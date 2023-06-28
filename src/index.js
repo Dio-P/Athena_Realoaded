@@ -1,13 +1,53 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import {
+  createBrowserRouter,
+  createRoutesFromElements,
+  RouterProvider,
+  Route,
+} from "react-router-dom";
+import {
+  ApolloClient,
+  ApolloProvider,
+  HttpLink,
+  InMemoryCache,
+} from "@apollo/client";
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import SinglePartPage from './containers/SinglePartPage';
 
+const athenaDbUri = "http://localhost:5051/graphql"
+
+const client = new ApolloClient({
+  link: new HttpLink({
+    uri: athenaDbUri,
+  }),
+  cache: new InMemoryCache(({
+    addTypename: false
+  })),
+});
+
+const router = createBrowserRouter(
+  createRoutesFromElements(
+    <>
+      <Route path="/" 
+      element={<App/>}
+        loader={({params}) => {
+          
+        }}
+        action={({ params }) => {
+        }}
+      />
+    </>
+  )
+);
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <App />
+      <ApolloProvider client={client}>
+        <RouterProvider router={router}/>
+      </ApolloProvider>
   </React.StrictMode>
 );
 
