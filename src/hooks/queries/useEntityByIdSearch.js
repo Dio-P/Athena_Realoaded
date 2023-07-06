@@ -48,12 +48,19 @@ const useEntityByIdSearch = () => {
   );
 
   const searchEntity = (id) => {
+    console.log("inside search entity");
     query({
       variables: { id },
     });
   };
 
   useEffect(() => {
+    // if (loading) {
+
+    // }
+    if (error) {
+      console.error("error", error)
+    }
     if (data?.getEntityById) {
       setReturnedEntity(data.getEntityById);
     }
