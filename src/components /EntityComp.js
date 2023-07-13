@@ -7,12 +7,14 @@ const EntityContainer = styled.div`
   display: flex;
 `;
 
-const EntityComp = ({ entity }) => {
+const EntityComp = ({ entity, setDisplayedEntity }) => {
 
   const [returnedChildren, searchChildren] = useChildrenByIdsSearch();
 
   useEffect(() => {
     if (entity?.children){
+      console.log("inside search children", entity);
+      console.log("returnedChildren", returnedChildren);
       searchChildren(entity.children);
     }
   }, [entity]);
@@ -24,6 +26,7 @@ const EntityComp = ({ entity }) => {
           <MultiBtnComp
             label={childEntity.name}
             key={childEntity.name}
+            onClickFunction={()=> setDisplayedEntity(childEntity)}
           />
         ))}
 

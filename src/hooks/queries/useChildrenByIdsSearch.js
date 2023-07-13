@@ -43,17 +43,27 @@ export const SEARCH_CHILDREN_BY_ID_QUERY = gql`
 const useChildrenByIdsSearch = () => {
   const [returnedChildren, setReturnedChildren] = useState("");
 
-  const [query, { loading, error, data }] = useLazyQuery(
+  const [query, { loading, error, data, refetch }] = useLazyQuery(
     SEARCH_CHILDREN_BY_ID_QUERY
   );
-
+  // const { loading, error, data, refetch } = useQuery(GET_DOG_PHOTO, {
+  //   variables: { breed },
+  // });
   const searchChildren = (ids) => {
-    query({
-      variables: { ids },
-    });
+    console.log("ids", ids);
+    if(!data){
+      query({
+        variables: { ids },
+      });
+    }
+    if(data){
+      console.log("data", !!data);
+      refetch({ ids })
+    }
   };
 
   useEffect(() => {
+    console.log("data**", data);
     // if (loading) {
 
     // }
@@ -63,7 +73,7 @@ const useChildrenByIdsSearch = () => {
     if (data?.getChildrenById) {
       setReturnedChildren(data.getChildrenById);
     }
-  }, [data]);
+  }, [data, error]);
 
   return [returnedChildren, searchChildren];
 };
