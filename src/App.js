@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import useEntityByIdSearch from './hooks/queries/useEntityByIdSearch';
 import MultiBtnComp from './components /MultiBtnComp';
 import EntityComp from './components /EntityComp';
+import useParamsHelper from './hooks/useParamsHelper';
 
 const MOCK_DEFAULT_STARTING_ENTITY_ID = "4";
 
@@ -11,6 +12,8 @@ const MOCK_DEFAULT_STARTING_ENTITY_ID = "4";
 function App() {
 
   const [returnedEntity, searchEntity] = useEntityByIdSearch();
+
+  useParamsHelper()
   const [displayedEntity, setDisplayedEntity] = useState("");
 
   

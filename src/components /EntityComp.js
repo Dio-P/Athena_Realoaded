@@ -30,6 +30,9 @@ const EntityChildrenBox = styled.div`
 
 const EntityComp = ({ entity, setDisplayedEntity }) => {
 
+  const breacrumbTest = {
+    cPub: "5"
+  };
   const [returnedChildren, searchChildren] = useChildrenByIdsSearch();
 
   useEffect(() => {
