@@ -28,12 +28,17 @@ const EntityChildrenBox = styled.div`
   display: flex;
 `;
 
-const EntityComp = ({ entity, setDisplayedEntity }) => {
+const EntityComp = ({ entity, setDisplayedEntity, paramsCustomObj, setParamsCustomObj }) => {
 
-  const breacrumbTest = {
-    cPub: "5"
-  };
+  
   const [returnedChildren, searchChildren] = useChildrenByIdsSearch();
+
+  useEffect(() => {
+    if(entity?.name){
+      setParamsCustomObj({...paramsCustomObj, [entity.name]: entity.id});
+    }
+     
+  }, [entity]);
 
   useEffect(() => {
     if (entity?.children){

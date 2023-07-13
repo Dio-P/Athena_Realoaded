@@ -13,10 +13,12 @@ function App() {
 
   const [returnedEntity, searchEntity] = useEntityByIdSearch();
 
-  useParamsHelper()
+  const [paramsCustomObj, setParamsCustomObj] = useState({});
+  useParamsHelper(paramsCustomObj)
   const [displayedEntity, setDisplayedEntity] = useState("");
 
   
+
   useEffect(() => {
    searchEntity(MOCK_DEFAULT_STARTING_ENTITY_ID);
   }, []);
@@ -26,7 +28,6 @@ function App() {
   }, [returnedEntity]);
 
   const changeEntity = (child) => {
-    console.log("inside changeEntity :", child);
     setDisplayedEntity(child) 
   }
 
@@ -36,6 +37,8 @@ function App() {
         <EntityComp 
           entity={displayedEntity} 
           setDisplayedEntity={(child)=>changeEntity(child)}
+          paramsCustomObj={paramsCustomObj}
+          setParamsCustomObj={setParamsCustomObj}
         />
       }
     </div>

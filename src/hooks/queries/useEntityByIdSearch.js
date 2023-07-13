@@ -48,7 +48,6 @@ const useEntityByIdSearch = () => {
   );
 
   const searchEntity = (id) => {
-    console.log("inside search entity");
     query({
       variables: { id },
     });

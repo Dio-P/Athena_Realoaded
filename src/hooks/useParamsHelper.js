@@ -1,16 +1,17 @@
 import { array } from "prop-types";
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import { useSearchParams } from "react-router-dom";
 
-const MOCK_TEST_PARAMS = encodeURIComponent(["cpub", "authoring", "optimo"].join("->"));
-
-const useParamsHelper = () => {
+const useParamsHelper = (paramsCustomObj) => {
+  
   let [searchParams, setSearchParams] = useSearchParams();
   const params = Object.fromEntries([...searchParams]);
+  const paramString = useMemo(() => Object.keys(paramsCustomObj).join("->"),[paramsCustomObj]);
 
   useEffect(() => {
-    setSearchParams(MOCK_TEST_PARAMS); 
-  }, []);
+    console.log("paramString", paramString);
+      setSearchParams(paramString); 
+  }, [paramsCustomObj]);
 
 };
 
