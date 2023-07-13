@@ -46,15 +46,17 @@ const useChildrenByIdsSearch = () => {
   const [query, { loading, error, data, refetch }] = useLazyQuery(
     SEARCH_CHILDREN_BY_ID_QUERY
   );
-  
+
   const searchChildren = (ids) => {
-    if(!data){
-      query({
-        variables: { ids },
-      });
-    }
-    if(data){
-      refetch({ ids })
+    if(ids){
+      if(!data){
+        query({
+          variables: { ids },
+        });
+      }
+      if(data){
+        refetch({ ids })
+      }
     }
   };
 
