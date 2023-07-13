@@ -28,19 +28,13 @@ function App() {
   }
 
   return (
-    <div >
+    <div>
       {returnedEntity &&
-      <div>
-        the name of the entity is: {returnedEntity.name}
         <EntityComp 
           entity={displayedEntity} 
           setDisplayedEntity={(child)=>changeEntity(child)}
         />
-        {/* <EntityComp entity={returnedEntity}/> */}
-
-      </div>
       }
-      Hello From the New Athena
     </div>
   );
 }
