@@ -4,40 +4,45 @@ import { useSearchParams } from "react-router-dom";
 
 // const MOCK_DEFAULT_STARTING_ENTITY_ID = "4";
 
-const useParamsHelper = (paramsCustomObj) => {
+const useParamsHelper = (paramsCustomObj, setParamsCustomObj) => {
   
   const [searchParams, setSearchParams] = useSearchParams();
   const [displayedEntityId, setDisplayedEntityId] = useState("4");
 
   const params = Object.fromEntries([...searchParams]);
-  const paramNames = useMemo(() => Object.keys(paramsCustomObj), [paramsCustomObj]);
-  const paramString = useMemo(() => (paramNames.length > 1)? paramNames.join("->"): paramNames[0],[paramNames]);
 
-  useEffect(() => {
-    console.log("paramNames", paramNames); 
-    console.log("paramNames.length > 1", paramNames.length > 1, paramNames[0]); 
-  }, [paramNames]);
+  const paramNames = useMemo(() => Object.keys(paramsCustomObj), [paramsCustomObj]);
+  const paramString = useMemo(() => (paramNames.length > 2)? paramNames.join("->"): paramNames[0],[paramNames]);
 
   useEffect(() => {
     if(paramsCustomObj) {
-      console.log("paramsCustomObj", paramsCustomObj);
       console.log("paramString", paramString);
       setSearchParams(paramString);
-      console.log("Object.values(paramsCustomObj)[-1]", Object.values(paramsCustomObj));
-      console.log("paramsCustomObj", paramsCustomObj);
-      setDisplayedEntityId((Object.values(paramsCustomObj).pop()[0]) || "4");
+      setDisplayedEntityId((Object.values(paramsCustomObj).pop()[0]));
     }
   }, [paramsCustomObj]);
 
   useEffect(() => {
-    console.log("params", params); 
+    if(params) {
+      console.log("params", params);
+      // const latestParam = params.split("->").pop()[0];
+      // const paramToBeDeleted= Object.values(paramsCustomObj).pop()[0];
+      // setParamsCustomObj({...paramsCustomObj, [paramToBeDeleted]: undefined})
+      // setDisplayedEntityId(paramsCustomObj[latestParam]);
+
+      // console.log("params", params);
+      // const oldObjArray = Array.from(paramsCustomObj);
+      // console.log("oldObjArray", oldObjArray);
+      // const notNeeded = oldObjArray.pop()[0];
+      // const allParams = params.split("->");
+      // const {notNeeded, ...allParams} = paramsCustomObj
+      // setParamsCustomObj({...allParams,})
+      // setSearchParams(paramString);
+      // setDisplayedEntityId(paramsCustomObj[latestParam]);
+    }
   }, [params]);
 
-  useEffect(() => {
-    console.log("displayedEntityId", displayedEntityId); 
-  }, [displayedEntityId]);
-
-  return {displayedEntityId}
+  return {displayedEntityId }
 };
 
 export default useParamsHelper;

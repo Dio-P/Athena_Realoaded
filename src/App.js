@@ -10,7 +10,7 @@ function App() {
   const [returnedEntity, searchEntity] = useEntityByIdSearch();
 
   const [paramsCustomObj, setParamsCustomObj] = useState({ cPub:"4" });
-  const { displayedEntityId } = useParamsHelper(paramsCustomObj)
+  const { displayedEntityId } = useParamsHelper(paramsCustomObj, setParamsCustomObj)
   const [displayedEntity, setDisplayedEntity] = useState("");
 
   
