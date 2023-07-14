@@ -11,17 +11,20 @@ function App() {
   const [paramsCustomObj, setParamsCustomObj] = useState({
     cPub: { id: "4", index: 1, name: "cPub" },
   });
-  const { displayedEntityId } = useParamsHelper(
-    paramsCustomObj,
-    setParamsCustomObj
-  );
+  const {
+    displayedEntityId, renderChosenEntity
+  } = useParamsHelper(paramsCustomObj, setParamsCustomObj);
   const [displayedEntity, setDisplayedEntity] = useState("");
 
+  // every time the params change this should rerun
   useEffect(() => {
+    console.log("search is about to happen");
     searchEntity(displayedEntityId);
   }, [displayedEntityId]);
 
   useEffect(() => {
+    console.log("DisplayedEntity is about to be set");
+    console.log("returnedEntity", returnedEntity);
     setDisplayedEntity(returnedEntity);
   }, [returnedEntity]);
 
@@ -36,7 +39,7 @@ function App() {
           entity={displayedEntity}
           setDisplayedEntity={(child) => changeEntity(child)}
           paramsCustomObj={paramsCustomObj}
-          setParamsCustomObj={setParamsCustomObj}
+          renderChosenEntity={renderChosenEntity}
         />
       )}
     </div>

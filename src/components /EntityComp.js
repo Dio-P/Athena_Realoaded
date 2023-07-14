@@ -28,17 +28,10 @@ const EntityChildrenBox = styled.div`
   display: flex;
 `;
 
-const EntityComp = ({ entity, setDisplayedEntity, paramsCustomObj, setParamsCustomObj }) => {
+const EntityComp = ({ entity, setDisplayedEntity, paramsCustomObj, renderChosenEntity }) => {
 
   
   const [returnedChildren, searchChildren] = useChildrenByIdsSearch();
-
-  // useEffect(() => {
-  //   if(entity?.name){
-  //     setParamsCustomObj({...paramsCustomObj, [entity.name]: entity.id});
-  //   }
-     
-  // }, [entity]);
 
   useEffect(() => {
     if (entity?.children){
@@ -70,7 +63,7 @@ const EntityComp = ({ entity, setDisplayedEntity, paramsCustomObj, setParamsCust
             <MultiBtnComp
               label={childEntity.name}
               key={childEntity.name}
-              onClickFunction={()=> setParamsCustomObj({...paramsCustomObj, [childEntity.name]: childEntity.id})}
+              onClickFunction={()=> renderChosenEntity(childEntity.name, childEntity.id, paramsCustomObj)}
               // onClickFunction={()=> setDisplayedEntity(childEntity)}
               // type={childEntity.type}
             />
