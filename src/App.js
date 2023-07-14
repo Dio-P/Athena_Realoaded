@@ -18,8 +18,8 @@ function App() {
 
   // every time the params change this should rerun
   useEffect(() => {
-    console.log("search is about to happen");
-    searchEntity(displayedEntityId);
+    console.log("search is about to happen", displayedEntityId);
+    searchEntity(displayedEntityId.id);
   }, [displayedEntityId]);
 
   useEffect(() => {
