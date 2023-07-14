@@ -20,33 +20,43 @@ const useParamsHelper = (paramsCustomObj, setParamsCustomObj) => {
   useEffect(() => {
     if(params.ent){
       console.log("params", params);
-      console.log("params.ent.split('->')", params.ent.split("->"));
       const latestParam = params.ent.split("->").pop();
       console.log("********latestParam", latestParam, paramsCustomObj[latestParam]);
       if(paramsCustomObj[latestParam]) {
-        console.log("about to setDisplayedEntityId to :", paramsCustomObj[latestParam].id);
-        setDisplayedEntityId(paramsCustomObj[latestParam].id);
+        console.log("about to setDisplayedEntityId to :", paramsCustomObj, paramsCustomObj[latestParam].id);
+        renderChosenEntity(latestParam, paramsCustomObj[latestParam].id, paramsCustomObj)
       } else {
-        console.log("paramsCustomObj", paramsCustomObj);
         console.log("latestParam :", latestParam, "was not found in the obj");
       }
     }
   }, [params.ent])
 
-  const createUpdatedParamsObjs = (updatedParamsNames, id) => {
+  const isUserRenderingPreviousEntity = (entityName) =>
+      Object.keys(paramsCustomObj).includes(entityName);
+
+  const createUpdatedParamsObjs = (updatedParamsNames, newEntId, paramsObj) => {
+    console.log("paramsObj", paramsObj);
     let newObj = {};
+    
+    // this right now does not run when back arrow is pressed
+    // the isUserRenderingPreviousEntity works only for the one running and is not repeated for each one of the values
+    const getId = (name) => {
+      console.log("isUserRenderingPreviousEntity(name)", name, isUserRenderingPreviousEntity(name));
+      return isUserRenderingPreviousEntity(name)? paramsObj[name].id : newEntId;
+    }
+
     updatedParamsNames.map(
       (name, index) =>
-        (newObj = { ...newObj, [name]: { id, index, name } })
+        (newObj = { ...newObj, [name]: { id: getId(name), index, name } })
     );
     return newObj;
   };
 
-  const getUpdatedParamsNames = (name, updatedParamsObjArray, isUserRenderingPreviousEntity) => {
+  const getUpdatedParamsNames = (name, updatedParamsObjArray) => {
     const updatedArray = updatedParamsObjArray.map((paramObj) => 
       paramObj.name
     );
-    if(!isUserRenderingPreviousEntity){
+    if(!isUserRenderingPreviousEntity(name)){
       updatedArray.push(name);
     }
     console.log(updatedArray);
@@ -59,27 +69,23 @@ const useParamsHelper = (paramsCustomObj, setParamsCustomObj) => {
     // recreate the new params box
 
     // is there a chance that the entity name will not be unique should I check for this?
-    console.log("inside renderChosenEntity");
-    const isUserRenderingPreviousEntity =
-      Object.values(paramsObj).includes(entityName);
-    console.log("paramsObj", paramsObj);
+    
     const oldParamsObjArray = Object.values(paramsObj);
-    const chosenEntityIndex = isUserRenderingPreviousEntity
+    const chosenEntityIndex = isUserRenderingPreviousEntity(entityName)
       ? paramsObj[entityName].index
       : oldParamsObjArray.length + 1;
 
-      console.log("oldParamsObjArray", oldParamsObjArray);
     const updatedParamsObjArray = oldParamsObjArray.filter(
       (param) => !(param.index > chosenEntityIndex)
     );
 
-    const updatedParamsNames = getUpdatedParamsNames(entityName, updatedParamsObjArray, isUserRenderingPreviousEntity )
-      console.log("updatedParamsNames", updatedParamsNames);
+    const updatedParamsNames = getUpdatedParamsNames(entityName, updatedParamsObjArray)
     const newParamsUrlString = updatedParamsNames.join("->");
-    console.log("newParamsUrlString", newParamsUrlString);
+
     const updatedParamsObjs = createUpdatedParamsObjs(
       updatedParamsNames,
-      entityId
+      entityId,
+      paramsObj
     );
 
     console.log("updatedParamsObjs", updatedParamsObjs);
