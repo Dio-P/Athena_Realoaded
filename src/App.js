@@ -15,13 +15,16 @@ function App() {
     displayedEntityId, renderChosenEntity, setSearchParams
   } = useParamsHelper(paramsCustomObj, setParamsCustomObj);
   const [displayedEntity, setDisplayedEntity] = useState("");
-
+// this needs to go when we stop mocking
   useEffect(() => {
     setSearchParams({ent: "cPub"}) 
   }, []);
   // every time the params change this should rerun
   useEffect(() => {
-    searchEntity(displayedEntityId.id);
+    if (displayedEntityId) {
+      console.log("displayedEntityId", displayedEntityId);
+      searchEntity(displayedEntityId);
+    }
   }, [displayedEntityId]);
 
   useEffect(() => {

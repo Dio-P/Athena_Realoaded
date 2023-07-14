@@ -43,14 +43,22 @@ export const SEARCH_ENTITY_BY_ID_QUERY = gql`
 const useEntityByIdSearch = () => {
   const [returnedEntity, setReturnedEntity] = useState("");
 
-  const [query, { loading, error, data }] = useLazyQuery(
+  const [query, { loading, error, data, refetch }] = useLazyQuery(
     SEARCH_ENTITY_BY_ID_QUERY
   );
 
   const searchEntity = (id) => {
-    query({
-      variables: { id },
-    });
+    console.log("inside search entity ");
+    if(!returnedEntity) {
+      console.log("to query");
+      query({
+        variables: { id },
+      });
+    } if (returnedEntity) {
+      console.log("to refetch");
+      console.log("id", id);
+      refetch({ id })
+    }
   };
 
   useEffect(() => {
@@ -63,7 +71,7 @@ const useEntityByIdSearch = () => {
     if (data?.getEntityById) {
       setReturnedEntity(data.getEntityById);
     }
-  }, [data]);
+  }, [data, error]);
 
   // useEffect(() => {
   //   if (data && data.getAppById) {

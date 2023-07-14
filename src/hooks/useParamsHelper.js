@@ -6,16 +6,26 @@ import { useSearchParams } from "react-router-dom";
 
 const useParamsHelper = (paramsCustomObj, setParamsCustomObj) => {
   const [searchParams, setSearchParams] = useSearchParams();
-  const [displayedEntityId, setDisplayedEntityId] = useState("4");
+  const [displayedEntityId, setDisplayedEntityId] = useState("");
+  const [paramsUrl, setParamsUrl] = useState("");
 
   const params = Object.fromEntries([...searchParams]);
 
   useEffect(() => {
+    if(paramsUrl) {
+      setSearchParams({ent: paramsUrl});
+    } 
+  }, [paramsUrl]);
+
+  useEffect(() => {
     if(params.ent){
       console.log("params", params);
+      console.log("params.ent.split('->')", params.ent.split("->"));
       const latestParam = params.ent.split("->").pop();
+      console.log("********latestParam", latestParam, paramsCustomObj[latestParam]);
       if(paramsCustomObj[latestParam]) {
-        setDisplayedEntityId(paramsCustomObj[latestParam]);
+        console.log("about to setDisplayedEntityId to :", paramsCustomObj[latestParam].id);
+        setDisplayedEntityId(paramsCustomObj[latestParam].id);
       } else {
         console.log("paramsCustomObj", paramsCustomObj);
         console.log("latestParam :", latestParam, "was not found in the obj");
@@ -74,7 +84,9 @@ const useParamsHelper = (paramsCustomObj, setParamsCustomObj) => {
 
     console.log("updatedParamsObjs", updatedParamsObjs);
     setParamsCustomObj(updatedParamsObjs);
-    setSearchParams({ ent: newParamsUrlString });
+    setParamsUrl(newParamsUrlString );
+    console.log("about to setDisplayedEntityId to :", entityId);
+    setDisplayedEntityId(entityId)
   };
 
   return { displayedEntityId, renderChosenEntity, setSearchParams };
