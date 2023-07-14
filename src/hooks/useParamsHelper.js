@@ -10,35 +10,6 @@ const useParamsHelper = (paramsCustomObj, setParamsCustomObj) => {
 
   const params = Object.fromEntries([...searchParams]);
 
-  // const paramNames = useMemo(() => Object.keys(paramsCustomObj), [paramsCustomObj]);
-  // const paramString = useMemo(() => (paramNames.length > 2)? paramNames.join("->"): paramNames[0],[paramNames]);
-
-  // useEffect(() => {
-  //   if (paramsCustomObj) {
-  //     console.log("paramsCustomObj", paramsCustomObj);
-  //     const paramNames = Object.keys(paramsCustomObj);
-  //     const paramString =
-  //       paramNames.length >= 1 ? paramNames.join("->") : paramNames[0];
-  //     console.log("paramString", paramString);
-  //     setSearchParams({ ent: paramString });
-  //     setDisplayedEntityId(Object.values(paramsCustomObj).pop());
-  //   }
-  // }, [paramsCustomObj]);
-
-  // useEffect(() => {
-  //   // this runs also when params are added.
-  //   // maybe it would be better instead of deleting the last to always be getting the last
-  //   if (params) {
-  //     console.log("params", params);
-  //     const latestParam = params.ent.split("->").pop();
-  //     setDisplayedEntityId(paramsCustomObj[latestParam].id);
-  //     const objKeyToBeDeleted = Object.keys(paramsCustomObj).pop();
-  //     console.log("objKeyToBeDeleted", objKeyToBeDeleted);
-  //     // setParamsCustomObj({...paramsCustomObj, [objKeyToBeDeleted]: undefined})
-  //     // setDisplayedEntityId(paramsCustomObj[latestParam]);
-  //   }
-  // }, [params]);
-
   useEffect(() => {
     if(params.ent){
       console.log("params", params);
@@ -78,19 +49,22 @@ const useParamsHelper = (paramsCustomObj, setParamsCustomObj) => {
     // recreate the new params box
 
     // is there a chance that the entity name will not be unique should I check for this?
+    console.log("inside renderChosenEntity");
     const isUserRenderingPreviousEntity =
       Object.values(paramsObj).includes(entityName);
-    const oldParamsObjArray = Array.from(paramsObj);
+    console.log("paramsObj", paramsObj);
+    const oldParamsObjArray = Object.values(paramsObj);
     const chosenEntityIndex = isUserRenderingPreviousEntity
       ? paramsObj[entityName].index
       : oldParamsObjArray.length + 1;
 
+      console.log("oldParamsObjArray", oldParamsObjArray);
     const updatedParamsObjArray = oldParamsObjArray.filter(
       (param) => !(param.index > chosenEntityIndex)
     );
 
     const updatedParamsNames = getUpdatedParamsNames(entityName, updatedParamsObjArray, isUserRenderingPreviousEntity )
-  
+      console.log("updatedParamsNames", updatedParamsNames);
     const newParamsUrlString = updatedParamsNames.join("->");
     console.log("newParamsUrlString", newParamsUrlString);
     const updatedParamsObjs = createUpdatedParamsObjs(
@@ -102,24 +76,6 @@ const useParamsHelper = (paramsCustomObj, setParamsCustomObj) => {
     setParamsCustomObj(updatedParamsObjs);
     setSearchParams({ ent: newParamsUrlString });
   };
-
-  // const addNewEntity = (name, paramsObj) => {
-  //   const updatedParamsObjs = createUpdatedParamsObjs(updatedParamsNames, paramsObj);
-  //   // setParamsCustomObj(...paramsCustomObj, [entityName]: { id: newObj[entityName].id, index, name })
-  // }
-
-  // const renderChosenEntity = (entityName, paramsObj) => {
-  //   // to handle everything around rendering a chosen element from breadcrump or by clicking on it.
-  //   const isUserRenderingPreviousEntity = Object.values(paramsCustomObj).includes(entityName);
-
-  //   addOrDellEntities(entityName, paramsObj);
-  // if (isUserRenderingPreviousEntity) {
-  //   // is there a chance that the entity name will not be unique should I check for this?
-  //   addOrDellEntities(entityName, paramsObj)
-  // } if (!isUserRenderingPreviousEntity) {
-  //   addNewEntity(entityName, paramsObj)
-  // }
-  // }
 
   return { displayedEntityId, renderChosenEntity, setSearchParams };
 };
