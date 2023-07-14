@@ -38,8 +38,6 @@ const useParamsHelper = (paramsCustomObj, setParamsCustomObj) => {
     console.log("paramsObj", paramsObj);
     let newObj = {};
     
-    // this right now does not run when back arrow is pressed
-    // the isUserRenderingPreviousEntity works only for the one running and is not repeated for each one of the values
     const getId = (name) => {
       console.log("isUserRenderingPreviousEntity(name)", name, isUserRenderingPreviousEntity(name));
       return isUserRenderingPreviousEntity(name)? paramsObj[name].id : newEntId;
