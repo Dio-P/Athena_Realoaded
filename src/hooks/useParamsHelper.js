@@ -40,13 +40,17 @@ const useParamsHelper = (paramsCustomObj, setParamsCustomObj) => {
   // }, [params]);
 
   useEffect(() => {
-    const latestParam = params.ent.split("->").pop();
-    if(paramsCustomObj[latestParam]) {
-      setDisplayedEntityId(paramsCustomObj[latestParam]);
-    } else {
-      console.log("param was not found in the obj")
+    if(params.ent){
+      console.log("params", params);
+      const latestParam = params.ent.split("->").pop();
+      if(paramsCustomObj[latestParam]) {
+        setDisplayedEntityId(paramsCustomObj[latestParam]);
+      } else {
+        console.log("paramsCustomObj", paramsCustomObj);
+        console.log("latestParam :", latestParam, "was not found in the obj");
+      }
     }
-  }, [params])
+  }, [params.ent])
 
   const createUpdatedParamsObjs = (updatedParamsNames, id) => {
     let newObj = {};
@@ -58,12 +62,13 @@ const useParamsHelper = (paramsCustomObj, setParamsCustomObj) => {
   };
 
   const getUpdatedParamsNames = (name, updatedParamsObjArray, isUserRenderingPreviousEntity) => {
-    const updatedArray = updatedParamsObjArray.map(
-      (paramObj) => paramObj.name
+    const updatedArray = updatedParamsObjArray.map((paramObj) => 
+      paramObj.name
     );
     if(!isUserRenderingPreviousEntity){
       updatedArray.push(name);
     }
+    console.log(updatedArray);
     return updatedArray
   };
 
@@ -116,7 +121,7 @@ const useParamsHelper = (paramsCustomObj, setParamsCustomObj) => {
   // }
   // }
 
-  return { displayedEntityId, renderChosenEntity };
+  return { displayedEntityId, renderChosenEntity, setSearchParams };
 };
 
 export default useParamsHelper;

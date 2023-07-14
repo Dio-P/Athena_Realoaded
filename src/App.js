@@ -12,19 +12,19 @@ function App() {
     cPub: { id: "4", index: 1, name: "cPub" },
   });
   const {
-    displayedEntityId, renderChosenEntity
+    displayedEntityId, renderChosenEntity, setSearchParams
   } = useParamsHelper(paramsCustomObj, setParamsCustomObj);
   const [displayedEntity, setDisplayedEntity] = useState("");
 
+  useEffect(() => {
+    setSearchParams({ent: "cPub"}) 
+  }, []);
   // every time the params change this should rerun
   useEffect(() => {
-    console.log("search is about to happen", displayedEntityId);
     searchEntity(displayedEntityId.id);
   }, [displayedEntityId]);
 
   useEffect(() => {
-    console.log("DisplayedEntity is about to be set");
-    console.log("returnedEntity", returnedEntity);
     setDisplayedEntity(returnedEntity);
   }, [returnedEntity]);
 
