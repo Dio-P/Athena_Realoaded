@@ -1,22 +1,24 @@
-import './App.css';
-import { useEffect, useState } from 'react';
-import useEntityByIdSearch from './hooks/queries/useEntityByIdSearch';
-import MultiBtnComp from './components /MultiBtnComp';
-import EntityComp from './components /EntityComp';
-import useParamsHelper from './hooks/useParamsHelper';
+import "./App.css";
+import { useEffect, useState } from "react";
+import useEntityByIdSearch from "./hooks/queries/useEntityByIdSearch";
+import MultiBtnComp from "./components /MultiBtnComp";
+import EntityComp from "./components /EntityComp";
+import useParamsHelper from "./hooks/useParamsHelper";
 
 function App() {
-
   const [returnedEntity, searchEntity] = useEntityByIdSearch();
 
-  const [paramsCustomObj, setParamsCustomObj] = useState({ cPub:"4" });
-  const { displayedEntityId } = useParamsHelper(paramsCustomObj, setParamsCustomObj)
+  const [paramsCustomObj, setParamsCustomObj] = useState({
+    cPub: { id: "4", index: 1, name: "cPub" },
+  });
+  const { displayedEntityId } = useParamsHelper(
+    paramsCustomObj,
+    setParamsCustomObj
+  );
   const [displayedEntity, setDisplayedEntity] = useState("");
 
-  
-
   useEffect(() => {
-   searchEntity(displayedEntityId);
+    searchEntity(displayedEntityId);
   }, [displayedEntityId]);
 
   useEffect(() => {
@@ -24,19 +26,19 @@ function App() {
   }, [returnedEntity]);
 
   const changeEntity = (child) => {
-    setDisplayedEntity(child) 
-  }
+    setDisplayedEntity(child);
+  };
 
   return (
     <div>
-      {returnedEntity &&
-        <EntityComp 
-          entity={displayedEntity} 
-          setDisplayedEntity={(child)=>changeEntity(child)}
+      {returnedEntity && (
+        <EntityComp
+          entity={displayedEntity}
+          setDisplayedEntity={(child) => changeEntity(child)}
           paramsCustomObj={paramsCustomObj}
           setParamsCustomObj={setParamsCustomObj}
         />
-      }
+      )}
     </div>
   );
 }
