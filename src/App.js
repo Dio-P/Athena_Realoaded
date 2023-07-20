@@ -38,7 +38,9 @@ function App() {
 
   return (
     <div>
-      <MenuBar/>
+      <MenuBar
+        paramsCustomObj={paramsCustomObj}
+      />
       {returnedEntity && (
         <EntityComp
           entity={displayedEntity}
