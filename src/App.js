@@ -4,6 +4,7 @@ import useEntityByIdSearch from "./hooks/queries/useEntityByIdSearch";
 import MultiBtnComp from "./components /MultiBtnComp";
 import EntityComp from "./components /EntityComp";
 import useParamsHelper from "./hooks/useParamsHelper";
+import MenuBar from "./containers/MenuBar";
 
 function App() {
   const [returnedEntity, searchEntity] = useEntityByIdSearch();
@@ -37,6 +38,7 @@ function App() {
 
   return (
     <div>
+      <MenuBar/>
       {returnedEntity && (
         <EntityComp
           entity={displayedEntity}
