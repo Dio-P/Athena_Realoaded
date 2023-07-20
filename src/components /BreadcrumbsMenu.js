@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import styled from "@emotion/styled";
-import useParamsHelper from "../hooks/useParamsHelper";
 
 const BreadcrumbsMenuContainer = styled.div`
   display: flex;
@@ -15,7 +14,6 @@ const BreadcrumbsMenu = ({ paramsCustomObj, renderChosenEntity }) => {
 
   useEffect(() => {
     if(paramsCustomObj){
-      console.log("setting breakcrumbs");
       setBreadCrumbs(Object.keys(paramsCustomObj))
     }
   }, [paramsCustomObj]);
