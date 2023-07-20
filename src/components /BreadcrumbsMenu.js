@@ -10,12 +10,12 @@ const BreadCrumbButtonContainer = styled.div`
   display: Flex;
 `;
 
-const BreadcrumbsMenu = ({ paramsCustomObj }) => {
-  const {} = useParamsHelper();
+const BreadcrumbsMenu = ({ paramsCustomObj, renderChosenEntity }) => {
   const [breadCrumbs, setBreadCrumbs] = useState("");
 
   useEffect(() => {
     if(paramsCustomObj){
+      console.log("setting breakcrumbs");
       setBreadCrumbs(Object.keys(paramsCustomObj))
     }
   }, [paramsCustomObj]);
@@ -23,16 +23,22 @@ const BreadcrumbsMenu = ({ paramsCustomObj }) => {
   const BreadCrumbButton = ({ breadCrumbName }) => {
     return (
       <BreadCrumbButtonContainer
-        onClick={}
+        onClick={() => renderChosenEntity(breadCrumbName, paramsCustomObj[breadCrumbName].id, paramsCustomObj)}
       >
-        {breadCrumbName}
+        /{breadCrumbName}
       </BreadCrumbButtonContainer>
     )
   };
 
   return (
     <BreadcrumbsMenuContainer>
-      Hello from the break crumbs
+      {breadCrumbs.length > 0 &&
+        breadCrumbs.map((breadCrumb) => (
+          <BreadCrumbButton
+            breadCrumbName={breadCrumb}
+          />
+        ))
+      }
     </BreadcrumbsMenuContainer>
   )
 };

@@ -40,6 +40,7 @@ function App() {
     <div>
       <MenuBar
         paramsCustomObj={paramsCustomObj}
+        renderChosenEntity={renderChosenEntity}
       />
       {returnedEntity && (
         <EntityComp

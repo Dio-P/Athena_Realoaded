@@ -19,9 +19,9 @@ const useParamsHelper = (paramsCustomObj, setParamsCustomObj) => {
 
   useEffect(() => {
     if(params.ent){
-      console.log("params", params);
+      // console.log("params", params);
       const latestParam = params.ent.split("->").pop();
-      console.log("********latestParam", latestParam, paramsCustomObj[latestParam]);
+      // console.log("********latestParam", latestParam, paramsCustomObj[latestParam]);
       if(paramsCustomObj[latestParam]) {
         console.log("about to setDisplayedEntityId to :", paramsCustomObj, paramsCustomObj[latestParam].id);
         renderChosenEntity(latestParam, paramsCustomObj[latestParam].id, paramsCustomObj)

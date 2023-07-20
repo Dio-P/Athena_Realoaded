@@ -7,12 +7,13 @@ const MenuBarContainer = styled.div`
   flex-direction: column;
 `;
 
-const MenuBar = ({ paramsCustomObj }) => {
+const MenuBar = ({ paramsCustomObj, renderChosenEntity }) => {
   return (
     <MenuBarContainer>
       hello from the menu bar
       <BreadcrumbsMenu
         paramsCustomObj={paramsCustomObj}
+        renderChosenEntity={renderChosenEntity}
       />
       <SearchBar/>
     </MenuBarContainer>
