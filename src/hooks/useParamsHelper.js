@@ -31,7 +31,7 @@ const useParamsHelper = (paramsCustomObj, setParamsCustomObj) => {
     }
   }, [params.ent])
 
-  const isUserRenderingPreviousEntity = (entityName) =>
+  const isInBreadcrumb = (entityName) =>
       Object.keys(paramsCustomObj).includes(entityName);
 
   const createUpdatedParamsObjs = (updatedParamsNames, newEntId, paramsObj) => {
@@ -39,8 +39,8 @@ const useParamsHelper = (paramsCustomObj, setParamsCustomObj) => {
     let newObj = {};
     
     const getId = (name) => {
-      console.log("isUserRenderingPreviousEntity(name)", name, isUserRenderingPreviousEntity(name));
-      return isUserRenderingPreviousEntity(name)? paramsObj[name].id : newEntId;
+      console.log("isInBreadcrumb(name)", name, isInBreadcrumb(name));
+      return isInBreadcrumb(name)? paramsObj[name].id : newEntId;
     }
 
     updatedParamsNames.map(
@@ -54,7 +54,7 @@ const useParamsHelper = (paramsCustomObj, setParamsCustomObj) => {
     const updatedArray = updatedParamsObjArray.map((paramObj) => 
       paramObj.name
     );
-    if(!isUserRenderingPreviousEntity(name)){
+    if(!isInBreadcrumb(name)){
       updatedArray.push(name);
     }
     console.log(updatedArray);
@@ -69,7 +69,7 @@ const useParamsHelper = (paramsCustomObj, setParamsCustomObj) => {
     // is there a chance that the entity name will not be unique should I check for this?
     
     const oldParamsObjArray = Object.values(paramsObj);
-    const chosenEntityIndex = isUserRenderingPreviousEntity(entityName)
+    const chosenEntityIndex = isInBreadcrumb(entityName)
       ? paramsObj[entityName].index
       : oldParamsObjArray.length + 1;
 
