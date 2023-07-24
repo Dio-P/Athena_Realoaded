@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 import BreadcrumbsMenu from "../components /BreadcrumbsMenu";
-import SearchBar from "../components /SearchBar";
+import SearchComboBox from "../components /SearchComboBox";
 
 const MenuBarContainer = styled.div`
   display: flex;
@@ -14,7 +14,12 @@ const MenuBar = ({ paramsCustomObj, renderChosenEntity }) => {
         paramsCustomObj={paramsCustomObj}
         renderChosenEntity={renderChosenEntity}
       />
-      <SearchBar/>
+      <SearchComboBox
+        // data={} //do I need that?
+        onClickOption={}
+        freshlyAddedValue={}
+        preexistingData={}
+      />
     </MenuBarContainer>
   )
 };
