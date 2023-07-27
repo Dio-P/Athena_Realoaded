@@ -1,6 +1,7 @@
 import styled from "@emotion/styled";
 import BreadcrumbsMenu from "../components /BreadcrumbsMenu";
 import SearchComboBox from "../components /SearchComboBox";
+import useFilterEntityByQueryString from "../hooks/queries/useFilterEntityByQueryString";
 
 const MenuBarContainer = styled.div`
   display: flex;
@@ -8,6 +9,9 @@ const MenuBarContainer = styled.div`
 `;
 
 const MenuBar = ({ paramsCustomObj, renderChosenEntity }) => {
+
+  const { returnedEntities, filterEntities } = useFilterEntityByQueryString();
+
   return (
     <MenuBarContainer>
       <BreadcrumbsMenu
@@ -15,10 +19,11 @@ const MenuBar = ({ paramsCustomObj, renderChosenEntity }) => {
         renderChosenEntity={renderChosenEntity}
       />
       <SearchComboBox
-        // data={} //do I need that?
-        onClickOption={}
-        freshlyAddedValue={}
-        preexistingData={}
+        data={returnedEntities} //do I need that?
+        searchFunction={filterEntities}
+        // onClickOption={}
+        // freshlyAddedValue={}
+        // preexistingData={}
       />
     </MenuBarContainer>
   )

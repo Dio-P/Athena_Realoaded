@@ -74,22 +74,25 @@ export const SearchComboBox = ({
   onClickOption,
   freshlyAddedValue,
   preexistingData,
+  searchFunction,
 }) => {
-  const [searchingQuery, setSearchingQuery] = useState(undefined);
+  // const [searchingQuery, setSearchingQuery] = useState(undefined);
 
-  const allData = useMemo(
-    () =>
-      freshlyAddedValue
-        ? [...preexistingData, freshlyAddedValue]
-        : preexistingData,
-    [preexistingData, freshlyAddedValue]
-  );
-  const filteredData = useMemo(
-    () => allData.filter((folder) => folder.name.includes(searchingQuery)),
-    [searchingQuery]
-  );
+  // const allData = useMemo(
+  //   () =>
+  //     freshlyAddedValue
+  //       ? [...preexistingData, freshlyAddedValue]
+  //       : preexistingData,
+  //   [preexistingData, freshlyAddedValue]
+  // );
+  // const filteredData = useMemo(
+  //   () => allData.filter((folder) => folder.name.includes(searchingQuery)),
+  //   [searchingQuery]
+  // );
 
-  const optionsToRender = !searchingQuery ? allData : filteredData;
+  // const optionsToRender = !searchingQuery ? allData : filteredData;
+  console.log("data", data);
+  const optionsToRender = data? data: [];
 
   return (
     <SearchBarContainer>
@@ -99,15 +102,16 @@ export const SearchComboBox = ({
       <SearchInput
         type="text"
         name="dropDownSearch"
-        value={searchingQuery}
-        onChange={(e) => setSearchingQuery(e.target.value)}
+        // value={searchingQuery}
+        onChange={(e) => searchFunction(e.target.value)}
+        // onChange={(e) => setSearchingQuery(e.target.value)}
       />
       <OptionsWrapper>
-        {optionsToRender.map((folder, index) => (
+        {optionsToRender.map((folder) => (
           <SingleDropdownElement
-            onClickOption={() => onClickOption(folder)}
+            // onClickOption={() => onClickOption(folder)}
             label={folder.name}
-            key={index}
+            key={folder.name}
           />
         ))}
       </OptionsWrapper>
