@@ -66,9 +66,11 @@ const useFilterEntityByQueryString = () => {
         variables: { queryString },
       })
 
-    } else {
+    } if (queryString==="") {
+      setReturnedEntities("");
+    }else {
       refetch(
-        queryString
+        {queryString}
       )
     }
   }
