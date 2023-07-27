@@ -75,6 +75,7 @@ export const SearchComboBox = ({
   freshlyAddedValue,
   preexistingData,
   searchFunction,
+  searchingFor,
 }) => {
   // const [searchingQuery, setSearchingQuery] = useState(undefined);
 
@@ -97,21 +98,22 @@ export const SearchComboBox = ({
   return (
     <SearchBarContainer>
       <MagnifyingGlassIconWrapper>
-        {magnifyingGlassIcon}
+        {searchingFor}{magnifyingGlassIcon}
       </MagnifyingGlassIconWrapper>
       <SearchInput
         type="text"
         name="dropDownSearch"
+        placeholder={searchingFor}
         // value={searchingQuery}
         onChange={(e) => searchFunction(e.target.value)}
         // onChange={(e) => setSearchingQuery(e.target.value)}
       />
       <OptionsWrapper>
-        {optionsToRender.map((folder) => (
+        {optionsToRender.map((entity) => (
           <SingleDropdownElement
-            // onClickOption={() => onClickOption(folder)}
-            label={folder.name}
-            key={folder.name}
+            // onClickOption={() => onClickOption(entity)}
+            label={entity.name}
+            key={entity.id}
           />
         ))}
       </OptionsWrapper>

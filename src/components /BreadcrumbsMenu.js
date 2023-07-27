@@ -34,6 +34,7 @@ const BreadcrumbsMenu = ({ paramsCustomObj, renderChosenEntity }) => {
         breadCrumbs.map((breadCrumb) => (
           <BreadCrumbButton
             breadCrumbName={breadCrumb}
+            key={breadCrumb}
           />
         ))
       }

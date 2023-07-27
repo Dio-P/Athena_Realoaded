@@ -4,7 +4,7 @@ import gql from "graphql-tag";
 
 export const FILTER_ENTITY_BY_QUERYSTRING_QUERY = gql`
   query ($queryString: String!) {
-    filterEntityByQueryString(queryString: $queryString) {
+    filterTagsBySearchString(queryString: $queryString) {
       id
       name
       type
@@ -39,44 +39,40 @@ export const FILTER_ENTITY_BY_QUERYSTRING_QUERY = gql`
     }
   }`
 
-const useFilterEntityByQueryString = () => {
-  const [returnedEntities, setReturnedEntities] = useState("");
+const useGetAllTags = () => {
+  const [returnedTags, setReturnedTags] = useState("");
 
   const [query, { loading, error, data, refetch }] = useLazyQuery(
     FILTER_ENTITY_BY_QUERYSTRING_QUERY
   );
 
+
   useEffect(() => {
     if(data) {
-      console.log("data", data);
-      setReturnedEntities(data.filterEntityByQueryString);
+      setReturnedTags(data.filterTagsBySearchString);
     } if(error) {
-      console.log("error:",  error);
       console.error(error)
     } if(loading) {
       console.log("loading");
     }
   }, [data, error, loading]);
 
-  const filterEntities = (queryString) => {
-    console.log("queryString is:", queryString, "of type:", typeof queryString);
-    if(!returnedEntities){
+  const getTags = (queryString) => {
+    if(!returnedTags){
       console.log("to query");
       query({
         variables: { queryString },
       })
 
     } if (queryString==="") {
-      setReturnedEntities("");
+      setReturnedTags("");
 
     }else {
-      refetch(
-        {queryString}
-      )
+      refetch({queryString})
     }
   }
 
-  return { returnedEntities, filterEntities }
+  return { returnedTags, getTags }
 }
 
-export default useFilterEntityByQueryString;
+export default useGetAllTags
