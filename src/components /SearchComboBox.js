@@ -76,6 +76,8 @@ export const SearchComboBox = ({
   preexistingData,
   searchFunction,
   searchingFor,
+  value,
+  setValue
 }) => {
   // const [searchingQuery, setSearchingQuery] = useState(undefined);
 
@@ -104,8 +106,9 @@ export const SearchComboBox = ({
         type="text"
         name="dropDownSearch"
         placeholder={searchingFor}
-        // value={searchingQuery}
-        onChange={(e) => searchFunction(e.target.value)}
+        // value={value}
+        onChange={(e) => setValue(e.target.value)}
+        // onChange={(e) => searchFunction(e.target.value)}
         // onChange={(e) => setSearchingQuery(e.target.value)}
       />
       <OptionsWrapper>
@@ -114,6 +117,8 @@ export const SearchComboBox = ({
             // onClickOption={() => onClickOption(entity)}
             label={entity.name}
             key={entity.id}
+                    // value={value}
+
           />
         ))}
       </OptionsWrapper>
