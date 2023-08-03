@@ -3,8 +3,21 @@ import SearchComboBox from "../components /SearchComboBox";
 
 const AdvancedSearchBlockContainer = styled.div`
   display: flex;
+  flex-direction: column;
+`;
+
+const ComboBoxContainers = styled.div`
+  display: flex;
   background-color: red;
-  width: 10px;
+  width: 100%;
+  height: 100%;
+  min-width
+`;
+
+const AdvancedSearch = styled.div`
+  background-color: green;
+  display: flex;
+  width: 100%;
   height: 20px;
 `;
 
@@ -21,9 +34,12 @@ const AdvancedSearchBlock = ({
   setNameToSearchFor,
 }) => {
   return (
-    <AdvancedSearchBlockContainer onClick={() => setIsOpen(!isOpen)}>
+    <AdvancedSearchBlockContainer>
+      <AdvancedSearch onClick={() => setIsOpen(!isOpen)}>
+        Advanced Search
+      </AdvancedSearch>
       {isOpen && (
-        <>
+        <ComboBoxContainers>
           <SearchComboBox
             data={returnedTags} //do I need that?
             searchFunction={queryTags}
@@ -50,7 +66,7 @@ const AdvancedSearchBlock = ({
           value={tagsToSearchFor}
           setValue={setTagsToSearchFor}
         /> */}
-        </>
+        </ComboBoxContainers>
       )}
     </AdvancedSearchBlockContainer>
   );

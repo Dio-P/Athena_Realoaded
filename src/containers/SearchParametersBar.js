@@ -14,6 +14,7 @@ import { DropDownWrapper } from "../components /specialElements";
 
 const SearchBarContainer = styled.div`
   display: flex;
+  flex-direction: column;
 `;
 
 const SearchButton = styled.button`
@@ -76,10 +77,6 @@ const SearchParametersBar = () => {
         searchName={nameToSearchFor}
         setNameToSearchFor={setNameToSearchFor}
       /> */}
-      
-      <SearchButton
-        onClick={onClickSearch}
-      /> 
       {/* it would be nice if instead of search button the query could be triggering on typing name, or both. */}
     </SearchBarContainer>
   ) 
