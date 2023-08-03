@@ -8,12 +8,21 @@ const SearchBarContainer = styled.div`
   display: flex;
 `;
 
+const SearchButton = styled.button`
+display: flex;
+`;
+
 const SearchParametersBar = () => {
   const { returnedEntities, filterEntities } = useFilterEntityByQueryString();
   const { returnedTags, getTags } = useGetAllTags();
 
   const [searchName, setSearchName] = useState("");
   const [searchTags, setSearchTags] = useState(""); //could there be more than one tags?
+
+  const onClickSearch = () => {
+    console.log("search was clicked");
+
+  }
 
   return (
     <SearchBarContainer>
@@ -37,6 +46,10 @@ const SearchParametersBar = () => {
         // freshlyAddedValue={}
         // preexistingData={}
       />
+      <SearchButton
+        onClick={onClickSearch}
+      /> 
+      {/* it would be nice if instead of search button the query could be triggering on typing name, or both. */}
     </SearchBarContainer>
   ) 
 };

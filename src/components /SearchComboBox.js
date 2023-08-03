@@ -1,7 +1,7 @@
 import { useMemo, useState } from "react";
 import styled from "@emotion/styled";
 import styleVariables from "../styleVariables";
-import { magnifyingGlassIcon } from "../helpers/svgIcons";
+import { deleteIcon, magnifyingGlassIcon } from "../helpers/svgIcons";
 import capitaliseFirstLetters from "../helpers/capitaliseFirstLetters";
 
 const SearchBarContainer = styled.div`
@@ -58,6 +58,21 @@ const DropDownLabel = styled.div`
   margin: auto;
 `;
 
+const ChoicesWrapper = styled.div`
+  display: flex;
+`;
+
+const ChosenEntityWrapper = styled.div`
+  display: flex;
+`;
+
+const XBoxWrapper = styled.div`
+  display: flex;
+  height: 100%;
+  width: 25px;
+  margin: 1px 2px 1px 2px;
+`;
+
 const SingleDropdownElement = ({ onClickOption, label, isAddFolderBtn }) => {
   return (
     <SingleDropDownElementWrapper
@@ -69,11 +84,24 @@ const SingleDropdownElement = ({ onClickOption, label, isAddFolderBtn }) => {
   );
 };
 
+const ChosenEntity = ({ value, onClickRemove }) => {
+  return (
+  <ChosenEntityWrapper>
+    {capitaliseFirstLetters(value)}
+    <XBoxWrapper
+      onClick={onClickRemove}
+    >
+      {deleteIcon}
+    </XBoxWrapper>
+  </ChosenEntityWrapper>
+  )
+}
+
 export const SearchComboBox = ({
   data,
-  onClickOption,
-  freshlyAddedValue,
-  preexistingData,
+  // onClickOption,
+  // freshlyAddedValue,
+  // preexistingData,
   searchFunction,
   searchingFor,
   value,
@@ -97,6 +125,16 @@ export const SearchComboBox = ({
   console.log("data", data);
   const optionsToRender = data? data: [];
 
+  const clickingOption = (entity) => {
+    console.log("option has been clicked: ", entity);
+    setValue([entity.name])
+  }
+
+  const removeChoice = (valueToRemove) => {
+    const updatedValues = value.filter(({id}) => (id !== valueToRemove.id))
+    setValue(updatedValues)
+  }
+
   return (
     <SearchBarContainer>
       <MagnifyingGlassIconWrapper>
@@ -106,22 +144,35 @@ export const SearchComboBox = ({
         type="text"
         name="dropDownSearch"
         placeholder={searchingFor}
-        // value={value}
-        onChange={(e) => setValue(e.target.value)}
+        value={value}
+        onChange={(e) => searchFunction(e.target.value)}
         // onChange={(e) => searchFunction(e.target.value)}
         // onChange={(e) => setSearchingQuery(e.target.value)}
       />
       <OptionsWrapper>
-        {optionsToRender.map((entity) => (
-          <SingleDropdownElement
-            // onClickOption={() => onClickOption(entity)}
+        {optionsToRender.map((entity) => {
+          console.log("optionsToRender", optionsToRender)
+          console.log("entity@", entity)
+          return <SingleDropdownElement
+            onClickOption={() => clickingOption(entity)}
             label={entity.name}
             key={entity.id}
-                    // value={value}
-
+            value={value}
+          />
+        }
+        )}
+      </OptionsWrapper>
+      {value.length >0 &&
+      <ChoicesWrapper>
+        {value.map((singleValue) => (
+          <ChosenEntity 
+            key={singleValue.id}
+            value={singleValue}
+            onClickRemove={()=> removeChoice(singleValue)}
           />
         ))}
-      </OptionsWrapper>
+      </ChoicesWrapper>
+      }
     </SearchBarContainer>
   );
 };
