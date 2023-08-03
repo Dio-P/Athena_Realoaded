@@ -6,9 +6,11 @@ import capitaliseFirstLetters from "../helpers/capitaliseFirstLetters";
 
 const SearchBarContainer = styled.div`
   display: flex;
+  flex-direction: column;
   align-items: center;
   width: 200px;
   margin-bottom: 3px;
+  padding: 10px;
 `;
 
 const MagnifyingGlassIconWrapper = styled.div`

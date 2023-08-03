@@ -21,6 +21,13 @@ const AdvancedSearch = styled.div`
   height: 20px;
 `;
 
+const SearchButton = styled.button`
+  display: flex;
+  width: 50px;
+  height: 50px;
+  align-self: center;
+`;
+
 const AdvancedSearchBlock = ({
   isOpen,
   setIsOpen,
@@ -33,6 +40,12 @@ const AdvancedSearchBlock = ({
   nameToSearchFor,
   setNameToSearchFor,
 }) => {
+
+  const onClickSearch = () => {
+    console.log("search was clicked");
+
+  }
+
   return (
     <AdvancedSearchBlockContainer>
       <AdvancedSearch onClick={() => setIsOpen(!isOpen)}>
@@ -66,7 +79,13 @@ const AdvancedSearchBlock = ({
           value={tagsToSearchFor}
           setValue={setTagsToSearchFor}
         /> */}
+
+        <SearchButton
+          onClick={onClickSearch}
+        /> 
+
         </ComboBoxContainers>
+
       )}
     </AdvancedSearchBlockContainer>
   );

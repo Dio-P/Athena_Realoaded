@@ -17,10 +17,6 @@ const SearchBarContainer = styled.div`
   flex-direction: column;
 `;
 
-const SearchButton = styled.button`
-display: flex;
-`;
-
 // general search to return an entity without middle stages 
 // advanced search to set the string or strings
 // when advanced search is open general search is disabled and used only to display results
@@ -32,52 +28,35 @@ const SearchParametersBar = () => {
   const { returnedNames, queryNames } = useQueryNames();
   const { returnedTags, queryTags } = useQueryTags();
 
-  const [entityToGet, setEntityToGet] = useState([]);
+  const [entityToGet, setEntityToGet] = useState("");
 
-  const [nameToSearchFor, setNameToSearchFor] = useState([]);
-  const [tagsToSearchFor, setTagsToSearchFor] = useState([]); // is this working well with multiple tags?
-
-  const onClickSearch = () => {
-    console.log("search was clicked");
-
-  }
+  const [nameToSearchFor, setNameToSearchFor] = useState(""); //somewhere the logic that turns this into an empty array is repeated
+  const [tagsToSearchFor, setTagsToSearchFor] = useState(""); // is this working well with multiple tags?
 
   return (
     <SearchBarContainer>
-      <SearchComboBox
-        data={returnedEntities} //do I need that?
-        searchFunction={filterEntities}
-        searchingFor="Entity"
-        value={entityToGet}
-        setValue={setEntityToGet}
-        // onClickOption={}
-        // freshlyAddedValue={}
-        // preexistingData={}
-      />
 
       <AdvancedSearchBlock
-          isOpen={isAdvancedSearchBlockOpen}
-          setIsOpen={setIsAdvancedSearchBlockOpen}
-          returnedTags={returnedTags}
-          getTags={queryTags}
-          tagsToSearchFor={tagsToSearchFor}
-          setTagsToSearchFor={setTagsToSearchFor}
-          returnedNames={returnedNames}
-          queryNames={queryNames}
-          searchName={nameToSearchFor}
-          setNameToSearchFor={setNameToSearchFor}
-        />
-      {/* <AdvancedSearchBlock
+        isOpen={isAdvancedSearchBlockOpen}
+        setIsOpen={setIsAdvancedSearchBlockOpen}
         returnedTags={returnedTags}
-        getTags={queryTags}
+        queryTags={queryTags}
         tagsToSearchFor={tagsToSearchFor}
         setTagsToSearchFor={setTagsToSearchFor}
         returnedNames={returnedNames}
         queryNames={queryNames}
         searchName={nameToSearchFor}
         setNameToSearchFor={setNameToSearchFor}
-      /> */}
-      {/* it would be nice if instead of search button the query could be triggering on typing name, or both. */}
+      />
+
+      <SearchComboBox
+        data={returnedEntities}
+        searchFunction={filterEntities}
+        searchingFor="Entity"
+        value={entityToGet}
+        setValue={setEntityToGet}
+      />
+
     </SearchBarContainer>
   ) 
 };
