@@ -1,7 +1,11 @@
 import styled from "@emotion/styled";
 import SearchComboBox from "../components /SearchComboBox";
 import useFilterEntityByQueryString from "../hooks/queries/useFilterEntityByQueryString";
-import useGetAllTags from "../hooks/queries/useGetAllTags";
+
+import useQueryTags from "../hooks/queries/useQueryTags";
+import useQueryNames from "../hooks/queries/useQueryNames";
+
+import AdvancedSearchBlock from "./AdvancedSearchBlock";
 import { useState } from "react";
 
 const SearchBarContainer = styled.div`
@@ -14,10 +18,14 @@ display: flex;
 
 const SearchParametersBar = () => {
   const { returnedEntities, filterEntities } = useFilterEntityByQueryString();
-  const { returnedTags, getTags } = useGetAllTags();
+
+  const { returnedNames, queryNames } = useQueryNames();
+  const { returnedTags, queryTags } = useQueryTags();
 
   const [searchName, setSearchName] = useState("");
-  const [searchTags, setSearchTags] = useState(""); //could there be more than one tags?
+
+  const [nameToSearchFor, setNameToSearchFor] = useState("");
+  const [tagsToSearchFor, setTagsToSearchFor] = useState(""); //could there be more than one tags?
 
   const onClickSearch = () => {
     console.log("search was clicked");
@@ -36,16 +44,18 @@ const SearchParametersBar = () => {
         // freshlyAddedValue={}
         // preexistingData={}
       />
-      <SearchComboBox
-        data={returnedTags} //do I need that?
-        searchFunction={getTags}
-        searchingFor="tags"
-        value={searchTags}
-        setValue={setSearchTags}
-        // onClickOption={}
-        // freshlyAddedValue={}
-        // preexistingData={}
+
+      <AdvancedSearchBlock
+        returnedTags={returnedTags}
+        getTags={queryTags}
+        tagsToSearchFor={tagsToSearchFor}
+        setTagsToSearchFor={setTagsToSearchFor}
+        returnedNames={returnedNames}
+        queryNames={queryNames}
+        searchName={nameToSearchFor}
+        setNameToSearchFor={setNameToSearchFor}
       />
+      
       <SearchButton
         onClick={onClickSearch}
       /> 

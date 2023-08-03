@@ -140,15 +140,17 @@ export const SearchComboBox = ({
       <MagnifyingGlassIconWrapper>
         {searchingFor}{magnifyingGlassIcon}
       </MagnifyingGlassIconWrapper>
+
       <SearchInput
         type="text"
         name="dropDownSearch"
         placeholder={searchingFor}
-        value={value}
+        // value={e.target.value}
         onChange={(e) => searchFunction(e.target.value)}
         // onChange={(e) => searchFunction(e.target.value)}
         // onChange={(e) => setSearchingQuery(e.target.value)}
       />
+
       <OptionsWrapper>
         {optionsToRender.map((entity) => {
           console.log("optionsToRender", optionsToRender)
@@ -162,7 +164,8 @@ export const SearchComboBox = ({
         }
         )}
       </OptionsWrapper>
-      {value.length >0 &&
+
+      {value.length > 0 &&
       <ChoicesWrapper>
         {value.map((singleValue) => (
           <ChosenEntity 

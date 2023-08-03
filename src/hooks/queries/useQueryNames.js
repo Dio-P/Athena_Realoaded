@@ -2,9 +2,9 @@ import { useState, useEffect } from "react";
 import { useLazyQuery } from "@apollo/client";
 import gql from "graphql-tag";
 
-export const FILTER_ENTITY_BY_QUERYSTRING_QUERY = gql`
+export const QUERY_NAMES_BY_QUERYSTRING = gql`
   query ($queryString: String!) {
-    filterTagsBySearchString(queryString: $queryString) {
+    filterNamesBySearchString(queryString: $queryString) {
       id
       name
       type
@@ -39,17 +39,17 @@ export const FILTER_ENTITY_BY_QUERYSTRING_QUERY = gql`
     }
   }`
 
-const useGetAllTags = () => {
-  const [returnedTags, setReturnedTags] = useState("");
+const useQueryNames = () => {
+  const [returnedNames, setReturnedNames] = useState("");
 
   const [query, { loading, error, data, refetch }] = useLazyQuery(
-    FILTER_ENTITY_BY_QUERYSTRING_QUERY
+    QUERY_NAMES_BY_QUERYSTRING
   );
 
 
   useEffect(() => {
     if(data) {
-      setReturnedTags(data.filterTagsBySearchString);
+      setReturnedNames(data.filterNamesBySearchString);
     } if(error) {
       console.error(error)
     } if(loading) {
@@ -57,22 +57,22 @@ const useGetAllTags = () => {
     }
   }, [data, error, loading]);
 
-  const getTags = (queryString) => {
-    if(!returnedTags){
+  const queryNames = (queryString) => {
+    if(!returnedNames){
       console.log("to query");
       query({
         variables: { queryString },
       })
 
     } if (queryString==="") {
-      setReturnedTags("");
+      setReturnedNames("");
 
     }else {
       refetch({queryString})
     }
   }
 
-  return { returnedTags, getTags }
+  return { returnedNames, queryNames }
 }
 
-export default useGetAllTags
+export default useQueryNames
