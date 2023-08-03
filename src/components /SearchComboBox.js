@@ -165,7 +165,7 @@ export const SearchComboBox = ({
         )}
       </OptionsWrapper>
 
-      {value.length > 0 &&
+      {value?.length > 0 &&
       <ChoicesWrapper>
         {value.map((singleValue) => (
           <ChosenEntity 

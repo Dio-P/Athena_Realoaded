@@ -39,9 +39,13 @@ const MagnifyingGlassIconWrapper = styled.div`
 `;
 
 const SearchInput = styled.input`
-  width: 100%;
-  margin-right: 3px;
-  border-radius: ${styleVariables.borderRadious.main};
+width: 100%;
+margin-right: 3px;
+border-radius: ${styleVariables.borderRadious.main};
+`;
+
+const DropDownWrapperContainer = styled.div`
+  display: flex;
 `;
 
 export const WarningElement = ({ info }) => {
@@ -69,3 +73,11 @@ export const SearchBar = ({searchingQuery, search}) => (
   />
 </SearchBarWrapper>
 ); 
+
+// export const DropDownWrapper = ({Component, isOpen, setIsOpen}) => (
+//   <DropDownWrapperContainer onClick={() => setIsOpen(false)}>
+//     { isOpen &&
+//       <Component/>
+//     }
+//   </DropDownWrapperContainer>
+// ); 
