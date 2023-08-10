@@ -39,6 +39,8 @@ const AdvancedSearchBlock = ({
   queryNames,
   nameToSearchFor,
   setNameToSearchFor,
+  filteredTypes,
+  filterTypes,
 }) => {
 
   const onClickSearch = () => {
@@ -72,13 +74,13 @@ const AdvancedSearchBlock = ({
             setValue={setNameToSearchFor}
           />
 
-          {/* <SearchComboBox
-          data={returnedTags}
-          searchFunction={queryTags}
-          searchingFor="name"
+          <SearchComboBox
+          data={filteredTypes}
+          searchFunction={filterTypes}
+          searchingFor="type"
           value={tagsToSearchFor}
           setValue={setTagsToSearchFor}
-        /> */}
+        />
 
         <SearchButton
           onClick={onClickSearch}

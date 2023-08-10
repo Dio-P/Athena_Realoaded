@@ -8,6 +8,7 @@ import useFilterEntityByQueryString from "../hooks/queries/useFilterEntityByQuer
 
 import useQueryTags from "../hooks/queries/useQueryTags";
 import useQueryNames from "../hooks/queries/useQueryNames";
+import useQueryAllTypes from "../hooks/queries/useQueryAllTypes";
 
 import { DropDownWrapper } from "../components /specialElements";
 
@@ -24,6 +25,7 @@ const SearchParametersBar = () => {
   const [isAdvancedSearchBlockOpen, setIsAdvancedSearchBlockOpen] = useState(false);
 
   const { returnedEntities, filterEntities } = useFilterEntityByQueryString();
+  const {filteredTypes, filterTypes} = useQueryAllTypes();
 
   const { returnedNames, queryNames } = useQueryNames();
   const { returnedTags, queryTags } = useQueryTags();
@@ -47,6 +49,8 @@ const SearchParametersBar = () => {
         queryNames={queryNames}
         searchName={nameToSearchFor}
         setNameToSearchFor={setNameToSearchFor}
+        filteredTypes={filteredTypes}
+        filterTypes={filterTypes}
       />
 
       <SearchComboBox
