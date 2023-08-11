@@ -129,15 +129,18 @@ export const SearchComboBox = ({
 
   const clickingOption = (entity) => {
     console.log("option has been clicked: ", entity);
-    setValue([...value, entity.name])
+    setValue([...value, entity.name || entity])
   }
 
   const removeChoice = (valueToRemove) => {
-    const updatedValues = value.filter(({id}) => (id !== valueToRemove.id))
+    const updatedValues = value?.id ? 
+      value.filter(({id}) => (id !== valueToRemove.id)) 
+      : 
+      value.filter((singleValue) => (singleValue !== valueToRemove))
     setValue(updatedValues)
   }
 
-  console.log("searchingFor :", searchingFor);
+  console.log("value@", value);
   return (
     <SearchBarContainer>
       <MagnifyingGlassIconWrapper>
@@ -160,8 +163,8 @@ export const SearchComboBox = ({
           console.log("entity@", entity)
           return <SingleDropdownElement
             onClickOption={() => clickingOption(entity)}
-            label={entity.name}
-            key={entity.id}
+            label={entity.name || entity} //remove completely the entity.name when done with changing all
+            key={entity.id || entity}
             value={value}
           />
         }
@@ -172,7 +175,7 @@ export const SearchComboBox = ({
       <ChoicesWrapper>
         {value.map((singleValue) => (
           <ChosenEntity 
-            key={singleValue.id}
+            key={singleValue.id || singleValue}
             value={singleValue}
             onClickRemove={()=> removeChoice(singleValue)}
           />
