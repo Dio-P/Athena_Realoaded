@@ -34,6 +34,7 @@ const SearchParametersBar = () => {
 
   const [nameToSearchFor, setNameToSearchFor] = useState(""); //somewhere the logic that turns this into an empty array is repeated
   const [tagsToSearchFor, setTagsToSearchFor] = useState(""); // is this working well with multiple tags?
+  const [typesToSearchFor, setTypesToSearchFor] = useState(""); // is this working well with multiple tags?
 
   return (
     <SearchBarContainer>
@@ -51,6 +52,8 @@ const SearchParametersBar = () => {
         setNameToSearchFor={setNameToSearchFor}
         filteredTypes={filteredTypes}
         filterTypes={filterTypes}
+        typesToSearchFor={typesToSearchFor} 
+        setTypesToSearchFor={setTypesToSearchFor}
       />
 
       <SearchComboBox

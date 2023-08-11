@@ -106,8 +106,8 @@ export const SearchComboBox = ({
   // preexistingData,
   searchFunction,
   searchingFor,
-  value,
-  setValue
+  value, //rename this chosenValues
+  setValue //rename this setChosenValues
 }) => {
   // const [searchingQuery, setSearchingQuery] = useState(undefined);
 
@@ -129,7 +129,7 @@ export const SearchComboBox = ({
 
   const clickingOption = (entity) => {
     console.log("option has been clicked: ", entity);
-    setValue([entity.name])
+    setValue([...value, entity.name])
   }
 
   const removeChoice = (valueToRemove) => {
@@ -137,6 +137,7 @@ export const SearchComboBox = ({
     setValue(updatedValues)
   }
 
+  console.log("searchingFor :", searchingFor);
   return (
     <SearchBarContainer>
       <MagnifyingGlassIconWrapper>
