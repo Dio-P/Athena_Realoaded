@@ -7,7 +7,7 @@ export const QUERY_ALL_TYPES = gql`
     getAllTypes
   }`
 
-const useQueryAllTypes = (queryString) => {
+const useQueryAllTypes = () => {
   const [allTypes, setAllTypes] = useState("");
   const [filteredTypes, setFilteredTypes] = useState("");
 
@@ -30,16 +30,14 @@ const useQueryAllTypes = (queryString) => {
     }
   }, [data, error, loading]);
 
-  useEffect(() => {
-    if (queryString) {
-      filterTypes()
-    }
-  }, [queryString]);
-
   const filterTypes = (queryString) => {
-    setFilteredTypes(allTypes.filter((type) => (
-      type.includes(queryString)
-    )))
+    if(queryString){
+      setFilteredTypes(allTypes.filter((type) => (
+        type.includes(queryString)
+      )))
+    } else {
+      setFilteredTypes("");
+    }
   }
 
   return {filteredTypes, filterTypes } 

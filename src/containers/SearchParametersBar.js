@@ -9,6 +9,8 @@ import useFilterEntityByQueryString from "../hooks/queries/useFilterEntityByQuer
 import useQueryTags from "../hooks/queries/useQueryTags";
 import useQueryNames from "../hooks/queries/useQueryNames";
 import useQueryAllTypes from "../hooks/queries/useQueryAllTypes";
+import useGetAllLinks from "../hooks/queries/useGetAllLinks";
+
 
 import { DropDownWrapper } from "../components /specialElements";
 
@@ -26,6 +28,8 @@ const SearchParametersBar = () => {
 
   const { returnedEntities, filterEntities } = useFilterEntityByQueryString();
   const {filteredTypes, filterTypes} = useQueryAllTypes();
+  const { filteredLinks, filterLinks } = useGetAllLinks();
+
 
   const { returnedNames, queryNames } = useQueryNames();
   const { returnedTags, queryTags } = useQueryTags();
@@ -35,6 +39,9 @@ const SearchParametersBar = () => {
   const [nameToSearchFor, setNameToSearchFor] = useState(""); //somewhere the logic that turns this into an empty array is repeated
   const [tagsToSearchFor, setTagsToSearchFor] = useState(""); // is this working well with multiple tags?
   const [typesToSearchFor, setTypesToSearchFor] = useState(""); // is this working well with multiple tags?
+  const [linksToSearchFor, setLinksToSearchFor] = useState(""); // is this working well with multiple tags?
+  const [briefDescriptionsToSearchFor, setBriefDescriptionsToSearchFor] = useState(""); // is this working well with multiple tags?
+  const [leadersToSearchFor, setLeadersToSearchFor] = useState(""); // is this working well with multiple tags?
 
   return (
     <SearchBarContainer>
@@ -54,6 +61,12 @@ const SearchParametersBar = () => {
         filterTypes={filterTypes}
         typesToSearchFor={typesToSearchFor} 
         setTypesToSearchFor={setTypesToSearchFor}
+        filteredLinks={filteredLinks}
+        filterLinks={filterLinks}
+        linksToSearchFor={linksToSearchFor}
+        setLinksToSearchFor={setLinksToSearchFor}
+        // briefDescriptionsToSearchFor, setBriefDescriptionsToSearchFor
+        // leadersToSearchFor, setLeadersToSearchFor
       />
 
       <SearchComboBox
