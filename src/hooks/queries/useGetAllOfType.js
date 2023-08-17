@@ -40,12 +40,15 @@ const useGetAllOfType = (ofType, queryString) => {
 
   useEffect(() => {
     if(allOfType) {
+      console.log('inside all of type');
       if (!queryString) {
+        console.log('no query string ');
         setFilteredResults("");
+      } else {
+        setFilteredResults(allOfType.filter((type) => (
+          type.includes(queryString)
+        )))
       }
-      setFilteredResults(allOfType.filter((type) => (
-        type.includes(queryString)
-      )))
     }
   }, [queryString]);
 

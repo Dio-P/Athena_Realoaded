@@ -115,11 +115,12 @@ export const SearchComboBox = ({
 
   // const clickingOption = (entity) => {
   //   console.log("option has been clicked: ", entity);
-  //   setValue({ ...value, [ofType]: [...value[ofType], entity.name || entity || entity] });
-  //   // setValue([...value, entity.name || entity || entity])
+  //   setValue({ ...value, [ofType]: [...value[ofType], entity || entity] });
+  //   // setValue([...value, entity || entity])
   // };
 
   const removeChoice = (choiceToRemove) => {
+    console.log();
     const updatedValues = value[ofType].filter(
       (choice) => choice !== choiceToRemove
     );
@@ -158,10 +159,10 @@ export const SearchComboBox = ({
                 setValue(
                   { 
                   ...value, 
-                  [ofType]: value[ofType]? [...value[ofType], entity.name || entity] : [entity.name || entity] 
+                  [ofType]: value[ofType]? [...value[ofType], entity] : [entity] 
                 })}
               
-              label={entity.name || entity} //remove completely the entity.name || entity when done with changing all
+              label={entity} //remove completely the entity when done with changing all
               key={entity.id}
               // value={value}
             />
