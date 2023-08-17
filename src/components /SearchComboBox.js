@@ -129,7 +129,7 @@ export const SearchComboBox = ({
     //   value.filter(({id}) => (id !== valueToRemove.id))
     //   :
     //   value.filter((singleValue) => (singleValue !== valueToRemove))
-    setValue(updatedValues);
+    setValue({...value, [ofType]: updatedValues});
   };
 
   return (
