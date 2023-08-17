@@ -31,6 +31,10 @@ const SearchButton = styled.button`
 const AdvancedSearchBlock = ({
   isOpen,
   setIsOpen,
+  handleQuery,
+  allFilteredResults,
+  advanceQueryParameters, 
+  setAdvanceQueryParameters,
   returnedTags,
   queryTags,
   tagsToSearchFor,
@@ -51,6 +55,10 @@ const AdvancedSearchBlock = ({
   filterBriefDescriptions,
   briefDescriptionsToSearchFor,
   setBriefDescriptionsToSearchFor,
+  filteredLeaders,
+  filterLeaders,
+  leadersToSearchFor,
+  setLeadersToSearchFor,
 }) => {
 
   const onClickSearch = () => {
@@ -66,54 +74,51 @@ const AdvancedSearchBlock = ({
       {isOpen && (
         <ComboBoxContainers>
           <SearchComboBox
-            data={returnedTags} //do I need that?
-            searchFunction={queryTags}
-            searchingFor="tags"
-            value={tagsToSearchFor}
-            setValue={setTagsToSearchFor}
-            // onClickOption={}
-            // freshlyAddedValue={}
-            // preexistingData={}
+            data={allFilteredResults}
+            searchFunction={handleQuery}
+            ofType="tag"
+            value={advanceQueryParameters}
+            setValue={setAdvanceQueryParameters}
           />
 
           <SearchComboBox
-            data={returnedNames}
-            searchFunction={queryNames}
-            searchingFor="name"
-            value={nameToSearchFor}
-            setValue={setNameToSearchFor}
+            data={allFilteredResults}
+            searchFunction={handleQuery}
+            ofType="name"
+            value={advanceQueryParameters}
+            setValue={setAdvanceQueryParameters}
           />
 
           <SearchComboBox
-            data={filteredTypes}
-            searchFunction={filterTypes}
-            searchingFor="type"
-            value={typesToSearchFor}
-            setValue={setTypesToSearchFor}
+            data={allFilteredResults}
+            searchFunction={handleQuery}
+            ofType="type"
+            value={advanceQueryParameters}
+            setValue={setAdvanceQueryParameters}
           />
 
           <SearchComboBox
-            data={filteredLinks}
-            searchFunction={filterLinks}
-            searchingFor="link"
-            value={linksToSearchFor}
-            setValue={setLinksToSearchFor}
+            data={allFilteredResults}
+            searchFunction={handleQuery}
+            ofType="mainLink"
+            value={advanceQueryParameters}
+            setValue={setAdvanceQueryParameters}
           />
 
           <SearchComboBox
-            data={filteredBriefDescriptions}
-            searchFunction={filterBriefDescriptions}
-            searchingFor="brief description"
-            value={briefDescriptionsToSearchFor}
-            setValue={setBriefDescriptionsToSearchFor}
+            data={allFilteredResults}
+            searchFunction={handleQuery}
+            ofType="briefDescription"
+            value={advanceQueryParameters}
+            setValue={setAdvanceQueryParameters}
           />
 
           <SearchComboBox
-            data={filteredTypes}
-            searchFunction={filterTypes}
-            searchingFor="leader"
-            value={typesToSearchFor}
-            setValue={setTypesToSearchFor}
+            data={allFilteredResults}
+            searchFunction={handleQuery}
+            ofType="leader"
+            value={advanceQueryParameters}
+            setValue={setAdvanceQueryParameters}
           />
 
         <SearchButton

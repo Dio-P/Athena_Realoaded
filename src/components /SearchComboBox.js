@@ -88,16 +88,12 @@ const SingleDropdownElement = ({ onClickOption, label, isAddFolderBtn }) => {
 
 const ChosenEntity = ({ value, onClickRemove }) => {
   return (
-  <ChosenEntityWrapper>
-    {capitaliseFirstLetters(value)}
-    <XBoxWrapper
-      onClick={onClickRemove}
-    >
-      {deleteIcon}
-    </XBoxWrapper>
-  </ChosenEntityWrapper>
-  )
-}
+    <ChosenEntityWrapper>
+      {capitaliseFirstLetters(value)}
+      <XBoxWrapper onClick={onClickRemove}>{deleteIcon}</XBoxWrapper>
+    </ChosenEntityWrapper>
+  );
+};
 
 export const SearchComboBox = ({
   data,
@@ -105,9 +101,9 @@ export const SearchComboBox = ({
   // freshlyAddedValue,
   // preexistingData,
   searchFunction,
-  searchingFor,
+  ofType,
   value, //rename this chosenValues
-  setValue //rename this setChosenValues
+  setValue, //rename this setChosenValues
 }) => {
   // const [searchingQuery, setSearchingQuery] = useState(undefined);
 
@@ -125,63 +121,66 @@ export const SearchComboBox = ({
 
   // const optionsToRender = !searchingQuery ? allData : filteredData;
   console.log("data", data);
-  const optionsToRender = data? data: [];
+  const optionsToRender = data[ofType] || [];
 
   const clickingOption = (entity) => {
     console.log("option has been clicked: ", entity);
-    setValue([...value, entity.name || entity])
-  }
+    setValue({ ...value, [ofType]: [...value[ofType], entity.name || entity] });
+    // setValue([...value, entity.name || entity])
+  };
 
   const removeChoice = (valueToRemove) => {
-    const updatedValues = value?.id ? 
-      value.filter(({id}) => (id !== valueToRemove.id)) 
-      : 
-      value.filter((singleValue) => (singleValue !== valueToRemove))
-    setValue(updatedValues)
-  }
+    const updatedValues = value[ofType].filter(
+      ({ id }) => id !== valueToRemove.id
+    );
+    // const updatedValues = value?.id ?
+    //   value.filter(({id}) => (id !== valueToRemove.id))
+    //   :
+    //   value.filter((singleValue) => (singleValue !== valueToRemove))
+    setValue(updatedValues);
+  };
 
-  console.log("value@", value);
   return (
     <SearchBarContainer>
       <MagnifyingGlassIconWrapper>
-        {searchingFor}{magnifyingGlassIcon}
+        {magnifyingGlassIcon}
+        {/* Search for {ofType}s */}
       </MagnifyingGlassIconWrapper>
 
       <SearchInput
         type="text"
         name="dropDownSearch"
-        placeholder={searchingFor}
+        placeholder={`${ofType}s`}
         // value={e.target.value}
-        onChange={(e) => searchFunction(e.target.value)}
+        onChange={(e) => searchFunction(e.target.value, ofType)}
         // onChange={(e) => searchFunction(e.target.value)}
         // onChange={(e) => setSearchingQuery(e.target.value)}
       />
 
       <OptionsWrapper>
         {optionsToRender.map((entity) => {
-          console.log("optionsToRender", optionsToRender)
-          console.log("entity@", entity)
-          return <SingleDropdownElement
-            onClickOption={() => clickingOption(entity)}
-            label={entity.name || entity} //remove completely the entity.name when done with changing all
-            key={entity.id || entity}
-            value={value}
-          />
-        }
-        )}
+          return (
+            <SingleDropdownElement
+              onClickOption={() => clickingOption(entity)}
+              label={entity.name} //remove completely the entity.name when done with changing all
+              key={entity.id}
+              // value={value}
+            />
+          );
+        })}
       </OptionsWrapper>
 
-      {value?.length > 0 &&
-      <ChoicesWrapper>
-        {value.map((singleValue) => (
-          <ChosenEntity 
-            key={singleValue.id || singleValue}
-            value={singleValue}
-            onClickRemove={()=> removeChoice(singleValue)}
-          />
-        ))}
-      </ChoicesWrapper>
-      }
+      {value[ofType]?.length > 0 && (
+        <ChoicesWrapper>
+          {value[ofType].map((singleValue) => (
+            <ChosenEntity
+              key={singleValue.id}
+              value={singleValue}
+              onClickRemove={() => removeChoice(singleValue)}
+            />
+          ))}
+        </ChoicesWrapper>
+      )}
     </SearchBarContainer>
   );
 };
