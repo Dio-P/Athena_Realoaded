@@ -74,48 +74,48 @@ const AdvancedSearchBlock = ({
       {isOpen && (
         <ComboBoxContainers>
           <SearchComboBox
-            data={allFilteredResults}
-            searchFunction={handleQuery}
+            // data={allFilteredResults}
+            // searchFunction={handleQuery}
             ofType="tag"
             value={advanceQueryParameters}
             setValue={setAdvanceQueryParameters}
           />
 
           <SearchComboBox
-            data={allFilteredResults}
-            searchFunction={handleQuery}
+            // data={allFilteredResults}
+            // searchFunction={handleQuery}
             ofType="name"
             value={advanceQueryParameters}
             setValue={setAdvanceQueryParameters}
           />
 
           <SearchComboBox
-            data={allFilteredResults}
-            searchFunction={handleQuery}
+            // data={allFilteredResults}
+            // searchFunction={handleQuery}
             ofType="type"
             value={advanceQueryParameters}
             setValue={setAdvanceQueryParameters}
           />
 
           <SearchComboBox
-            data={allFilteredResults}
-            searchFunction={handleQuery}
+            // data={allFilteredResults}
+            // searchFunction={handleQuery}
             ofType="mainLink"
             value={advanceQueryParameters}
             setValue={setAdvanceQueryParameters}
           />
 
           <SearchComboBox
-            data={allFilteredResults}
-            searchFunction={handleQuery}
+            // data={allFilteredResults}
+            // searchFunction={handleQuery}
             ofType="briefDescription"
             value={advanceQueryParameters}
             setValue={setAdvanceQueryParameters}
           />
 
           <SearchComboBox
-            data={allFilteredResults}
-            searchFunction={handleQuery}
+            // data={allFilteredResults}
+            // searchFunction={handleQuery}
             ofType="leader"
             value={advanceQueryParameters}
             setValue={setAdvanceQueryParameters}

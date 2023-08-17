@@ -7,9 +7,9 @@ export const GET_ALL_OF_TYPE = gql`
     getAll(ofType: $ofType)
   }`
 
-const useGetAllOfType = () => {
-  const [ofType, setOfType] = useState("");
-  const [queryString, setQueryString] = useState("");
+const useGetAllOfType = (ofType, queryString) => {
+  // const [ofType, setOfType] = useState("");
+  // const [queryString, setQueryString] = useState("");
   const [allOfType, setAllOfType] = useState("");
   const [filteredResults, setFilteredResults] = useState("");
 
@@ -19,16 +19,18 @@ const useGetAllOfType = () => {
 
 
   useEffect(() => {
-    query({
-      variables: { ofType },
-    })
+    if (ofType) {
+      query({
+        variables: { ofType },
+      })
+    }
   }, [ofType]);
 
+  // this is slow on digit because it does not have all of type yet
   useEffect(() => {
     if(data) {
       console.log("data£$", data);
-      console.log("allOfType$", {...allOfType, [ofType]: data.getAll});
-      setAllOfType({...allOfType, [ofType]: data.getAll});
+      setAllOfType(data.getAll);
     } if(error) {
       console.error(error)
     } if(loading) {
@@ -36,39 +38,49 @@ const useGetAllOfType = () => {
     }
   }, [data, error, loading]);
 
-  const filterOptions = (queryString) => {
-    console.log('inside filterOptions queryString', queryString);
-    console.log('inside filterOptions, allOfType:', allOfType);
-    if(allOfType){
-      console.log("allOfType@@@", allOfType);
-     
-      setFilteredResults(allOfType[ofType].filter((type) => (
+  useEffect(() => {
+    if(allOfType) {
+      if (!queryString) {
+        setFilteredResults("");
+      }
+      setFilteredResults(allOfType.filter((type) => (
         type.includes(queryString)
       )))
+    }
+  }, [queryString]);
+
+  // const filterOptions = (queryString) => {
+  //   console.log('inside filterOptions queryString', queryString);
+  //   console.log('inside filterOptions, allOfType:', allOfType);
+  //   if(allOfType){
+  //     console.log("allOfType@@@", allOfType);
+     
+  //     setFilteredResults({...filteredResults, [ofType]: allOfType[ofType].filter((type) => (
+  //       type.includes(queryString)
+  //     ))}
+  //     )
       
-    }
-  }
+  //   }
+  // }
 
-  const handleQuery = (queryString, ofType) => {
-    console.log("inside handleQuery");
-    if (!ofType) {
-      console.error('please choose a type')
-      return
-    } else {
-      setOfType(ofType);
-    }
+  // const handleQuery = (queryString, ofType) => {
+  //   console.log("inside handleQuery",queryString, ofType );
+  //   if (ofType) {
+  //     setOfType(ofType);
+  //   }
+  //   if (queryString) {
+  //     filterOptions(queryString);
+
+  //   } else {
+  //     setFilteredResults("");
+
+
+  //   }
     
-    if (!queryString) {
-      setFilteredResults("");
+  // }
 
-    } else {
-      filterOptions(queryString);
-
-    }
-    
-  }
-
-  return { results: { [ofType] : filteredResults }, handleQuery } 
+  console.log("filteredResults $£$£$£$", filteredResults);
+  return { filteredResults } 
 }
 
 export default useGetAllOfType

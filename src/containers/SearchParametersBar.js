@@ -28,15 +28,15 @@ const SearchBarContainer = styled.div`
 // when advanced search is open general search is disabled and used only to display results
 const SearchParametersBar = () => {
   const [isAdvancedSearchBlockOpen, setIsAdvancedSearchBlockOpen] = useState(false);
-  const [allFilteredResults, setAllFilteredResults] = useState("");
+  // const [allFilteredResults, setAllFilteredResults] = useState("");
   const [advanceQueryParameters, setAdvanceQueryParameters] = useState("");
 
-  const { filteredResults, handleQuery } = useGetAllOfType();
+  // const { filteredResults, handleQuery } = useGetAllOfType();
 
-  useEffect(() => {
-    console.log('filteredResults@@', filteredResults);
-    setAllFilteredResults({...allFilteredResults, ...filteredResults}) 
-  }, [filteredResults]);
+  // useEffect(() => {
+  //   console.log('filteredResults@@', filteredResults);
+  //   setAllFilteredResults({...allFilteredResults, ...filteredResults}) 
+  // }, [filteredResults]);
 
   const { returnedEntities, filterEntities } = useFilterEntityByQueryString();
   // const {filteredTypes, filterTypes} = useQueryAllTypes();
@@ -62,10 +62,10 @@ const SearchParametersBar = () => {
       <AdvancedSearchBlock
         isOpen={isAdvancedSearchBlockOpen}
         setIsOpen={setIsAdvancedSearchBlockOpen}
-        handleQuery={handleQuery}
+        // handleQuery={handleQuery}
         advanceQueryParameters={advanceQueryParameters}
         setAdvanceQueryParameters={setAdvanceQueryParameters}
-        allFilteredResults={allFilteredResults}
+        // allFilteredResults={allFilteredResults}
         // returnedTags={returnedTags}
         // queryTags={queryTags}
         // tagsToSearchFor={tagsToSearchFor}

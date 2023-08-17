@@ -3,6 +3,7 @@ import styled from "@emotion/styled";
 import styleVariables from "../styleVariables";
 import { deleteIcon, magnifyingGlassIcon } from "../helpers/svgIcons";
 import capitaliseFirstLetters from "../helpers/capitaliseFirstLetters";
+import useGetAllOfType from "../hooks/queries/useGetAllOfType";
 
 const SearchBarContainer = styled.div`
   display: flex;
@@ -105,34 +106,25 @@ export const SearchComboBox = ({
   value, //rename this chosenValues
   setValue, //rename this setChosenValues
 }) => {
-  // const [searchingQuery, setSearchingQuery] = useState(undefined);
+  
+  const [queryString, setQueryString] = useState("")
+  const { filteredResults } = useGetAllOfType(ofType, queryString );
+  
+  const optionsToRender = filteredResults || [];
+  console.log("optionsToRender@@@", optionsToRender);
 
-  // const allData = useMemo(
-  //   () =>
-  //     freshlyAddedValue
-  //       ? [...preexistingData, freshlyAddedValue]
-  //       : preexistingData,
-  //   [preexistingData, freshlyAddedValue]
-  // );
-  // const filteredData = useMemo(
-  //   () => allData.filter((folder) => folder.name.includes(searchingQuery)),
-  //   [searchingQuery]
-  // );
+  // const clickingOption = (entity) => {
+  //   console.log("option has been clicked: ", entity);
+  //   setValue({ ...value, [ofType]: [...value[ofType], entity.name || entity || entity] });
+  //   // setValue([...value, entity.name || entity || entity])
+  // };
 
-  // const optionsToRender = !searchingQuery ? allData : filteredData;
-  console.log("data", data);
-  const optionsToRender = data[ofType] || [];
-
-  const clickingOption = (entity) => {
-    console.log("option has been clicked: ", entity);
-    setValue({ ...value, [ofType]: [...value[ofType], entity.name || entity] });
-    // setValue([...value, entity.name || entity])
-  };
-
-  const removeChoice = (valueToRemove) => {
+  const removeChoice = (choiceToRemove) => {
     const updatedValues = value[ofType].filter(
-      ({ id }) => id !== valueToRemove.id
+      (choice) => choice !== choiceToRemove
     );
+// this would probably need to change
+
     // const updatedValues = value?.id ?
     //   value.filter(({id}) => (id !== valueToRemove.id))
     //   :
@@ -152,7 +144,8 @@ export const SearchComboBox = ({
         name="dropDownSearch"
         placeholder={`${ofType}s`}
         // value={e.target.value}
-        onChange={(e) => searchFunction(e.target.value, ofType)}
+        onChange={(e) => setQueryString(e.target.value)}
+        // onChange={(e) => searchFunction(e.target.value, ofType)}
         // onChange={(e) => searchFunction(e.target.value)}
         // onChange={(e) => setSearchingQuery(e.target.value)}
       />
@@ -161,8 +154,14 @@ export const SearchComboBox = ({
         {optionsToRender.map((entity) => {
           return (
             <SingleDropdownElement
-              onClickOption={() => clickingOption(entity)}
-              label={entity.name} //remove completely the entity.name when done with changing all
+              onClickOption={() => 
+                setValue(
+                  { 
+                  ...value, 
+                  [ofType]: value[ofType]? [...value[ofType], entity.name || entity] : [entity.name || entity] 
+                })}
+              
+              label={entity.name || entity} //remove completely the entity.name || entity when done with changing all
               key={entity.id}
               // value={value}
             />
