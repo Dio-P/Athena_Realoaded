@@ -10,6 +10,7 @@ import useQueryTags from "../hooks/queries/useQueryTags";
 import useQueryNames from "../hooks/queries/useQueryNames";
 import useQueryAllTypes from "../hooks/queries/useQueryAllTypes";
 import useGetAllLinks from "../hooks/queries/useGetAllLinks";
+import useGetAllBriefDescriptions from "../hooks/queries/useGetAllBriefDescriptions";
 
 
 import { DropDownWrapper } from "../components /specialElements";
@@ -29,7 +30,7 @@ const SearchParametersBar = () => {
   const { returnedEntities, filterEntities } = useFilterEntityByQueryString();
   const {filteredTypes, filterTypes} = useQueryAllTypes();
   const { filteredLinks, filterLinks } = useGetAllLinks();
-
+  const { filteredBriefDescriptions, filterBriefDescriptions } = useGetAllBriefDescriptions();
 
   const { returnedNames, queryNames } = useQueryNames();
   const { returnedTags, queryTags } = useQueryTags();
@@ -65,7 +66,10 @@ const SearchParametersBar = () => {
         filterLinks={filterLinks}
         linksToSearchFor={linksToSearchFor}
         setLinksToSearchFor={setLinksToSearchFor}
-        // briefDescriptionsToSearchFor, setBriefDescriptionsToSearchFor
+        filteredBriefDescriptions={filteredBriefDescriptions}
+        filterBriefDescriptions={filterBriefDescriptions}
+        briefDescriptionsToSearchFor={briefDescriptionsToSearchFor}
+        setBriefDescriptionsToSearchFor={setBriefDescriptionsToSearchFor}
         // leadersToSearchFor, setLeadersToSearchFor
       />
 

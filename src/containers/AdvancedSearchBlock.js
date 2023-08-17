@@ -47,6 +47,10 @@ const AdvancedSearchBlock = ({
   filterLinks,
   linksToSearchFor,
   setLinksToSearchFor,
+  filteredBriefDescriptions,
+  filterBriefDescriptions,
+  briefDescriptionsToSearchFor,
+  setBriefDescriptionsToSearchFor,
 }) => {
 
   const onClickSearch = () => {
@@ -97,11 +101,11 @@ const AdvancedSearchBlock = ({
           />
 
           <SearchComboBox
-            data={filteredTypes}
-            searchFunction={filterTypes}
+            data={filteredBriefDescriptions}
+            searchFunction={filterBriefDescriptions}
             searchingFor="brief description"
-            value={typesToSearchFor}
-            setValue={setTypesToSearchFor}
+            value={briefDescriptionsToSearchFor}
+            setValue={setBriefDescriptionsToSearchFor}
           />
 
           <SearchComboBox
