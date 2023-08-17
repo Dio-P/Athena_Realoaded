@@ -8,15 +8,12 @@ export const GET_ALL_OF_TYPE = gql`
   }`
 
 const useGetAllOfType = (ofType, queryString) => {
-  // const [ofType, setOfType] = useState("");
-  // const [queryString, setQueryString] = useState("");
   const [allOfType, setAllOfType] = useState("");
   const [filteredResults, setFilteredResults] = useState("");
 
   const [query, { loading, error, data }] = useLazyQuery(
     GET_ALL_OF_TYPE
   );
-
 
   useEffect(() => {
     if (ofType) {
@@ -26,7 +23,6 @@ const useGetAllOfType = (ofType, queryString) => {
     }
   }, [ofType]);
 
-  // this is slow on digit because it does not have all of type yet
   useEffect(() => {
     if(data) {
       console.log("data£$", data);
@@ -52,37 +48,7 @@ const useGetAllOfType = (ofType, queryString) => {
     }
   }, [queryString]);
 
-  // const filterOptions = (queryString) => {
-  //   console.log('inside filterOptions queryString', queryString);
-  //   console.log('inside filterOptions, allOfType:', allOfType);
-  //   if(allOfType){
-  //     console.log("allOfType@@@", allOfType);
-     
-  //     setFilteredResults({...filteredResults, [ofType]: allOfType[ofType].filter((type) => (
-  //       type.includes(queryString)
-  //     ))}
-  //     )
-      
-  //   }
-  // }
-
-  // const handleQuery = (queryString, ofType) => {
-  //   console.log("inside handleQuery",queryString, ofType );
-  //   if (ofType) {
-  //     setOfType(ofType);
-  //   }
-  //   if (queryString) {
-  //     filterOptions(queryString);
-
-  //   } else {
-  //     setFilteredResults("");
-
-
-  //   }
-    
-  // }
-
-  console.log("filteredResults $£$£$£$", filteredResults);
+  
   return { filteredResults } 
 }
 

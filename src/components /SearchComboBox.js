@@ -97,11 +97,6 @@ const ChosenEntity = ({ value, onClickRemove }) => {
 };
 
 export const SearchComboBox = ({
-  data,
-  // onClickOption,
-  // freshlyAddedValue,
-  // preexistingData,
-  searchFunction,
   ofType,
   value, //rename this chosenValues
   setValue, //rename this setChosenValues
@@ -113,23 +108,13 @@ export const SearchComboBox = ({
   const optionsToRender = filteredResults || [];
   console.log("optionsToRender@@@", optionsToRender);
 
-  // const clickingOption = (entity) => {
-  //   console.log("option has been clicked: ", entity);
-  //   setValue({ ...value, [ofType]: [...value[ofType], entity || entity] });
-  //   // setValue([...value, entity || entity])
-  // };
-
   const removeChoice = (choiceToRemove) => {
-    console.log();
     const updatedValues = value[ofType].filter(
-      (choice) => choice !== choiceToRemove
+      (choice) => {
+        console.log("choiceToRemove vs choice", choiceToRemove, choice);
+        return choice !== choiceToRemove
+      }
     );
-// this would probably need to change
-
-    // const updatedValues = value?.id ?
-    //   value.filter(({id}) => (id !== valueToRemove.id))
-    //   :
-    //   value.filter((singleValue) => (singleValue !== valueToRemove))
     setValue({...value, [ofType]: updatedValues});
   };
 
@@ -137,23 +122,18 @@ export const SearchComboBox = ({
     <SearchBarContainer>
       <MagnifyingGlassIconWrapper>
         {magnifyingGlassIcon}
-        {/* Search for {ofType}s */}
       </MagnifyingGlassIconWrapper>
 
       <SearchInput
         type="text"
         name="dropDownSearch"
         placeholder={`${ofType}s`}
-        // value={e.target.value}
         onChange={(e) => setQueryString(e.target.value)}
-        // onChange={(e) => searchFunction(e.target.value, ofType)}
-        // onChange={(e) => searchFunction(e.target.value)}
-        // onChange={(e) => setSearchingQuery(e.target.value)}
+
       />
 
       <OptionsWrapper>
-        {optionsToRender.map((entity) => {
-          return (
+        {optionsToRender.map((entity) => (
             <SingleDropdownElement
               onClickOption={() => 
                 setValue(
@@ -164,17 +144,16 @@ export const SearchComboBox = ({
               
               label={entity} //remove completely the entity when done with changing all
               key={entity.id}
-              // value={value}
             />
-          );
-        })}
+          ))
+        }
       </OptionsWrapper>
 
       {value[ofType]?.length > 0 && (
         <ChoicesWrapper>
           {value[ofType].map((singleValue) => (
             <ChosenEntity
-              key={singleValue.id}
+              key={singleValue}
               value={singleValue}
               onClickRemove={() => removeChoice(singleValue)}
             />
