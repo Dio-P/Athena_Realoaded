@@ -7,7 +7,7 @@ const MenuBarContainer = styled.div`
   flex-direction: column;
 `;
 
-const MenuBar = ({ paramsCustomObj, renderChosenEntity }) => {
+const MenuBar = ({ paramsCustomObj, renderChosenEntity, searchEntity }) => {
 
   return (
     <MenuBarContainer>
@@ -15,7 +15,7 @@ const MenuBar = ({ paramsCustomObj, renderChosenEntity }) => {
         paramsCustomObj={paramsCustomObj}
         renderChosenEntity={renderChosenEntity}
       />
-      <SearchParametersBar/>
+      <SearchParametersBar searchEntity={searchEntity}/>
     </MenuBarContainer>
   )
 };

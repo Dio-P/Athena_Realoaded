@@ -41,6 +41,7 @@ function App() {
       <MenuBar
         paramsCustomObj={paramsCustomObj}
         renderChosenEntity={renderChosenEntity}
+        searchEntity={searchEntity}
       />
       {returnedEntity && (
         <EntityComp

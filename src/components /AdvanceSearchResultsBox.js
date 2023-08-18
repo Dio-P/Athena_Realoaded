@@ -4,6 +4,7 @@ import styleVariables from "../styleVariables";
 import { deleteIcon, magnifyingGlassIcon } from "../helpers/svgIcons";
 import capitaliseFirstLetters from "../helpers/capitaliseFirstLetters";
 import useGetAllOfType from "../hooks/queries/useGetAllOfType";
+// import useEntityByIdSearch from "../hooks/queries/useEntityByIdSearch";
 
 const SearchBarContainer = styled.div`
   display: flex;
@@ -76,7 +77,7 @@ const XBoxWrapper = styled.div`
   margin: 1px 2px 1px 2px;
 `;
 
-const SingleDropdownElement = ({ onClickOption, label, isAddFolderBtn }) => {
+const SingleQueryResult = ({ onClickOption, label, isAddFolderBtn }) => {
   return (
     <SingleDropDownElementWrapper
       onClick={onClickOption}
@@ -87,36 +88,16 @@ const SingleDropdownElement = ({ onClickOption, label, isAddFolderBtn }) => {
   );
 };
 
-const ChosenEntity = ({ value, onClickRemove }) => {
-  return (
-    <ChosenEntityWrapper>
-      {capitaliseFirstLetters(value)}
-      <XBoxWrapper onClick={onClickRemove}>{deleteIcon}</XBoxWrapper>
-    </ChosenEntityWrapper>
-  );
-};
-
-export const SearchComboBox = ({
-  ofType,
-  chosenValues, //rename this chosenValues
-  onClickOption, //rename this setChosenValues
+const AdvanceSearchResultsBox = ({
+  advanceSearchResults,
+  onClickOption,
 }) => {
-  
+  // const [returnedEntity, searchEntity] = useEntityByIdSearch()
   const [queryString, setQueryString] = useState("")
-  const { filteredResults } = useGetAllOfType(ofType, queryString );
+  // const { filteredResults } = useGetAllOfType(ofType, queryString );
   
-  const optionsToRender = filteredResults || [];
-  console.log("optionsToRender@@@", optionsToRender, ofType);
-
-  const removeChoice = (choiceToRemove) => {
-    const updatedValues = chosenValues[ofType].filter(
-      (choice) => {
-        console.log("choiceToRemove vs choice", choiceToRemove, choice);
-        return choice !== choiceToRemove
-      }
-    );
-    onClickOption({...chosenValues, [ofType]: updatedValues});
-  };
+  // const optionsToRender = filteredResults || [];
+  console.log("optionsToRender@@@", advanceSearchResults);
 
   return (
     <SearchBarContainer>
@@ -125,43 +106,26 @@ export const SearchComboBox = ({
       </MagnifyingGlassIconWrapper>
 
       <SearchInput
-        type="text"
-        name="dropDownSearch"
-        placeholder={`${ofType}s`}
-        onChange={(e) => setQueryString(e.target.value)}
-
+        // type="text"
+        name="advanceSearchDisplayBox"
+        // placeholder={`${ofType}s`}
+        // onChange={(e) => setQueryString(e.target.value)}
+        disabled
       />
 
       <OptionsWrapper>
-        {optionsToRender.map((entity) => (
-            <SingleDropdownElement
-              onClickOption={() => 
-                onClickOption(
-                  { 
-                  ...chosenValues, 
-                  [ofType]: chosenValues[ofType]? [...chosenValues[ofType], entity] : [entity] 
-                })}
-              
-              label={entity}
+        {advanceSearchResults.map((entity) => (
+          // what do I want this to display ?
+            <SingleQueryResult
+              onClickOption={() => onClickOption(entity.id)}
+              label={entity.name}
               key={entity.id}
             />
           ))
         }
       </OptionsWrapper>
-
-      {chosenValues[ofType]?.length > 0 && (
-        <ChoicesWrapper>
-          {chosenValues[ofType].map((singleValue) => (
-            <ChosenEntity
-              key={singleValue}
-              value={singleValue}
-              onClickRemove={() => removeChoice(singleValue)}
-            />
-          ))}
-        </ChoicesWrapper>
-      )}
     </SearchBarContainer>
   );
 };
 
-export default SearchComboBox;
+export default AdvanceSearchResultsBox;

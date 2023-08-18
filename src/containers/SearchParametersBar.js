@@ -5,6 +5,7 @@ import SearchComboBox from "../components /SearchComboBox";
 import AdvancedSearchBlock from "./AdvancedSearchBlock";
 
 import useFilterEntityByQueryString from "../hooks/queries/useFilterEntityByQueryString";
+import AdvanceSearchResultsBox from "../components /AdvanceSearchResultsBox";
 
 import useQueryTags from "../hooks/queries/useQueryTags";
 import useQueryNames from "../hooks/queries/useQueryNames";
@@ -26,7 +27,7 @@ const SearchBarContainer = styled.div`
 // general search to return an entity without middle stages 
 // advanced search to set the string or strings
 // when advanced search is open general search is disabled and used only to display results
-const SearchParametersBar = () => {
+const SearchParametersBar = ({searchEntity}) => {
   const [isAdvancedSearchBlockOpen, setIsAdvancedSearchBlockOpen] = useState(false);
   // const [allFilteredResults, setAllFilteredResults] = useState("");
   const [advanceQueryParameters, setAdvanceQueryParameters] = useState("");
@@ -98,6 +99,11 @@ const SearchParametersBar = () => {
         searchingFor="Entity"
         chosenValues={entityToGet}
         setValue={setEntityToGet}
+      />
+      <AdvanceSearchResultsBox
+        advanceSearchResults={returnedEntities}
+        onClickOption={searchEntity}
+        
       />
 
     </SearchBarContainer>
