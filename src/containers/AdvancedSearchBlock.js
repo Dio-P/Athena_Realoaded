@@ -31,40 +31,11 @@ const SearchButton = styled.button`
 const AdvancedSearchBlock = ({
   isOpen,
   setIsOpen,
-  handleQuery,
-  allFilteredResults,
   advanceQueryParameters, 
   setAdvanceQueryParameters,
-  returnedTags,
-  queryTags,
-  tagsToSearchFor,
-  setTagsToSearchFor,
-  returnedNames,
-  queryNames,
-  nameToSearchFor,
-  setNameToSearchFor,
-  filteredTypes,
-  filterTypes,
-  typesToSearchFor,
-  setTypesToSearchFor,
-  filteredLinks,
-  filterLinks,
-  linksToSearchFor,
-  setLinksToSearchFor,
-  filteredBriefDescriptions,
-  filterBriefDescriptions,
-  briefDescriptionsToSearchFor,
-  setBriefDescriptionsToSearchFor,
-  filteredLeaders,
-  filterLeaders,
-  leadersToSearchFor,
-  setLeadersToSearchFor,
+  onClickSearch,
 }) => {
 
-  const onClickSearch = () => {
-    console.log("search was clicked");
-
-  }
 
   return (
     <AdvancedSearchBlockContainer>
@@ -74,57 +45,42 @@ const AdvancedSearchBlock = ({
       {isOpen && (
         <ComboBoxContainers>
           <SearchComboBox
-            // data={allFilteredResults}
-            // searchFunction={handleQuery}
-            ofType="tag"
+            ofType="tags"
             chosenValues={advanceQueryParameters}
             onClickOption={setAdvanceQueryParameters}
           />
 
           <SearchComboBox
-            // data={allFilteredResults}
-            // searchFunction={handleQuery}
             ofType="name"
             chosenValues={advanceQueryParameters}
             onClickOption={setAdvanceQueryParameters}
           />
 
           <SearchComboBox
-            // data={allFilteredResults}
-            // searchFunction={handleQuery}
             ofType="type"
             chosenValues={advanceQueryParameters}
             onClickOption={setAdvanceQueryParameters}
           />
 
           <SearchComboBox
-            // data={allFilteredResults}
-            // searchFunction={handleQuery}
             ofType="mainLink"
             chosenValues={advanceQueryParameters}
             onClickOption={setAdvanceQueryParameters}
           />
 
           <SearchComboBox
-            // data={allFilteredResults}
-            // searchFunction={handleQuery}
             ofType="briefDescription"
             chosenValues={advanceQueryParameters}
             onClickOption={setAdvanceQueryParameters}
           />
 
           <SearchComboBox
-            // data={allFilteredResults}
-            // searchFunction={handleQuery}
             ofType="leader"
             chosenValues={advanceQueryParameters}
             onClickOption={setAdvanceQueryParameters}
           />
 
-        <SearchButton
-          onClick={onClickSearch}
-        /> 
-
+          <SearchButton onClick={onClickSearch} /> 
         </ComboBoxContainers>
 
       )}

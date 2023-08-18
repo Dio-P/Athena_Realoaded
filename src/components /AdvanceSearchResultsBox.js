@@ -96,7 +96,7 @@ const AdvanceSearchResultsBox = ({
   const [queryString, setQueryString] = useState("")
   // const { filteredResults } = useGetAllOfType(ofType, queryString );
   
-  // const optionsToRender = filteredResults || [];
+  const resultsToDisplay = advanceSearchResults || [];
   console.log("optionsToRender@@@", advanceSearchResults);
 
   return (
@@ -108,13 +108,13 @@ const AdvanceSearchResultsBox = ({
       <SearchInput
         // type="text"
         name="advanceSearchDisplayBox"
-        // placeholder={`${ofType}s`}
+        placeholder={`advance`}
         // onChange={(e) => setQueryString(e.target.value)}
         disabled
       />
 
       <OptionsWrapper>
-        {advanceSearchResults.map((entity) => (
+        {resultsToDisplay.map((entity) => (
           // what do I want this to display ?
             <SingleQueryResult
               onClickOption={() => onClickOption(entity.id)}
