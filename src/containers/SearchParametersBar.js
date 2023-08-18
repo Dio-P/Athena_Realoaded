@@ -96,7 +96,7 @@ const SearchParametersBar = () => {
         data={returnedEntities}
         searchFunction={filterEntities}
         searchingFor="Entity"
-        value={entityToGet}
+        chosenValues={entityToGet}
         setValue={setEntityToGet}
       />
 

@@ -98,24 +98,24 @@ const ChosenEntity = ({ value, onClickRemove }) => {
 
 export const SearchComboBox = ({
   ofType,
-  value, //rename this chosenValues
-  setValue, //rename this setChosenValues
+  chosenValues, //rename this chosenValues
+  onClickOption, //rename this setChosenValues
 }) => {
   
   const [queryString, setQueryString] = useState("")
   const { filteredResults } = useGetAllOfType(ofType, queryString );
   
   const optionsToRender = filteredResults || [];
-  console.log("optionsToRender@@@", optionsToRender);
+  console.log("optionsToRender@@@", optionsToRender, ofType);
 
   const removeChoice = (choiceToRemove) => {
-    const updatedValues = value[ofType].filter(
+    const updatedValues = chosenValues[ofType].filter(
       (choice) => {
         console.log("choiceToRemove vs choice", choiceToRemove, choice);
         return choice !== choiceToRemove
       }
     );
-    setValue({...value, [ofType]: updatedValues});
+    onClickOption({...chosenValues, [ofType]: updatedValues});
   };
 
   return (
@@ -136,10 +136,10 @@ export const SearchComboBox = ({
         {optionsToRender.map((entity) => (
             <SingleDropdownElement
               onClickOption={() => 
-                setValue(
+                onClickOption(
                   { 
-                  ...value, 
-                  [ofType]: value[ofType]? [...value[ofType], entity] : [entity] 
+                  ...chosenValues, 
+                  [ofType]: chosenValues[ofType]? [...chosenValues[ofType], entity] : [entity] 
                 })}
               
               label={entity} //remove completely the entity when done with changing all
@@ -149,9 +149,9 @@ export const SearchComboBox = ({
         }
       </OptionsWrapper>
 
-      {value[ofType]?.length > 0 && (
+      {chosenValues[ofType]?.length > 0 && (
         <ChoicesWrapper>
-          {value[ofType].map((singleValue) => (
+          {chosenValues[ofType].map((singleValue) => (
             <ChosenEntity
               key={singleValue}
               value={singleValue}
