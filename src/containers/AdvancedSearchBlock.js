@@ -1,5 +1,7 @@
 import styled from "@emotion/styled";
 import SearchComboBox from "../components /SearchComboBox";
+import useCustomSearchQuery from "../hooks/queries/useCustomSearch";
+
 
 const AdvancedSearchBlockContainer = styled.div`
   display: flex;
@@ -33,7 +35,7 @@ const AdvancedSearchBlock = ({
   setIsOpen,
   advanceQueryParameters, 
   setAdvanceQueryParameters,
-  onClickSearch,
+  onClickSearch
 }) => {
 
 

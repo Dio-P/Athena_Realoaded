@@ -2,9 +2,10 @@ import { useState, useEffect } from "react";
 import { useLazyQuery } from "@apollo/client";
 import gql from "graphql-tag";
 
-export const SEARCH_ENTITY_BY_ID_QUERY = gql`
-  query ($id: ID!) {
-    getEntityById(id: $id) {
+export const QUERY_ADVANCED_CUSTOME_SEARCH = gql`
+# if working change it to an array of strings
+  query ($tags: [String], $name: [String], $type: [String], $leader: [String], $teamsResponsible: [String], $mainLink: [String]) {
+    customEntitySearch(tags: $tags, name: $name, type: $type, leader: $leader, teamsResponsible: $teamsResponsible, mainLink: $mainLink) {
       id
       name
       type
@@ -12,52 +13,31 @@ export const SEARCH_ENTITY_BY_ID_QUERY = gql`
       briefDescription
       teamsResponsible
       properties {
-        docs
         tags
-        technologies
-      }
-      children
-      connections {
-        audienceFacing
-        receivesDataFrom
-        givesDataTo
-      }
-      interactions {
-        isLinkUpToDate
-        comments {
-          timeStamp
-          userId
-          text
-        }
-        requestedActions {
-          timeStamp
-          typeOfAction
-          description
-          requestingUserId
-        }
       }
     }
   }
 `;
 
-const useCustomSearch = () => {
-  const [returnedEntity, setReturnedEntity] = useState("");
+const useCustomSearchQuery = () => {
+  // this needs to get the object with the choosenValues
+  const [returnedEntities, setReturnedEntities] = useState("");
 
   const [query, { loading, error, data, refetch }] = useLazyQuery(
-    SEARCH_ENTITY_BY_ID_QUERY
+    QUERY_ADVANCED_CUSTOME_SEARCH
   );
 
-  const searchEntity = (id) => {
-    console.log("inside search entity ");
-    if(!returnedEntity) {
+  const trigerAdvancedSearch = ({tags, name ,type ,leader, teamsResponsible, mainLink}) => {
+    console.log("inside trigerAdvancedSearch ");
+    console.log("returnedEntities@", returnedEntities);
+    if(returnedEntities.length === 0) {
       console.log("to query");
       query({
-        variables: { id },
+        variables: { tags, name ,type ,leader, teamsResponsible, mainLink },
       });
-    } if (returnedEntity) {
+    } else {
       console.log("to refetch");
-      console.log("id", id);
-      refetch({ id })
+      refetch({ tags, name ,type ,leader, teamsResponsible, mainLink })
     }
   };
 
@@ -68,8 +48,8 @@ const useCustomSearch = () => {
     if (error) {
       console.error("error", error)
     }
-    if (data?.getEntityById) {
-      setReturnedEntity(data.getEntityById);
+    if (data?.customEntitySearch) {
+      setReturnedEntities(data.customEntitySearch);
     }
   }, [data, error]);
 
@@ -88,7 +68,7 @@ const useCustomSearch = () => {
   //   }
   // }, [data]);
 
-  return [returnedEntity, searchEntity];
+  return {returnedEntities, trigerAdvancedSearch};
 };
 
-export default useCustomSearch;
+export default useCustomSearchQuery;

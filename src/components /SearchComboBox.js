@@ -106,7 +106,6 @@ export const SearchComboBox = ({
   const { filteredResults } = useGetAllOfType(ofType, queryString );
   
   const optionsToRender = filteredResults || [];
-  console.log("optionsToRender@@@", optionsToRender, ofType);
 
   const removeChoice = (choiceToRemove) => {
     const updatedValues = chosenValues[ofType].filter(

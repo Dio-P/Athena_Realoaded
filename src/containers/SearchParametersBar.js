@@ -6,6 +6,7 @@ import AdvancedSearchBlock from "./AdvancedSearchBlock";
 
 import useFilterEntityByQueryString from "../hooks/queries/useFilterEntityByQueryString";
 import AdvanceSearchResultsBox from "../components /AdvanceSearchResultsBox";
+import useCustomSearchQuery from "../hooks/queries/useCustomSearch";
 
 
 const SearchBarContainer = styled.div`
@@ -24,8 +25,12 @@ const SearchParametersBar = ({searchEntity}) => {
   
   const [entityToGet, setEntityToGet] = useState("");
 
+  const {returnedEntities: returnedAdvancedSearchOptions, trigerAdvancedSearch} = useCustomSearchQuery();
+  // Should I move advance query parameters state in here ?
+
   const onClickSearch = () => {
-    console.log('search has been clicked'); 
+    console.log('advanceQueryParameters', advanceQueryParameters);
+    trigerAdvancedSearch(advanceQueryParameters); 
   }
 
   return (
@@ -36,9 +41,9 @@ const SearchParametersBar = ({searchEntity}) => {
         setIsOpen={setIsAdvancedSearchBlockOpen}
         advanceQueryParameters={advanceQueryParameters}
         setAdvanceQueryParameters={setAdvanceQueryParameters}
-        onClickSearch={onClickSearch}
-  
+        onClickSearch={onClickSearch} 
       />
+
       {!isAdvancedSearchBlockOpen?
         <SearchComboBox
           data={returnedEntities}
@@ -49,7 +54,7 @@ const SearchParametersBar = ({searchEntity}) => {
         />
       :
         <AdvanceSearchResultsBox
-          advanceSearchResults={returnedEntities}
+          advanceSearchResults={returnedAdvancedSearchOptions}
           onClickOption={searchEntity}
         />
       }
