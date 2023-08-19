@@ -30,6 +30,7 @@ const useCustomSearchQuery = () => {
   const trigerAdvancedSearch = ({tags, name ,type ,leader, teamsResponsible, mainLink}) => {
     console.log("inside trigerAdvancedSearch ");
     console.log("returnedEntities@", returnedEntities);
+    console.log("all args", tags, name ,type ,leader, teamsResponsible, mainLink);
     if(returnedEntities.length === 0) {
       console.log("to query");
       query({
