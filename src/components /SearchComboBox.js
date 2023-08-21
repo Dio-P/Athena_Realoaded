@@ -96,7 +96,7 @@ const ChosenEntity = ({ value, onClickRemove }) => {
   );
 };
 
-export const SearchComboBox = ({
+const SearchComboBox = ({
   ofType,
   chosenValues, //rename this chosenValues
   onClickOption, //rename this setChosenValues
@@ -108,13 +108,15 @@ export const SearchComboBox = ({
   const optionsToRender = filteredResults || [];
 
   const removeChoice = (choiceToRemove) => {
-    const updatedValues = chosenValues[ofType].filter(
+    const {[ofType]: thisField, ...chosenValuesWithoutThis } = chosenValues
+    const updatedValues = thisField.filter(
       (choice) => {
         console.log("choiceToRemove vs choice", choiceToRemove, choice);
         return choice !== choiceToRemove
       }
     );
-    onClickOption({...chosenValues, [ofType]: updatedValues});
+    // chosenValues[ofType].length===0 && delete 
+    onClickOption({...chosenValuesWithoutThis, thisField: updatedValues});
   };
 
   return (
