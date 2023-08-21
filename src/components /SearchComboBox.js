@@ -76,7 +76,7 @@ const XBoxWrapper = styled.div`
   margin: 1px 2px 1px 2px;
 `;
 
-const SingleDropdownElement = ({ onClickOption, label, isAddFolderBtn }) => {
+const DropdownOption = ({ onClickOption, label, isAddFolderBtn }) => {
   return (
     <SingleDropDownElementWrapper
       onClick={onClickOption}
@@ -98,26 +98,26 @@ const ChosenEntity = ({ value, onClickRemove }) => {
 
 const SearchComboBox = ({
   ofType,
-  chosenValues, //rename this chosenValues
-  onClickOption, //rename this setChosenValues
+  chosenValues,
+  onClickOption,
 }) => {
   
   const [queryString, setQueryString] = useState("")
-  const { filteredResults } = useGetAllOfType(ofType, queryString );
+  const [allOptionsOfType] = useGetAllOfType(ofType, queryString );
   
-  const optionsToRender = filteredResults || [];
+  // const optionsToRender = allOptionsOfType || [];
 
   const removeChoice = (choiceToRemove) => {
-    const {[ofType]: thisField, ...fieldsWithoutThis } = chosenValues;
+    const {[ofType]: ofThisType, ...typesWithoutThis } = chosenValues;
 
-    const updateChoicesInField = () => thisField.filter(
+    const updateChoicesInField = () => ofThisType.filter(
       (choice) => choice !== choiceToRemove
     );
 
-    const updatedFields = (thisField.length === 1) ? 
-    {...fieldsWithoutThis} 
+    const updatedFields = (ofThisType.length === 1) ? 
+    {...typesWithoutThis} 
     : 
-    {...fieldsWithoutThis, thisField: updateChoicesInField()};
+    {...typesWithoutThis, ofThisType: updateChoicesInField()};
 
     onClickOption(updatedFields);
   };
@@ -137,19 +137,20 @@ const SearchComboBox = ({
       />
 
       <OptionsWrapper>
-        {optionsToRender.map((entity) => (
-            <SingleDropdownElement
-              onClickOption={() => 
-                onClickOption(
-                  { 
-                  ...chosenValues, 
-                  [ofType]: chosenValues[ofType]? [...chosenValues[ofType], entity] : [entity] 
-                })}
-              
-              label={entity}
-              key={entity.id}
-            />
-          ))
+        {allOptionsOfType &&
+          allOptionsOfType.map((entity) => (
+              <DropdownOption
+                onClickOption={() => 
+                  onClickOption(
+                    { 
+                    ...chosenValues, 
+                    [ofType]: chosenValues[ofType]? [...chosenValues[ofType], entity] : [entity] 
+                  })}
+                
+                label={entity}
+                key={entity.id}
+              />
+            ))
         }
       </OptionsWrapper>
 

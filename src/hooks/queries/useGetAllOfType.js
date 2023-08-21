@@ -49,7 +49,7 @@ const useGetAllOfType = (ofType, queryString) => {
   }, [queryString]);
 
   
-  return { filteredResults } 
+  return [filteredResults];
 }
 
 export default useGetAllOfType
