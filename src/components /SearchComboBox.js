@@ -108,15 +108,18 @@ const SearchComboBox = ({
   const optionsToRender = filteredResults || [];
 
   const removeChoice = (choiceToRemove) => {
-    const {[ofType]: thisField, ...chosenValuesWithoutThis } = chosenValues
-    const updatedValues = thisField.filter(
-      (choice) => {
-        console.log("choiceToRemove vs choice", choiceToRemove, choice);
-        return choice !== choiceToRemove
-      }
+    const {[ofType]: thisField, ...fieldsWithoutThis } = chosenValues;
+
+    const updateChoicesInField = () => thisField.filter(
+      (choice) => choice !== choiceToRemove
     );
-    // chosenValues[ofType].length===0 && delete 
-    onClickOption({...chosenValuesWithoutThis, thisField: updatedValues});
+
+    const updatedFields = (thisField.length === 1) ? 
+    {...fieldsWithoutThis} 
+    : 
+    {...fieldsWithoutThis, thisField: updateChoicesInField()};
+
+    onClickOption(updatedFields);
   };
 
   return (
