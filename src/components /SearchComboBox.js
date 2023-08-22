@@ -79,6 +79,8 @@ const XBoxWrapper = styled.div`
 const DropdownOption = ({ onClickOption, label, isAddFolderBtn }) => {
   return (
     <SingleDropDownElementWrapper
+      role="button"
+      aria-label={`add ${label} button`} //is this a good aria-label?
       onClick={onClickOption}
       isAddFolderBtn={isAddFolderBtn}
     >
@@ -91,7 +93,13 @@ const ChosenEntity = ({ value, onClickRemove }) => {
   return (
     <ChosenEntityWrapper>
       {capitaliseFirstLetters(value)}
-      <XBoxWrapper onClick={onClickRemove}>{deleteIcon}</XBoxWrapper>
+      <XBoxWrapper 
+        onClick={onClickRemove}
+        role="button"
+        aria-label={`remove ${value} button`} //is this all right?
+      >
+          {deleteIcon}
+      </XBoxWrapper>
     </ChosenEntityWrapper>
   );
 };
@@ -105,8 +113,6 @@ const SearchComboBox = ({
   const [queryString, setQueryString] = useState("")
   const [allOptionsOfType] = useGetAllOfType(ofType, queryString );
   
-  // const optionsToRender = allOptionsOfType || [];
-
   const removeChoice = (choiceToRemove) => {
     const {[ofType]: ofThisType, ...typesWithoutThis } = chosenValues;
 
