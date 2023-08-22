@@ -76,11 +76,11 @@ const XBoxWrapper = styled.div`
   margin: 1px 2px 1px 2px;
 `;
 
-const DropdownOption = ({ onClickOption, label, isAddFolderBtn }) => {
+const DropdownOption = ({ onClickOption, label, isAddFolderBtn, ofType }) => {
   return (
     <SingleDropDownElementWrapper
       role="button"
-      aria-label={`add ${label} button`} //is this a good aria-label?
+      aria-label={`add ${ofType} ${label} to query`} //is this a good aria-label?
       onClick={onClickOption}
       isAddFolderBtn={isAddFolderBtn}
     >
@@ -89,14 +89,14 @@ const DropdownOption = ({ onClickOption, label, isAddFolderBtn }) => {
   );
 };
 
-const ChosenEntity = ({ value, onClickRemove }) => {
+const ChosenEntity = ({ value, onClickRemove, ofType }) => {
   return (
     <ChosenEntityWrapper>
       {capitaliseFirstLetters(value)}
       <XBoxWrapper 
         onClick={onClickRemove}
         role="button"
-        aria-label={`remove ${value} button`} //is this all right?
+        aria-label={`remove ${ofType} ${value} from query`} //is this all right?
       >
           {deleteIcon}
       </XBoxWrapper>
@@ -152,7 +152,7 @@ const SearchComboBox = ({
                     ...chosenValues, 
                     [ofType]: chosenValues[ofType]? [...chosenValues[ofType], entity] : [entity] 
                   })}
-                
+                ofType={ofType}
                 label={entity}
                 key={entity.id}
               />
@@ -167,6 +167,7 @@ const SearchComboBox = ({
               key={singleValue}
               value={singleValue}
               onClickRemove={() => removeChoice(singleValue)}
+              ofType={ofType}
             />
           ))}
         </ChoicesWrapper>
