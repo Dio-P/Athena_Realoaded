@@ -1,5 +1,6 @@
 import styled from "@emotion/styled";
 import SearchComboBox from "../components /SearchComboBox";
+import { refreshIcon } from "../helpers/svgIcons";
 import useCustomSearchQuery from "../hooks/queries/useCustomSearch";
 
 
@@ -23,10 +24,17 @@ const AdvancedSearch = styled.div`
   height: 20px;
 `;
 
-const SearchButton = styled.button`
+const SearchBtn = styled.button`
   display: flex;
   width: 50px;
   height: 50px;
+  align-self: center;
+`;
+
+const ResetBtn = styled.button`
+  display: flex;
+  width: 25px;
+  height: 25px;
   align-self: center;
 `;
 
@@ -38,6 +46,10 @@ const AdvancedSearchBlock = ({
   onClickSearch
 }) => {
 
+  const onClickRefresh = () => {
+    setAdvanceQueryParameters("");
+    
+  };
 
   return (
     <AdvancedSearchBlockContainer>
@@ -82,7 +94,8 @@ const AdvancedSearchBlock = ({
             onClickOption={setAdvanceQueryParameters}
           />
 
-          <SearchButton onClick={onClickSearch} /> 
+          <SearchBtn onClick={onClickSearch} /> 
+          <ResetBtn onClick={onClickRefresh}> {refreshIcon} </ResetBtn>
         </ComboBoxContainers>
 
       )}

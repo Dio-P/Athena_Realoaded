@@ -6,12 +6,14 @@ import EntityComp from "./components /EntityComp";
 import useParamsHelper from "./hooks/useParamsHelper";
 import MenuBar from "./containers/MenuBar";
 
+const initialRender = {
+  cPub: { id: "4", index: 1, name: "cPub" },
+}
+
 function App() {
   const [returnedEntity, searchEntity] = useEntityByIdSearch();
 
-  const [paramsCustomObj, setParamsCustomObj] = useState({
-    cPub: { id: "4", index: 1, name: "cPub" },
-  });
+  const [paramsCustomObj, setParamsCustomObj] = useState(initialRender);
   const {
     displayedEntityId, renderChosenEntity, setSearchParams
   } = useParamsHelper(paramsCustomObj, setParamsCustomObj);
