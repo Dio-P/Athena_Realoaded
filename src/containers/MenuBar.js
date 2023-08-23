@@ -10,7 +10,7 @@ const MenuBarContainer = styled.div`
 const MenuBar = ({ paramsCustomObj, renderChosenEntity, searchEntity }) => {
 
   return (
-    <MenuBarContainer>
+    <MenuBarContainer aria-label="menu bar" >
       <BreadcrumbsMenu
         paramsCustomObj={paramsCustomObj}
         renderChosenEntity={renderChosenEntity}
