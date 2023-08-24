@@ -15,7 +15,7 @@ const returnedEntity = {
   name: "CPub",
   type: "team",
   leader: "Danny Morgan", 
-  mainLink: "www.somebbcDoc.co.uk",
+  mainLink: "www.sommebbcDoc.co.uk",
   briefDescription: "Content Publishing",
   teamsResponsible: undefined,
   properties: {
@@ -43,7 +43,7 @@ const returnedEntity = {
       {
         timeStamp: "some date and time",
         typeOfAction: "some action type",
-        description: "some coments",
+        description: "some comments",
         requestingUserId: "some user Id or name"
       }
     ]

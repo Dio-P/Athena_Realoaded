@@ -17,7 +17,7 @@ const SearchBarContainer = styled.div`
 // general search to return an entity without middle stages 
 // advanced search to set the string or strings
 // when advanced search is open general search is disabled and used only to display results
-const SearchParametersBar = ({searchEntity}) => {
+const SearchBar = ({searchEntity}) => {
   const [isAdvancedSearchBlockOpen, setIsAdvancedSearchBlockOpen] = useState(false);
   const [advanceQueryParameters, setAdvanceQueryParameters] = useState("");
   const { returnedEntities, filterEntities } = useFilterEntityByQueryString();
@@ -62,4 +62,4 @@ const SearchParametersBar = ({searchEntity}) => {
   ) 
 };
 
-export default SearchParametersBar
+export default SearchBar
