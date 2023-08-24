@@ -86,4 +86,20 @@ describe('app', () => {
 
     expect(screen.getByLabelText('CPub')).toBeVisible();
   });
+
+  test('should not renders entity if no returnedEntity', () => {
+
+    useEntityByIdSearch.mockImplementation(() => ([
+      undefined,
+      searchEntity,
+    ]))
+
+    render(
+      <MockedProvider addTypename={false}>
+        <App />
+      </MockedProvider>
+    );
+
+    expect(screen.queryByLabelText('CPub')).not.toBeInTheDocument();
+  });
 })
