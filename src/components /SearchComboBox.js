@@ -129,7 +129,7 @@ const SearchComboBox = ({
   };
 
   return (
-    <SearchBarContainer>
+    <SearchBarContainer aria-label={`search for ${ofType}`}>
       <MagnifyingGlassIconWrapper>
         {magnifyingGlassIcon}
       </MagnifyingGlassIconWrapper>

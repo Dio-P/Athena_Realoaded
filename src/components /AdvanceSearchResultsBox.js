@@ -100,7 +100,7 @@ const AdvanceSearchResultsBox = ({
   console.log("optionsToRender@@@", advanceSearchResults);
 
   return (
-    <SearchBarContainer>
+    <SearchBarContainer aria-label='Advance Search Results'>
       <MagnifyingGlassIconWrapper>
         {magnifyingGlassIcon}
       </MagnifyingGlassIconWrapper>

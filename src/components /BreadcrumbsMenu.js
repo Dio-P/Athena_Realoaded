@@ -29,7 +29,7 @@ const BreadcrumbsMenu = ({ paramsCustomObj, renderChosenEntity }) => {
   };
 
   return (
-    <BreadcrumbsMenuContainer >
+    <BreadcrumbsMenuContainer aria-label='Breadcrumbs Menu'>
       {breadCrumbs.length > 0 &&
         breadCrumbs.map((breadCrumb) => (
           <BreadCrumbButton

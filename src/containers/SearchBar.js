@@ -34,7 +34,7 @@ const SearchBar = ({searchEntity}) => {
   }
 
   return (
-    <SearchBarContainer>
+    <SearchBarContainer aria-label='Search Bar'>
 
       <AdvancedSearchBlock
         isOpen={isAdvancedSearchBlockOpen}
@@ -46,11 +46,9 @@ const SearchBar = ({searchEntity}) => {
 
       {!isAdvancedSearchBlockOpen?
         <SearchComboBox
-          data={returnedEntities}
-          searchFunction={filterEntities}
-          searchingFor="Entity"
+          ofType="Entity"
           chosenValues={entityToGet}
-          setValue={setEntityToGet}
+          onClickOption={setEntityToGet}
         />
       :
         <AdvanceSearchResultsBox

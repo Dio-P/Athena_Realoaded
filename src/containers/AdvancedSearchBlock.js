@@ -3,7 +3,6 @@ import SearchComboBox from "../components /SearchComboBox";
 import { refreshIcon } from "../helpers/svgIcons";
 import useCustomSearchQuery from "../hooks/queries/useCustomSearch";
 
-
 const AdvancedSearchBlockContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -41,19 +40,21 @@ const ResetBtn = styled.button`
 const AdvancedSearchBlock = ({
   isOpen,
   setIsOpen,
-  advanceQueryParameters, 
+  advanceQueryParameters,
   setAdvanceQueryParameters,
-  onClickSearch
+  onClickSearch,
 }) => {
-
   const onClickRefresh = () => {
     setAdvanceQueryParameters("");
-    
   };
 
+  console.log("inside advanced search block");
   return (
     <AdvancedSearchBlockContainer>
-      <AdvancedSearch onClick={() => setIsOpen(!isOpen)}>
+      <AdvancedSearch
+        aria-label="Advanced Search"
+        onClick={() => setIsOpen(!isOpen)}
+      >
         Advanced Search
       </AdvancedSearch>
       {isOpen && (
@@ -94,10 +95,9 @@ const AdvancedSearchBlock = ({
             onClickOption={setAdvanceQueryParameters}
           />
 
-          <SearchBtn onClick={onClickSearch} /> 
+          <SearchBtn onClick={onClickSearch} />
           <ResetBtn onClick={onClickRefresh}> {refreshIcon} </ResetBtn>
         </ComboBoxContainers>
-
       )}
     </AdvancedSearchBlockContainer>
   );
