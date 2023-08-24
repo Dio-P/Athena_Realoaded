@@ -40,7 +40,7 @@ const EntityComp = ({ entity, setDisplayedEntity, paramsCustomObj, renderChosenE
   }, [entity]);
 
   return (
-    <EntityContainer>
+    <EntityContainer aria-label={`${entity.name}`}>
       <ThisEntityContainer>
         <h1>{capitaliseFirstLetters(entity.name)}</h1>
         <EntityInfoBox>
