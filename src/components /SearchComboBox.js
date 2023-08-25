@@ -4,6 +4,7 @@ import styleVariables from "../styleVariables";
 import { deleteIcon, magnifyingGlassIcon } from "../helpers/svgIcons";
 import capitaliseFirstLetters from "../helpers/capitaliseFirstLetters";
 import useGetAllOfType from "../hooks/queries/useGetAllOfType";
+import { log } from "sass-lint/lib/helpers";
 
 const SearchBarContainer = styled.div`
   display: flex;
@@ -114,8 +115,10 @@ const SearchComboBox = ({
   const [allOptionsOfType] = useGetAllOfType(ofType, queryString );
   
   const removeChoice = (choiceToRemove) => {
+    console.log("remove choice clicked ", choiceToRemove);
     const {[ofType]: ofThisType, ...typesWithoutThis } = chosenValues;
 
+    console.log("ofThisType@", ofThisType);
     const updateChoicesInField = () => ofThisType.filter(
       (choice) => choice !== choiceToRemove
     );
@@ -123,7 +126,7 @@ const SearchComboBox = ({
     const updatedFields = (ofThisType.length === 1) ? 
     {...typesWithoutThis} 
     : 
-    {...typesWithoutThis, ofThisType: updateChoicesInField()};
+    {...typesWithoutThis, [ofType]: updateChoicesInField()};
 
     onClickOption(updatedFields);
   };
