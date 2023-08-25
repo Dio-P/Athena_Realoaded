@@ -92,7 +92,6 @@ describe("SearchComboBox", () => {
     const deleteButton = screen.queryByRole("button", {
       name: "remove type app from query",
     });
-    screen.debug();
     expect(deleteButton).toBeVisible();
 
     await userEvent.click(deleteButton);

@@ -4,7 +4,6 @@ import styleVariables from "../styleVariables";
 import { deleteIcon, magnifyingGlassIcon } from "../helpers/svgIcons";
 import capitaliseFirstLetters from "../helpers/capitaliseFirstLetters";
 import useGetAllOfType from "../hooks/queries/useGetAllOfType";
-import { log } from "sass-lint/lib/helpers";
 
 const SearchBarContainer = styled.div`
   display: flex;
