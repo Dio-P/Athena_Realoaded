@@ -56,7 +56,7 @@ describe('AdvancedSearchBlock', () => {
 
   test("should render all values chosen as parameters", () => {
     render(<AdvancedSearchBlock {...propsWithChosenValues} />);
-    screen.debug()
+
     expect(
       screen.getByRole("button", { name: "remove type app from query" })
     ).toBeVisible();
