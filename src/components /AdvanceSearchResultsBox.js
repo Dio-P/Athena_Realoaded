@@ -1,10 +1,7 @@
-import { useMemo, useState } from "react";
 import styled from "@emotion/styled";
 import styleVariables from "../styleVariables";
-import { deleteIcon, magnifyingGlassIcon } from "../helpers/svgIcons";
+import { magnifyingGlassIcon } from "../helpers/svgIcons";
 import capitaliseFirstLetters from "../helpers/capitaliseFirstLetters";
-import useGetAllOfType from "../hooks/queries/useGetAllOfType";
-// import useEntityByIdSearch from "../hooks/queries/useEntityByIdSearch";
 
 const SearchBarContainer = styled.div`
   display: flex;
@@ -62,21 +59,6 @@ const DropDownLabel = styled.div`
   margin: auto;
 `;
 
-const ChoicesWrapper = styled.div`
-  display: flex;
-`;
-
-const ChosenEntityWrapper = styled.div`
-  display: flex;
-`;
-
-const XBoxWrapper = styled.div`
-  display: flex;
-  height: 100%;
-  width: 25px;
-  margin: 1px 2px 1px 2px;
-`;
-
 const SingleQueryResult = ({ onClickOption, label, isAddFolderBtn }) => {
   return (
     <SingleDropDownElementWrapper
@@ -92,13 +74,7 @@ const AdvanceSearchResultsBox = ({
   advanceSearchResults,
   onClickOption,
 }) => {
-  // const [returnedEntity, searchEntity] = useEntityByIdSearch()
-  const [queryString, setQueryString] = useState("")
-  // const { filteredResults } = useGetAllOfType(ofType, queryString );
   
-  const resultsToDisplay = advanceSearchResults || [];
-  console.log("optionsToRender@@@", advanceSearchResults);
-
   return (
     <SearchBarContainer aria-label='Advance Search Results'>
       <MagnifyingGlassIconWrapper>
@@ -106,22 +82,20 @@ const AdvanceSearchResultsBox = ({
       </MagnifyingGlassIconWrapper>
 
       <SearchInput
-        // type="text"
         name="advanceSearchDisplayBox"
-        placeholder={`advance`}
-        // onChange={(e) => setQueryString(e.target.value)}
+        placeholder="advance"
         disabled
       />
 
       <OptionsWrapper>
-        {resultsToDisplay.map((entity) => (
-          // what do I want this to display ?
-            <SingleQueryResult
-              onClickOption={() => onClickOption(entity.id)}
-              label={entity.name}
-              key={entity.id}
-            />
-          ))
+        {advanceSearchResults &&
+          advanceSearchResults.map(({id, name}) => (
+              <SingleQueryResult
+                onClickOption={() => onClickOption(id)}
+                label={name}
+                key={id}
+              />
+            ))
         }
       </OptionsWrapper>
     </SearchBarContainer>
