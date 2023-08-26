@@ -20,6 +20,7 @@ const propsWithChosenValues = {
   },
   onClickOption: jest.fn(),
 };
+
 const allOptionsOfType = ["app", "company", "department", "subTeam", "team"];
 beforeEach(() => {
   jest.clearAllMocks();
@@ -101,21 +102,4 @@ describe("SearchComboBox", () => {
       type: ["mainLink"],
     });
   });
-//to  move to parent
-  // test("should render all values chosen as parameters", () => {
-  //   render(<SearchComboBox {...propsWithChosenValues} />);
-
-  //   expect(
-  //     screen.getByRole("button", { name: "remove type app from query" })
-  //   ).toBeVisible();
-  //   expect(
-  //     screen.getByRole("button", { name: "remove mainLink https://optimo.int.tools.bbc.co.uk/assets/new/editor from query" })
-  //   ).toBeVisible();
-  //   expect(
-  //     screen.getByRole("button", { name: "remove name Optimo from query" })
-  //   ).toBeVisible();
-  //   expect(
-  //     screen.getByRole("button", { name: "remove name IGM from query" })
-  //   ).toBeVisible();
-  // });
 });
