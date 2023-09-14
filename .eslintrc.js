@@ -16,7 +16,7 @@ module.exports = {
         '**/*.test.js',
       ],
       parserOptions: {
-        sourceType: 'script',
+        sourceType: 'module',
       },
     },
   ],
