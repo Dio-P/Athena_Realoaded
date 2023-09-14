@@ -28,12 +28,12 @@ const EntityChildrenBox = styled.div`
   display: flex;
 `;
 
-function Entity({
+const Entity = ({
   entity,
   // setDisplayedEntity,
   paramsCustomObj,
   renderChosenEntity,
-}) {
+}) => {
   const [returnedChildren, searchChildren] = useChildrenByIdsSearch();
 
   useEffect(() => {
@@ -78,7 +78,7 @@ function Entity({
 
     </EntityContainer>
   );
-}
+};
 
 Entity.propTypes = {
   entity: PropTypes.shape({

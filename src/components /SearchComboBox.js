@@ -73,12 +73,12 @@ const XBoxWrapper = styled.div`
   margin: 1px 2px 1px 2px;
 `;
 
-function DropdownOption({
+const DropdownOption = ({
   onClickOption,
   label,
   isAddFolderBtn,
   ofType,
-}) {
+}) => {
   return (
     <SingleDropDownElementWrapper
       role="button"
@@ -91,11 +91,11 @@ function DropdownOption({
   );
 }
 
-function ChosenEntity({
+const ChosenEntity = ({
   value,
   onClickRemove,
   ofType
-}) {
+}) => {
   return (
     <ChosenEntityWrapper>
       {capitaliseFirstLetters(value)}
@@ -110,11 +110,11 @@ function ChosenEntity({
   );
 }
 
-function SearchComboBox({
+const SearchComboBox = ({
   ofType,
   chosenValues,
   onClickOption,
-}) {
+}) => {
   const [queryString, setQueryString] = useState('');
   const [allOptionsOfType] = useGetAllOfType(ofType, queryString);
 

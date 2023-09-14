@@ -10,7 +10,7 @@ const firstRender = {
   cPub: { id: '4', index: 1, name: 'cPub' },
 };
 
-function App() {
+const App = () => {
   const [paramsCustomObj, setParamsCustomObj] = useState(firstRender);
   const [returnedEntity, searchEntity] = useEntityByIdSearch();
 
@@ -52,6 +52,6 @@ function App() {
       )}
     </div>
   );
-}
+};
 
 export default App;

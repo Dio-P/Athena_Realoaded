@@ -1,7 +1,8 @@
-import styled from "@emotion/styled";
-import SearchComboBox from "../components /SearchComboBox";
-import { refreshIcon } from "../helpers/svgIcons";
-import useCustomSearchQuery from "../hooks/queries/useCustomSearch";
+import React from 'react';
+import styled from '@emotion/styled';
+import SearchComboBox from '../components /SearchComboBox';
+import { refreshIcon } from '../helpers/svgIcons';
+import useCustomSearchQuery from '../hooks/queries/useCustomSearch';
 
 const AdvancedSearchBlockContainer = styled.div`
   display: flex;
@@ -45,10 +46,9 @@ const AdvancedSearchBlock = ({
   onClickSearch,
 }) => {
   const onClickRefresh = () => {
-    setAdvanceQueryParameters("");
+    setAdvanceQueryParameters('');
   };
 
-  console.log("inside advanced search block");
   return (
     <AdvancedSearchBlockContainer>
       <AdvancedSearch
@@ -60,49 +60,43 @@ const AdvancedSearchBlock = ({
       {isOpen && (
         <ComboBoxContainers>
           <SearchComboBox
-            key="tags"
             ofType="tags"
             chosenValues={advanceQueryParameters}
             onClickOption={setAdvanceQueryParameters}
           />
 
           <SearchComboBox
-            key="name"
             ofType="name"
             chosenValues={advanceQueryParameters}
             onClickOption={setAdvanceQueryParameters}
           />
 
           <SearchComboBox
-            key="type"
             ofType="type"
             chosenValues={advanceQueryParameters}
             onClickOption={setAdvanceQueryParameters}
           />
 
           <SearchComboBox
-            key="mainLink"
             ofType="mainLink"
             chosenValues={advanceQueryParameters}
             onClickOption={setAdvanceQueryParameters}
           />
 
           <SearchComboBox
-            key="briefDescription"
             ofType="briefDescription"
             chosenValues={advanceQueryParameters}
             onClickOption={setAdvanceQueryParameters}
           />
 
           <SearchComboBox
-            key="leader"
             ofType="leader"
             chosenValues={advanceQueryParameters}
             onClickOption={setAdvanceQueryParameters}
           />
 
           <SearchBtn onClick={onClickSearch} aria-label="Search" />
-          <ResetBtn onClick={onClickRefresh} aria-label="Refresh" > {refreshIcon} </ResetBtn>
+          <ResetBtn onClick={onClickRefresh} aria-label="Refresh"> {refreshIcon} </ResetBtn>
         </ComboBoxContainers>
       )}
     </AdvancedSearchBlockContainer>

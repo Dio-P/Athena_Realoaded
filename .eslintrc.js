@@ -30,5 +30,6 @@ module.exports = {
     'no-underscore-dangle': 'off',
     'global-require': 'off',
     'react/jsx-props-no-spreading': 'off',
+    'react/function-component-definition': 'off',
   },
 };

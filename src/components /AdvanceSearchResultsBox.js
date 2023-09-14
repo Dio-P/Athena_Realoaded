@@ -56,7 +56,7 @@ const DropDownLabel = styled.div`
   margin: auto;
 `;
 
-function SingleQueryResult({ onClickOption, label, isAddFolderBtn }) {
+const SingleQueryResult = ({ onClickOption, label, isAddFolderBtn }) => {
   return (
     <SingleDropDownElementWrapper
       onClick={onClickOption}
