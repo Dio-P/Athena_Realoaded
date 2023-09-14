@@ -28,7 +28,7 @@ const EntityChildrenBox = styled.div`
   display: flex;
 `;
 
-const EntityComp = ({ entity, setDisplayedEntity, paramsCustomObj, renderChosenEntity }) => {
+const Entity = ({ entity, setDisplayedEntity, paramsCustomObj, renderChosenEntity }) => {
 
   
   const [returnedChildren, searchChildren] = useChildrenByIdsSearch();
@@ -75,4 +75,4 @@ const EntityComp = ({ entity, setDisplayedEntity, paramsCustomObj, renderChosenE
   ) 
 };
 
-export default EntityComp;
+export default Entity;

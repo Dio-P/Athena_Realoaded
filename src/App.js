@@ -1,7 +1,7 @@
 // import "./App.css";
 import { useEffect, useState } from "react";
 import useEntityByIdSearch from "./hooks/queries/useEntityByIdSearch";
-import EntityComp from "./components /EntityComp";
+import Entity from "./components /Entity";
 import useParamsHelper from "./hooks/useParamsHelper";
 import MenuBar from "./containers/MenuBar";
 
@@ -42,7 +42,7 @@ function App() {
         searchEntity={searchEntity}
       />
       {returnedEntity && (
-        <EntityComp
+        <Entity
           entity={displayedEntity}
           setDisplayedEntity={(child) => setDisplayedEntity(child)}
           paramsCustomObj={paramsCustomObj}
