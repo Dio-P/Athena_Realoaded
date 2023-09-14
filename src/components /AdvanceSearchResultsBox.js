@@ -1,3 +1,5 @@
+import React from 'react';
+import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
 import styleVariables from '../styleVariables';
 import { magnifyingGlassIcon } from '../helpers/svgIcons';
@@ -56,35 +58,36 @@ const DropDownLabel = styled.div`
   margin: auto;
 `;
 
-const SingleQueryResult = ({ onClickOption, label, isAddFolderBtn }) => {
-  return (
-    <SingleDropDownElementWrapper
-      onClick={onClickOption}
-      isAddFolderBtn={isAddFolderBtn}
-    >
-      <DropDownLabel>{capitaliseFirstLetters(label)}</DropDownLabel>
-    </SingleDropDownElementWrapper>
-  );
-}
+const SingleQueryResult = ({
+  onClickOption,
+  label,
+  isAddFolderBtn,
+}) => (
+  <SingleDropDownElementWrapper
+    onClick={onClickOption}
+    isAddFolderBtn={isAddFolderBtn}
+  >
+    <DropDownLabel>{capitaliseFirstLetters(label)}</DropDownLabel>
+  </SingleDropDownElementWrapper>
+);
 
-function AdvanceSearchResultsBox({
+const AdvanceSearchResultsBox = ({
   advanceSearchResults,
   onClickOption,
-}) {
-  return (
-    <SearchBarContainer aria-label="Advance Search Results">
-      <MagnifyingGlassIconWrapper>
-        {magnifyingGlassIcon}
-      </MagnifyingGlassIconWrapper>
+}) => (
+  <SearchBarContainer aria-label="Advance Search Results">
+    <MagnifyingGlassIconWrapper>
+      {magnifyingGlassIcon}
+    </MagnifyingGlassIconWrapper>
 
-      <SearchInput
-        name="advanceSearchDisplayBox"
-        placeholder="advance"
-        disabled
-      />
+    <SearchInput
+      name="advanceSearchDisplayBox"
+      placeholder="advance"
+      disabled
+    />
 
-      <OptionsWrapper>
-        {advanceSearchResults
+    <OptionsWrapper>
+      {advanceSearchResults
           && advanceSearchResults.map(({ id, name }) => (
             <SingleQueryResult
               onClickOption={() => onClickOption(id)}
@@ -92,9 +95,37 @@ function AdvanceSearchResultsBox({
               key={id}
             />
           ))}
-      </OptionsWrapper>
-    </SearchBarContainer>
-  );
-}
+    </OptionsWrapper>
+  </SearchBarContainer>
+);
+
+SingleQueryResult.proptype = {
+  onClickOption: PropTypes.func.isRequired,
+  label: PropTypes.string.isRequired,
+  isAddFolderBtn: PropTypes.bool,
+};
+
+SingleQueryResult.defaultProps = {
+  isAddFolderBtn: false,
+};
+
+AdvanceSearchResultsBox.proptype = {
+  advanceSearchResults: PropTypes.shape({
+    id: PropTypes.string,
+    name: PropTypes.string,
+    type: PropTypes.string,
+    mainLink: PropTypes.string,
+    briefDescription: PropTypes.string,
+    teamsResponsible: PropTypes.arrayOf(PropTypes.string),
+    properties: PropTypes.shape({
+      tags: PropTypes.arrayOf(PropTypes.string),
+    }),
+  }),
+  onClickOption: PropTypes.func.isRequired,
+};
+
+AdvanceSearchResultsBox.defaultProps = {
+  advanceSearchResults: {},
+};
 
 export default AdvanceSearchResultsBox;
