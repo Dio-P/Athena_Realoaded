@@ -95,8 +95,8 @@ const AdvancedSearchBlock = ({
             onClickOption={setAdvanceQueryParameters}
           />
 
-          <SearchBtn onClick={onClickSearch} />
-          <ResetBtn onClick={onClickRefresh}> {refreshIcon} </ResetBtn>
+          <SearchBtn onClick={onClickSearch} aria-label="Search" />
+          <ResetBtn onClick={onClickRefresh} aria-label="Refresh" > {refreshIcon} </ResetBtn>
         </ComboBoxContainers>
       )}
     </AdvancedSearchBlockContainer>
