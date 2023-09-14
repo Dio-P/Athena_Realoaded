@@ -1,7 +1,7 @@
-import styled from "@emotion/styled";
-import styleVariables from "../styleVariables";
-import { magnifyingGlassIcon } from "../helpers/svgIcons";
-import capitaliseFirstLetters from "../helpers/capitaliseFirstLetters";
+import styled from '@emotion/styled';
+import styleVariables from '../styleVariables';
+import { magnifyingGlassIcon } from '../helpers/svgIcons';
+import capitaliseFirstLetters from '../helpers/capitaliseFirstLetters';
 
 const SearchBarContainer = styled.div`
   display: flex;
@@ -36,21 +36,18 @@ const SingleDropDownElementWrapper = styled.div`
   align-items: center;
   width: 99%;
   height: 45px;
-  background-color: ${(props) =>
-    !props.isAddFolderBtn
-      ? styleVariables.colours.tertiaryBlue
-      : styleVariables.colours.tertiaryPink};
-  border-radius: ${(props) =>
-    !props.isAddFolderBtn ? null : styleVariables.borderRadious.main};
+  background-color: ${(props) => (!props.isAddFolderBtn
+    ? styleVariables.colours.tertiaryBlue
+    : styleVariables.colours.tertiaryPink)};
+  border-radius: ${(props) => (!props.isAddFolderBtn ? null : styleVariables.borderRadious.main)};
   color: black;
   margin: 1px;
-  margin-top: ${(props) => props.isAddFolderBtn && "4px"};
+  margin-top: ${(props) => props.isAddFolderBtn && '4px'};
 
   &:hover {
-    background-color: ${(props) =>
-      !props.isAddFolderBtn
-        ? styleVariables.colours.secondaryBlue
-        : styleVariables.colours.secondaryPink};
+    background-color: ${(props) => (!props.isAddFolderBtn
+    ? styleVariables.colours.secondaryBlue
+    : styleVariables.colours.secondaryPink)};
   }
   cursor: pointer;
 `;
@@ -59,7 +56,7 @@ const DropDownLabel = styled.div`
   margin: auto;
 `;
 
-const SingleQueryResult = ({ onClickOption, label, isAddFolderBtn }) => {
+function SingleQueryResult({ onClickOption, label, isAddFolderBtn }) {
   return (
     <SingleDropDownElementWrapper
       onClick={onClickOption}
@@ -68,15 +65,14 @@ const SingleQueryResult = ({ onClickOption, label, isAddFolderBtn }) => {
       <DropDownLabel>{capitaliseFirstLetters(label)}</DropDownLabel>
     </SingleDropDownElementWrapper>
   );
-};
+}
 
-const AdvanceSearchResultsBox = ({
+function AdvanceSearchResultsBox({
   advanceSearchResults,
   onClickOption,
-}) => {
-  
+}) {
   return (
-    <SearchBarContainer aria-label='Advance Search Results'>
+    <SearchBarContainer aria-label="Advance Search Results">
       <MagnifyingGlassIconWrapper>
         {magnifyingGlassIcon}
       </MagnifyingGlassIconWrapper>
@@ -88,18 +84,17 @@ const AdvanceSearchResultsBox = ({
       />
 
       <OptionsWrapper>
-        {advanceSearchResults &&
-          advanceSearchResults.map(({id, name}) => (
-              <SingleQueryResult
-                onClickOption={() => onClickOption(id)}
-                label={name}
-                key={id}
-              />
-            ))
-        }
+        {advanceSearchResults
+          && advanceSearchResults.map(({ id, name }) => (
+            <SingleQueryResult
+              onClickOption={() => onClickOption(id)}
+              label={name}
+              key={id}
+            />
+          ))}
       </OptionsWrapper>
     </SearchBarContainer>
   );
-};
+}
 
 export default AdvanceSearchResultsBox;

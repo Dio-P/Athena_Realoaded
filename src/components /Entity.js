@@ -65,6 +65,7 @@ function Entity({
       <EntityChildrenBox>
         {returnedChildren.map((childEntity) => (
           <MultiBtnComp
+            aria={childEntity.name}
             label={childEntity.name}
             key={childEntity.name}
             onClickFunction={

@@ -74,7 +74,10 @@ const XBoxWrapper = styled.div`
 `;
 
 function DropdownOption({
-  onClickOption, label, isAddFolderBtn, ofType,
+  onClickOption,
+  label,
+  isAddFolderBtn,
+  ofType,
 }) {
   return (
     <SingleDropDownElementWrapper
@@ -88,7 +91,11 @@ function DropdownOption({
   );
 }
 
-function ChosenEntity({ value, onClickRemove, ofType }) {
+function ChosenEntity({
+  value,
+  onClickRemove,
+  ofType
+}) {
   return (
     <ChosenEntityWrapper>
       {capitaliseFirstLetters(value)}
