@@ -60,36 +60,42 @@ const AdvancedSearchBlock = ({
       {isOpen && (
         <ComboBoxContainers>
           <SearchComboBox
+            key="tags"
             ofType="tags"
             chosenValues={advanceQueryParameters}
             onClickOption={setAdvanceQueryParameters}
           />
 
           <SearchComboBox
+            key="name"
             ofType="name"
             chosenValues={advanceQueryParameters}
             onClickOption={setAdvanceQueryParameters}
           />
 
           <SearchComboBox
+            key="type"
             ofType="type"
             chosenValues={advanceQueryParameters}
             onClickOption={setAdvanceQueryParameters}
           />
 
           <SearchComboBox
+            key="mainLink"
             ofType="mainLink"
             chosenValues={advanceQueryParameters}
             onClickOption={setAdvanceQueryParameters}
           />
 
           <SearchComboBox
+            key="briefDescription"
             ofType="briefDescription"
             chosenValues={advanceQueryParameters}
             onClickOption={setAdvanceQueryParameters}
           />
 
           <SearchComboBox
+            key="leader"
             ofType="leader"
             chosenValues={advanceQueryParameters}
             onClickOption={setAdvanceQueryParameters}

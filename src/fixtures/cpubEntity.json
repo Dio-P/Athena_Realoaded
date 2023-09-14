@@ -1,0 +1,38 @@
+{
+  "id": "4",
+  "name": "CPub",
+  "type": "team",
+  "leader": "Danny Morgan",
+  "mainLink": "www.somebbcDoc.co.uk",
+  "briefDescription": "Content Publishing",
+  "teamsResponsible": [],
+  "properties": {
+    "docs": ["2"],
+    "tags": [],
+    "technologies": []
+  },
+  "children": ["5"],
+  "connections": {
+    "audienceFacing": false,
+    "receivesDataFrom": [],
+    "givesDataTo": []
+  },
+  "interactions": {
+    "isLinkUpToDate": true,
+    "comments": [
+      {
+        "timeStamp": "some date and time",
+        "userId": "some user Id or name",
+        "text": "some text"
+      }
+    ],
+    "requestedActions": [
+      {
+        "timeStamp": "some date and time",
+        "typeOfAction": "some action type",
+        "description": "some coments",
+        "requestingUserId": "some user Id or name"
+      }
+    ]
+  }
+}

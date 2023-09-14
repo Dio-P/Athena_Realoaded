@@ -15,7 +15,6 @@ const ThisEntityContainer = styled.div`
   flex-direction: column;
   margin: 5px 15px 5px 15px;
   width: 100%
-
 `;
 
 const EntityInfoBox = styled.div`
@@ -95,11 +94,11 @@ Entity.propTypes = {
       technologies: PropTypes.arrayOf(PropTypes.string),
     }),
     children: PropTypes.arrayOf(PropTypes.string),
-    connections: {
+    connections: PropTypes.shape({
       audienceFacing: PropTypes.bool,
       receivesDataFrom: PropTypes.arrayOf(PropTypes.string),
       givesDataTo: PropTypes.arrayOf(PropTypes.string),
-    },
+    }),
     interactions: PropTypes.shape({
       isLinkUpToDate: PropTypes.bool,
       comments: PropTypes.arrayOf(PropTypes.shape(

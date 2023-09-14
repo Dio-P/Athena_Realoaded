@@ -1,9 +1,9 @@
-import { useMemo, useState } from "react";
-import styled from "@emotion/styled";
-import styleVariables from "../styleVariables";
-import { deleteIcon, magnifyingGlassIcon } from "../helpers/svgIcons";
-import capitaliseFirstLetters from "../helpers/capitaliseFirstLetters";
-import useGetAllOfType from "../hooks/queries/useGetAllOfType";
+import React, { useMemo, useState } from 'react';
+import styled from '@emotion/styled';
+import styleVariables from '../styleVariables';
+import { deleteIcon, magnifyingGlassIcon } from '../helpers/svgIcons';
+import capitaliseFirstLetters from '../helpers/capitaliseFirstLetters';
+import useGetAllOfType from '../hooks/queries/useGetAllOfType';
 
 const SearchBarContainer = styled.div`
   display: flex;
@@ -38,21 +38,18 @@ const SingleDropDownElementWrapper = styled.div`
   align-items: center;
   width: 99%;
   height: 45px;
-  background-color: ${(props) =>
-    !props.isAddFolderBtn
-      ? styleVariables.colours.tertiaryBlue
-      : styleVariables.colours.tertiaryPink};
-  border-radius: ${(props) =>
-    !props.isAddFolderBtn ? null : styleVariables.borderRadious.main};
+  background-color: ${(props) => (!props.isAddFolderBtn
+    ? styleVariables.colours.tertiaryBlue
+    : styleVariables.colours.tertiaryPink)};
+  border-radius: ${(props) => (!props.isAddFolderBtn ? null : styleVariables.borderRadious.main)};
   color: black;
   margin: 1px;
-  margin-top: ${(props) => props.isAddFolderBtn && "4px"};
+  margin-top: ${(props) => props.isAddFolderBtn && '4px'};
 
   &:hover {
-    background-color: ${(props) =>
-      !props.isAddFolderBtn
-        ? styleVariables.colours.secondaryBlue
-        : styleVariables.colours.secondaryPink};
+    background-color: ${(props) => (!props.isAddFolderBtn
+    ? styleVariables.colours.secondaryBlue
+    : styleVariables.colours.secondaryPink)};
   }
   cursor: pointer;
 `;
@@ -76,56 +73,56 @@ const XBoxWrapper = styled.div`
   margin: 1px 2px 1px 2px;
 `;
 
-const DropdownOption = ({ onClickOption, label, isAddFolderBtn, ofType }) => {
+function DropdownOption({
+  onClickOption, label, isAddFolderBtn, ofType,
+}) {
   return (
     <SingleDropDownElementWrapper
       role="button"
-      aria-label={`add ${ofType} ${label} to query`} //is this a good aria-label?
+      aria-label={`add ${ofType} ${label} to query`} // is this a good aria-label?
       onClick={onClickOption}
       isAddFolderBtn={isAddFolderBtn}
     >
       <DropDownLabel>{capitaliseFirstLetters(label)}</DropDownLabel>
     </SingleDropDownElementWrapper>
   );
-};
+}
 
-const ChosenEntity = ({ value, onClickRemove, ofType }) => {
+function ChosenEntity({ value, onClickRemove, ofType }) {
   return (
     <ChosenEntityWrapper>
       {capitaliseFirstLetters(value)}
-      <XBoxWrapper 
+      <XBoxWrapper
         onClick={onClickRemove}
         role="button"
-        aria-label={`remove ${ofType} ${value} from query`} //is this all right?
+        aria-label={`remove ${ofType} ${value} from query`} // is this all right?
       >
-          {deleteIcon}
+        {deleteIcon}
       </XBoxWrapper>
     </ChosenEntityWrapper>
   );
-};
+}
 
-const SearchComboBox = ({
+function SearchComboBox({
   ofType,
   chosenValues,
   onClickOption,
-}) => {
-  
-  const [queryString, setQueryString] = useState("")
-  const [allOptionsOfType] = useGetAllOfType(ofType, queryString );
-  
-  const removeChoice = (choiceToRemove) => {
-    console.log("remove choice clicked ", choiceToRemove);
-    const {[ofType]: ofThisType, ...typesWithoutThis } = chosenValues;
+}) {
+  const [queryString, setQueryString] = useState('');
+  const [allOptionsOfType] = useGetAllOfType(ofType, queryString);
 
-    console.log("ofThisType@", ofThisType);
+  const removeChoice = (choiceToRemove) => {
+    console.log('remove choice clicked ', choiceToRemove);
+    const { [ofType]: ofThisType, ...typesWithoutThis } = chosenValues;
+
+    console.log('ofThisType@', ofThisType);
     const updateChoicesInField = () => ofThisType.filter(
-      (choice) => choice !== choiceToRemove
+      (choice) => choice !== choiceToRemove,
     );
 
-    const updatedFields = (ofThisType.length === 1) ? 
-    {...typesWithoutThis} 
-    : 
-    {...typesWithoutThis, [ofType]: updateChoicesInField()};
+    const updatedFields = (ofThisType.length === 1)
+      ? { ...typesWithoutThis }
+      : { ...typesWithoutThis, [ofType]: updateChoicesInField() };
 
     onClickOption(updatedFields);
   };
@@ -141,25 +138,23 @@ const SearchComboBox = ({
         name="dropDownSearch"
         placeholder={`${ofType}s`}
         onChange={(e) => setQueryString(e.target.value)}
-
       />
 
       <OptionsWrapper>
-        {allOptionsOfType &&
-          allOptionsOfType.map((entity) => (
-              <DropdownOption
-                onClickOption={() => 
-                  onClickOption(
-                    { 
-                    ...chosenValues, 
-                    [ofType]: chosenValues[ofType]? [...chosenValues[ofType], entity] : [entity] 
-                  })}
-                ofType={ofType}
-                label={entity}
-                key={entity.id}
-              />
-            ))
-        }
+        {allOptionsOfType
+          && allOptionsOfType.map((entity) => (
+            <DropdownOption
+              key={entity.id}
+              onClickOption={() => onClickOption(
+                {
+                  ...chosenValues,
+                  [ofType]: chosenValues[ofType] ? [...chosenValues[ofType], entity] : [entity],
+                },
+              )}
+              ofType={ofType}
+              label={entity}
+            />
+          ))}
       </OptionsWrapper>
 
       {chosenValues[ofType]?.length > 0 && (
@@ -176,6 +171,6 @@ const SearchComboBox = ({
       )}
     </SearchBarContainer>
   );
-};
+}
 
 export default SearchComboBox;
