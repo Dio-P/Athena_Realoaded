@@ -99,7 +99,7 @@ const AdvanceSearchResultsBox = ({
   </SearchBarContainer>
 );
 
-SingleQueryResult.proptype = {
+SingleQueryResult.propTypes = {
   onClickOption: PropTypes.func.isRequired,
   label: PropTypes.string.isRequired,
   isAddFolderBtn: PropTypes.bool,
@@ -109,8 +109,8 @@ SingleQueryResult.defaultProps = {
   isAddFolderBtn: false,
 };
 
-AdvanceSearchResultsBox.proptype = {
-  advanceSearchResults: PropTypes.shape({
+AdvanceSearchResultsBox.propTypes = {
+  advanceSearchResults: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.string,
     name: PropTypes.string,
     type: PropTypes.string,
@@ -120,7 +120,7 @@ AdvanceSearchResultsBox.proptype = {
     properties: PropTypes.shape({
       tags: PropTypes.arrayOf(PropTypes.string),
     }),
-  }),
+  })),
   onClickOption: PropTypes.func.isRequired,
 };
 
