@@ -8,9 +8,12 @@ module.exports = {
     {
       env: {
         node: true,
+        jest: true,
+
       },
       files: [
         '.eslintrc.{js,cjs}',
+        '**/*.test.js',
       ],
       parserOptions: {
         sourceType: 'script',
@@ -22,5 +25,10 @@ module.exports = {
     sourceType: 'module',
   },
   rules: {
+    'react/jsx-filename-extension': 'off',
+    'react/jsx-one-expression-per-line': 'off',
+    'no-underscore-dangle': 'off',
+    'global-require': 'off',
+    'react/jsx-props-no-spreading': 'off',
   },
 };
