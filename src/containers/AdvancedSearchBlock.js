@@ -1,8 +1,9 @@
 import React from 'react';
 import styled from '@emotion/styled';
+import PropTypes from 'prop-types';
 import SearchComboBox from '../components /SearchComboBox';
 import { refreshIcon } from '../helpers/svgIcons';
-import useCustomSearchQuery from '../hooks/queries/useCustomSearch';
+// import useCustomSearchQuery from '../hooks/queries/useCustomSearch';
 
 const AdvancedSearchBlockContainer = styled.div`
   display: flex;
@@ -101,6 +102,26 @@ const AdvancedSearchBlock = ({
       )}
     </AdvancedSearchBlockContainer>
   );
+};
+
+AdvancedSearchBlock.propTypes = {
+  isOpen: PropTypes.bool,
+  setIsOpen: PropTypes.func.isRequired,
+  advanceQueryParameters: PropTypes.shape({
+    tags: PropTypes.arrayOf(PropTypes.string),
+    name: PropTypes.arrayOf(PropTypes.string),
+    type: PropTypes.arrayOf(PropTypes.string),
+    mainLink: PropTypes.arrayOf(PropTypes.string),
+    briefDescription: PropTypes.arrayOf(PropTypes.string),
+    leader: PropTypes.arrayOf(PropTypes.string),
+  }),
+  setAdvanceQueryParameters: PropTypes.func.isRequired,
+  onClickSearch: PropTypes.func.isRequired,
+};
+
+AdvancedSearchBlock.defaultProps = {
+  isOpen: false,
+  advanceQueryParameters: {},
 };
 
 export default AdvancedSearchBlock;
