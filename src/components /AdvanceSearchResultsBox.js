@@ -58,7 +58,7 @@ const DropDownLabel = styled.div`
   margin: auto;
 `;
 
-const SingleQueryResult = ({
+const SingleOption = ({
   onClickOption,
   label,
   isAddFolderBtn,
@@ -66,6 +66,7 @@ const SingleQueryResult = ({
   <SingleDropDownElementWrapper
     onClick={onClickOption}
     isAddFolderBtn={isAddFolderBtn}
+    aria-label={`choose ${label}`}
   >
     <DropDownLabel>{capitaliseFirstLetters(label)}</DropDownLabel>
   </SingleDropDownElementWrapper>
@@ -89,7 +90,7 @@ const AdvanceSearchResultsBox = ({
     <OptionsWrapper>
       {advanceSearchResults
           && advanceSearchResults.map(({ id, name }) => (
-            <SingleQueryResult
+            <SingleOption
               onClickOption={() => onClickOption(id)}
               label={name}
               key={id}
@@ -99,13 +100,13 @@ const AdvanceSearchResultsBox = ({
   </SearchBarContainer>
 );
 
-SingleQueryResult.propTypes = {
+SingleOption.propTypes = {
   onClickOption: PropTypes.func.isRequired,
   label: PropTypes.string.isRequired,
   isAddFolderBtn: PropTypes.bool,
 };
 
-SingleQueryResult.defaultProps = {
+SingleOption.defaultProps = {
   isAddFolderBtn: false,
 };
 
