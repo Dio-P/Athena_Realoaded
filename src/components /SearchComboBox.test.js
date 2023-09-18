@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen, act } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import SearchComboBox from './SearchComboBox';
 import useGetAllOfType from '../hooks/queries/useGetAllOfType';
@@ -42,19 +42,19 @@ describe('SearchComboBox', () => {
 
     expect(screen.getByRole('textbox')).toBeVisible();
     expect(
-      screen.queryByRole('button', { name: 'add type app to query' })
+      screen.queryByRole('button', { name: 'add type app to query' }),
     ).toBeVisible();
     expect(
-      screen.queryByRole('button', { name: 'add type company to query' })
+      screen.queryByRole('button', { name: 'add type company to query' }),
     ).toBeVisible();
     expect(
-      screen.queryByRole('button', { name: 'add type department to query' })
+      screen.queryByRole('button', { name: 'add type department to query' }),
     ).toBeVisible();
     expect(
-      screen.queryByRole('button', { name: 'add type subTeam to query' })
+      screen.queryByRole('button', { name: 'add type subTeam to query' }),
     ).toBeVisible();
     expect(
-      screen.queryByRole('button', { name: 'add type team to query' })
+      screen.queryByRole('button', { name: 'add type team to query' }),
     ).toBeVisible();
   });
 
@@ -62,7 +62,7 @@ describe('SearchComboBox', () => {
     render(<SearchComboBox {...propsWithChosenValues} />);
 
     expect(
-      screen.getByRole('button', { name: 'remove type app from query' })
+      screen.getByRole('button', { name: 'remove type app from query' }),
     ).toBeVisible();
   });
 

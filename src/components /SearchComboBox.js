@@ -1,5 +1,7 @@
-import React, { useMemo, useState } from 'react';
+import React, { useState } from 'react';
 import styled from '@emotion/styled';
+import PropTypes from 'prop-types';
+
 import styleVariables from '../styleVariables';
 import { deleteIcon, magnifyingGlassIcon } from '../helpers/svgIcons';
 import capitaliseFirstLetters from '../helpers/capitaliseFirstLetters';
@@ -78,37 +80,34 @@ const DropdownOption = ({
   label,
   isAddFolderBtn,
   ofType,
-}) => {
-  return (
-    <SingleDropDownElementWrapper
-      role="button"
-      aria-label={`add ${ofType} ${label} to query`} // is this a good aria-label?
-      onClick={onClickOption}
-      isAddFolderBtn={isAddFolderBtn}
-    >
-      <DropDownLabel>{capitaliseFirstLetters(label)}</DropDownLabel>
-    </SingleDropDownElementWrapper>
-  );
-}
+}) => (
+  <SingleDropDownElementWrapper
+    role="button"
+    aria-label={`add ${ofType} ${label} to query`} // is this a good aria-label?
+    onClick={onClickOption}
+    isAddFolderBtn={isAddFolderBtn}
+  >
+    <DropDownLabel>{capitaliseFirstLetters(label)}</DropDownLabel>
+  </SingleDropDownElementWrapper>
+);
 
 const ChosenEntity = ({
+  // rename value?
   value,
   onClickRemove,
-  ofType
-}) => {
-  return (
-    <ChosenEntityWrapper>
-      {capitaliseFirstLetters(value)}
-      <XBoxWrapper
-        onClick={onClickRemove}
-        role="button"
-        aria-label={`remove ${ofType} ${value} from query`} // is this all right?
-      >
-        {deleteIcon}
-      </XBoxWrapper>
-    </ChosenEntityWrapper>
-  );
-}
+  ofType,
+}) => (
+  <ChosenEntityWrapper>
+    {capitaliseFirstLetters(value)}
+    <XBoxWrapper
+      onClick={onClickRemove}
+      role="button"
+      aria-label={`remove ${ofType} ${value} from query`} // is this all right?
+    >
+      {deleteIcon}
+    </XBoxWrapper>
+  </ChosenEntityWrapper>
+);
 
 const SearchComboBox = ({
   ofType,
@@ -178,6 +177,43 @@ const SearchComboBox = ({
       )}
     </SearchBarContainer>
   );
-}
+};
+
+DropdownOption.propTypes = {
+  onClickOption: PropTypes.func.isRequired,
+  label: PropTypes.string.isRequired,
+  isAddFolderBtn: PropTypes.bool,
+  ofType: PropTypes.string.isRequired,
+};
+
+DropdownOption.defaultProps = {
+  isAddFolderBtn: false,
+};
+
+ChosenEntity.propTypes = {
+  value: PropTypes.string.isRequired,
+  onClickRemove: PropTypes.func.isRequired,
+  ofType: PropTypes.string.isRequired,
+};
+
+SearchComboBox.propTypes = {
+  ofType: PropTypes.string.isRequired,
+  chosenValues: PropTypes.shape({
+    id: PropTypes.string,
+    name: PropTypes.string,
+    type: PropTypes.string,
+    mainLink: PropTypes.string,
+    briefDescription: PropTypes.string,
+    teamsResponsible: PropTypes.arrayOf(PropTypes.string),
+    properties: PropTypes.shape({
+      tags: PropTypes.arrayOf(PropTypes.string),
+    }),
+  }),
+  onClickOption: PropTypes.func.isRequired,
+};
+
+SearchComboBox.defaultProps = {
+  chosenValues: {},
+};
 
 export default SearchComboBox;
