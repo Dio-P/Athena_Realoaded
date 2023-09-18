@@ -1,16 +1,16 @@
+import React from 'react';
 import { render, screen } from '@testing-library/react';
-import { MockedProvider } from '@apollo/react-testing'
+import { MockedProvider } from '@apollo/react-testing';
 
 import MenuBar from './MenuBar';
-
 
 describe('Menu Bar', () => {
   test('Should render breadcrumbs menu', () => {
     render(
       <MockedProvider addTypename={false}>
         <MenuBar />
-      </MockedProvider>
-    ) 
+      </MockedProvider>,
+    );
 
     expect(screen.getByLabelText('Breadcrumbs Menu')).toBeVisible();
   });
@@ -19,11 +19,9 @@ describe('Menu Bar', () => {
     render(
       <MockedProvider addTypename={false}>
         <MenuBar />
-      </MockedProvider>
-    ) 
+      </MockedProvider>,
+    );
 
     expect(screen.getByLabelText('Search Bar')).toBeVisible();
   });
-})
-
-// what are the best practises for adding aria label?
+});
