@@ -1,10 +1,9 @@
-import { useState, useMemo, useEffect } from "react";
-import styled from "@emotion/styled";
-import { warningIcon, magnifyingGlassIcon } from "../helpers/svgIcons";
-import styleVariables from "../styleVariables";
-import capitaliseFirstLetters from "../helpers/capitaliseFirstLetters";
+import React from 'react';
+import styled from '@emotion/styled';
+import PropTypes from 'prop-types';
 
-// WarningElement element styles \/
+import { warningIcon } from '../helpers/svgIcons';
+// import styleVariables from '../styleVariables';
 
 const WarningElementWrapper = styled.div`
   color: red;
@@ -23,56 +22,48 @@ const WarningIconContainer = styled.div`
   width: 20px;
 `;
 
-// useSearchBar element styles \/
+// const SearchBarWrapper = styled.div`
+//   display: flex;
+//   align-items: center;
+//   width: 200px;
+//   margin-bottom: 3px;
+// `;
 
-const SearchBarWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  width: 200px;
-  margin-bottom: 3px;
-`;
+// const MagnifyingGlassIconWrapper = styled.div`
+//   width: 23px;
+//   height: 23px;
+//   padding: 3px;
+// `;
 
-const MagnifyingGlassIconWrapper = styled.div`
-  width: 23px;
-  height: 23px;
-  padding: 3px;
-`;
+// const SearchInput = styled.input`
+// width: 100%;
+// margin-right: 3px;
+// border-radius: ${styleVariables.borderRadious.main};
+// `;
 
-const SearchInput = styled.input`
-width: 100%;
-margin-right: 3px;
-border-radius: ${styleVariables.borderRadious.main};
-`;
+const WarningElement = ({ info }) => (
+  <WarningElementWrapper>
+    <WarningHeaderContainer>
+      <WarningIconContainer>
+        {warningIcon}
+      </WarningIconContainer>
+      <strong>Warning: </strong>
+    </WarningHeaderContainer>
+    {` ${info}`}
+  </WarningElementWrapper>
+);
 
-const DropDownWrapperContainer = styled.div`
-  display: flex;
-`;
-
-export const WarningElement = ({ info }) => {
-  return (
-    <WarningElementWrapper>
-      <WarningHeaderContainer>
-        <WarningIconContainer>
-          {warningIcon}
-        </WarningIconContainer>
-        <strong>Warning: </strong>  
-      </WarningHeaderContainer>
-      {` ${info}`}
-    </WarningElementWrapper>
-  ) 
-};
-
-export const SearchBar = ({searchingQuery, search}) => (
-  <SearchBarWrapper>
-  <MagnifyingGlassIconWrapper>{magnifyingGlassIcon}</MagnifyingGlassIconWrapper>
-  <SearchInput
-    type="text"
-    name="dropDownSearch"
-    value={searchingQuery}
-    onChange={search}
-  />
-</SearchBarWrapper>
-); 
+// export const SearchBar = ({ searchingQuery, search }) => (
+//   <SearchBarWrapper>
+//     <MagnifyingGlassIconWrapper>{magnifyingGlassIcon}</MagnifyingGlassIconWrapper>
+//     <SearchInput
+//       type="text"
+//       name="dropDownSearch"
+//       value={searchingQuery}
+//       onChange={search}
+//     />
+//   </SearchBarWrapper>
+// );
 
 // export const DropDownWrapper = ({Component, isOpen, setIsOpen}) => (
 //   <DropDownWrapperContainer onClick={() => setIsOpen(false)}>
@@ -80,4 +71,9 @@ export const SearchBar = ({searchingQuery, search}) => (
 //       <Component/>
 //     }
 //   </DropDownWrapperContainer>
-// ); 
+// );
+WarningElement.propTypes = {
+  info: PropTypes.string.isRequired,
+};
+
+export default WarningElement;

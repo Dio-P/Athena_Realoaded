@@ -118,10 +118,8 @@ const SearchComboBox = ({
   const [allOptionsOfType] = useGetAllOfType(ofType, queryString);
 
   const removeChoice = (choiceToRemove) => {
-    console.log('remove choice clicked ', choiceToRemove);
     const { [ofType]: ofThisType, ...typesWithoutThis } = chosenValues;
 
-    console.log('ofThisType@', ofThisType);
     const updateChoicesInField = () => ofThisType.filter(
       (choice) => choice !== choiceToRemove,
     );

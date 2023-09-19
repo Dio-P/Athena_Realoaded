@@ -47,7 +47,7 @@ describe('Entity', () => {
         <Entity {...defaultProps} />
       </MockedProvider>,
     );
-    screen.debug();
+
     userEvent.click(screen.getByLabelText('Authoring'));
 
     expect(defaultProps.renderChosenEntity).toHaveBeenCalledWith(
