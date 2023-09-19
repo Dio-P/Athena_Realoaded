@@ -1,10 +1,18 @@
-import capitaliseFirstLetters from "../helpers/capitaliseFirstLetters";
-import styled from "@emotion/styled";
-import styleVariables from "../styleVariables";
-import { tickIcon, arrowDownIcon, arrowUpIcon, deleteIcon } from "../helpers/svgIcons";
-import { WarningElement } from "./specialElements";
-import { defaultProps } from "default-props";
-import PropTypes from "prop-types";
+import React from 'react';
+import styled from '@emotion/styled';
+import PropTypes from 'prop-types';
+
+import capitaliseFirstLetters from '../helpers/capitaliseFirstLetters';
+import styleVariables from '../styleVariables';
+import {
+  tickIcon,
+  arrowDownIcon,
+  arrowUpIcon,
+  deleteIcon,
+} from '../helpers/svgIcons';
+// import WarningElement from './specialElements';
+// import { defaultProps } from 'default-props';
+// import PropTypes from 'prop-types';
 
 const dropDownButton = {
   ContainerWrapper: styled.div`
@@ -154,37 +162,43 @@ const TagBtn = {
     height: 100%;
     width: 25px;
     margin: 1px 2px 1px 2px;
-  `
-}
+  `,
+};
 
-const TagButton = ({label, onClickFunction, aria, withDelete, type}) => {
-  console.log("in tag button @", label, onClickFunction, aria, withDelete);
-  return (
-    <TagBtn.Container
+const TagButton = ({
+  label,
+  onClickFunction,
+  aria,
+  withDelete,
+  type,
+}) => (
+  <TagBtn.Container
     aria-label={aria || `${type} button`}
-    >
-      {label}
-     {withDelete && 
-      <TagBtn.XBoxWrapper
-        onClick={onClickFunction}
-      >
-        {deleteIcon}
-      </TagBtn.XBoxWrapper>
-      }
-    </TagBtn.Container>
-  );
-};
-
-const SmallButton = ({ icon, onClickFunction, type, aria }) => {
-  return (
-    <smallBtn.Wrapper
+  >
+    {label}
+    {withDelete && (
+    <TagBtn.XBoxWrapper
       onClick={onClickFunction}
-      aria-label={aria || `${icon.props["aria-label"]} button`}
     >
-      <smallBtn.IconContainer>{icon}</smallBtn.IconContainer>
-    </smallBtn.Wrapper>
-  );
-};
+      {deleteIcon}
+    </TagBtn.XBoxWrapper>
+    )}
+  </TagBtn.Container>
+);
+
+const SmallButton = ({
+  icon,
+  onClickFunction,
+  // type,
+  aria,
+}) => (
+  <smallBtn.Wrapper
+    onClick={onClickFunction}
+    aria-label={aria || `${icon.props['aria-label']} button`}
+  >
+    <smallBtn.IconContainer>{icon}</smallBtn.IconContainer>
+  </smallBtn.Wrapper>
+);
 
 const MainButton = ({
   CustomButtonContainer,
@@ -193,25 +207,23 @@ const MainButton = ({
   clicked,
   onClickFunction,
   aria,
-}) => {
-  return (
-    <mainBtn.Wrapper
-      onClick={onClickFunction}
-      aria-label={aria || `${type} button`}
-    >
-      <CustomButtonContainer>
-        <mainBtn.LabelContainer>
-          <mainBtn.Label>{capitaliseFirstLetters(label)}</mainBtn.Label>
-        </mainBtn.LabelContainer>
-        {type === "checkbox" && (
-          <mainBtn.TickBoxWrapper>
-            <mainBtn.TickBox>{clicked && tickIcon}</mainBtn.TickBox>
-          </mainBtn.TickBoxWrapper>
-        )}
-      </CustomButtonContainer>
-    </mainBtn.Wrapper>
-  );
-};
+}) => (
+  <mainBtn.Wrapper
+    onClick={onClickFunction}
+    aria-label={aria || `${type} button`}
+  >
+    <CustomButtonContainer>
+      <mainBtn.LabelContainer>
+        <mainBtn.Label>{capitaliseFirstLetters(label)}</mainBtn.Label>
+      </mainBtn.LabelContainer>
+      {type === 'checkbox' && (
+        <mainBtn.TickBoxWrapper>
+          <mainBtn.TickBox>{clicked && tickIcon}</mainBtn.TickBox>
+        </mainBtn.TickBoxWrapper>
+      )}
+    </CustomButtonContainer>
+  </mainBtn.Wrapper>
+);
 
 const DropDownButton = ({
   onClickFunction,
@@ -221,10 +233,10 @@ const DropDownButton = ({
   type,
   aria,
 }) => {
-  const folderName = freshlyAddedValue?.name || chosenValue
+  const folderName = freshlyAddedValue?.name || chosenValue;
   const dropDownButtonTitle = (freshlyAddedValue || chosenValue)
     ? `Folder to display new part in: ${capitaliseFirstLetters(folderName)}`
-    : "Choose a folder to display part in";
+    : 'Choose a folder to display part in';
   return (
     <dropDownButton.ContainerWrapper aria-label={aria || `${type} button`}>
       <dropDownButton.Container onClick={onClickFunction}>
@@ -243,13 +255,13 @@ const MultiBtnComp = ({
   type,
   icon,
   onClickFunction,
-  renderConditional,
+  // renderConditional,
   isMenuOpen,
   freshlyAddedValue,
   chosenValue,
   aria,
 }) => {
-  if (type === "small") {
+  if (type === 'small') {
     return (
       <SmallButton
         icon={icon}
@@ -259,7 +271,7 @@ const MultiBtnComp = ({
       />
     );
   }
-  if (type === "add") {
+  if (type === 'add') {
     return (
       <MainButton
         CustomButtonContainer={mainBtn.AddingVersionContainer}
@@ -271,7 +283,7 @@ const MultiBtnComp = ({
       />
     );
   }
-  if (type === "checkbox" && !!clicked) {
+  if (type === 'checkbox' && !!clicked) {
     return (
       <MainButton
         CustomButtonContainer={mainBtn.ClickedVersionContainer}
@@ -283,7 +295,7 @@ const MultiBtnComp = ({
       />
     );
   }
-  if (type === "dropDown") {
+  if (type === 'dropDown') {
     return (
       <DropDownButton
         onClickFunction={onClickFunction}
@@ -292,22 +304,22 @@ const MultiBtnComp = ({
         chosenValue={chosenValue}
         type={type}
         aria={aria}
-        providingAdditionalOption={true}
+        providingAdditionalOption
       />
     );
   }
-  if (type === "tagWithX") {
+  if (type === 'tagWithX') {
     return (
       <TagButton
         onClickFunction={onClickFunction}
         label={label}
         type={type}
         aria={aria}
-        withDelete={true}
+        withDelete
       />
     );
   }
-  if (type === "tag") {
+  if (type === 'tag') {
     return (
       <TagButton
         label={label}
@@ -327,24 +339,97 @@ const MultiBtnComp = ({
         onClickFunction={onClickFunction}
         aria={aria}
       />
-      {/* {renderConditional(label) && <WarningElement info="will be deleted if not choosen" />} */}
+      {/* {renderConditional(label) && <WarningElement info='will be deleted if not choosen' />} */}
     </div>
   );
 };
 
 export default MultiBtnComp;
 
-MultiBtnComp.propTypes = {};
+TagButton.propTypes = {
+  label: PropTypes.string,
+  onClickFunction: PropTypes.func.isRequired,
+  aria: PropTypes.string,
+  withDelete: PropTypes.bool,
+  type: PropTypes.string,
+};
 
-// make everything left align
-// for the parts:
-// make a greed
-// to be scrolling down in case of more than two rows of three
-// add a finder
-// for the folder:
-// make it a dropdown
-// when clicked, the same functionality ass the tick but instead of tick same green smaller shape as the white box
-// make this a dropdown
-// to add new have a popup with the existing box
-// instead of back to existing folders have a pink X top right
-// "if you leave this folder empty it will be deleted"
+TagButton.defaultProps = {
+  label: '...',
+  aria: '',
+  withDelete: false,
+  type: 'checkbox', // do we need that there
+};
+
+SmallButton.propTypes = {
+  icon: PropTypes.instanceOf(Element),
+  onClickFunction: PropTypes.func.isRequired,
+  // type: PropTypes.string, // do we need that there
+  aria: PropTypes.string,
+};
+
+SmallButton.defaultProps = {
+  icon: <> </>,
+  // type: '',
+  aria: '',
+};
+
+MainButton.propTypes = {
+  CustomButtonContainer: PropTypes.instanceOf(Element), // is this the right value?
+  type: PropTypes.string, // ??
+  label: PropTypes.string,
+  clicked: PropTypes.bool,
+  onClickFunction: PropTypes.func.isRequired,
+  aria: PropTypes.string,
+};
+
+MainButton.defaultProps = {
+  CustomButtonContainer: mainBtn.PlainVersionContainer,
+  type: '', // ??
+  label: '...',
+  clicked: false,
+  aria: '',
+};
+
+DropDownButton.propTypes = {
+  onClickFunction: PropTypes.func.isRequired,
+  isMenuOpen: PropTypes.bool,
+  freshlyAddedValue: PropTypes.string, // ???
+  chosenValue: PropTypes.string, // ???
+  type: PropTypes.string, // ??
+  aria: PropTypes.string,
+};
+
+DropDownButton.defaultProps = {
+  isMenuOpen: false,
+  freshlyAddedValue: '', // ??
+  chosenValue: '',
+  type: '', // ??
+  aria: '', // ??
+};
+
+MultiBtnComp.propTypes = {
+  label: PropTypes.string,
+  clicked: PropTypes.bool,
+  type: PropTypes.string,
+  icon: PropTypes.instanceOf(Element),
+  onClickFunction: PropTypes.func.isRequired,
+  // renderConditional: PropTypes.,
+  isMenuOpen: PropTypes.bool,
+  freshlyAddedValue: PropTypes.string,
+  chosenValue: PropTypes.string,
+  aria: PropTypes.string,
+};
+MultiBtnComp.defaultProps = {
+  label: '...',
+  clicked: false,
+  type: '', // ??
+  icon: <> </>,
+  // renderConditional: PropTypes.,
+  isMenuOpen: false,
+  freshlyAddedValue: '',
+  chosenValue: '',
+  aria: '',
+};
+
+// 'if you leave this folder empty it will be deleted'
