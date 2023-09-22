@@ -207,6 +207,7 @@ const MainButton = ({
   clicked,
   onClickFunction,
   aria,
+  // change all the above to 'aria-labelledby': ariaLabelledBy,
 }) => (
   <mainBtn.Wrapper
     onClick={onClickFunction}
@@ -344,8 +345,6 @@ const MultiBtnComp = ({
   );
 };
 
-export default MultiBtnComp;
-
 TagButton.propTypes = {
   label: PropTypes.string,
   onClickFunction: PropTypes.func.isRequired,
@@ -432,4 +431,9 @@ MultiBtnComp.defaultProps = {
   aria: '',
 };
 
+export default MultiBtnComp;
+
+// refactoring:
 // 'if you leave this folder empty it will be deleted'
+// change all the arias and aria labelledby props to this syntax 'aria-labelledby': ariaLabelledBy,
+// create emotion css components to refer partly to avoid those huge emotion blocks at the top.
