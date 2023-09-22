@@ -334,7 +334,7 @@ const MultiBtnComp = ({
     <div>
       <MainButton
         CustomButtonContainer={mainBtn.PlainVersionContainer}
-        type={type}
+        type={type} // why would anyone pass a type here?
         label={label}
         clicked={clicked}
         onClickFunction={onClickFunction}
@@ -437,3 +437,4 @@ export default MultiBtnComp;
 // 'if you leave this folder empty it will be deleted'
 // change all the arias and aria labelledby props to this syntax 'aria-labelledby': ariaLabelledBy,
 // create emotion css components to refer partly to avoid those huge emotion blocks at the top.
+// change the if statements of the main component to swap
