@@ -70,6 +70,7 @@ const useChildrenByIdsSearch = () => {
       console.error('error', error);
     }
     if (data?.getChildrenById) {
+      console.log('error£$', error);
       setReturnedChildren(data.getChildrenById);
     }
   }, [data, error]);
