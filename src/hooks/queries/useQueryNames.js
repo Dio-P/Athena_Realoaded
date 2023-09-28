@@ -1,6 +1,6 @@
-import { useState, useEffect } from "react";
-import { useLazyQuery } from "@apollo/client";
-import gql from "graphql-tag";
+import { useState, useEffect } from 'react';
+import { useLazyQuery } from '@apollo/client';
+import gql from 'graphql-tag';
 
 export const QUERY_NAMES_BY_QUERYSTRING = gql`
   query ($queryString: String!) {
@@ -37,42 +37,41 @@ export const QUERY_NAMES_BY_QUERYSTRING = gql`
         }
       }
     }
-  }`
+  }`;
 
 const useQueryNames = () => {
-  const [returnedNames, setReturnedNames] = useState("");
+  const [returnedNames, setReturnedNames] = useState('');
 
-  const [query, { loading, error, data, refetch }] = useLazyQuery(
-    QUERY_NAMES_BY_QUERYSTRING
+  const [query, {
+    loading, error, data, refetch,
+  }] = useLazyQuery(
+    QUERY_NAMES_BY_QUERYSTRING,
   );
 
-
   useEffect(() => {
-    if(data) {
+    if (data) {
       setReturnedNames(data.filterNamesBySearchString);
-    } if(error) {
-      console.error(error)
-    } if(loading) {
-      console.log("loading");
+    } if (error) {
+      console.error(error);
+    } if (loading) {
+      console.log('loading');
     }
   }, [data, error, loading]);
 
   const queryNames = (queryString) => {
-    if(!returnedNames){
-      console.log("to query");
+    if (!returnedNames) {
+      console.log('to query');
       query({
         variables: { queryString },
-      })
-
-    } if (queryString==="") {
-      setReturnedNames("");
-
-    }else {
-      refetch({queryString})
+      });
+    } if (queryString === '') {
+      setReturnedNames('');
+    } else {
+      refetch({ queryString });
     }
-  }
+  };
 
-  return { returnedNames, queryNames }
-}
+  return { returnedNames, queryNames };
+};
 
-export default useQueryNames
+export default useQueryNames;

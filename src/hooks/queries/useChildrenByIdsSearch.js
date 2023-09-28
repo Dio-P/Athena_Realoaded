@@ -44,7 +44,7 @@ const useChildrenByIdsSearch = () => {
   const [returnedChildren, setReturnedChildren] = useState('');
 
   const [query, {
-    loading, error, data, refetch,
+    error, data, refetch,
   }] = useLazyQuery(
     SEARCH_CHILDREN_BY_ID_QUERY,
   );

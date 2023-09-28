@@ -1,5 +1,5 @@
-import { array } from 'prop-types';
-import { useEffect, useMemo, useState } from 'react';
+// import { array } from 'prop-types';
+import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
 // const MOCK_DEFAULT_STARTING_ENTITY_ID = '4';
@@ -20,16 +20,16 @@ const useParamsHelper = (paramsCustomObj, setParamsCustomObj) => {
   const isInBreadcrumb = (entityName) => Object.keys(paramsCustomObj).includes(entityName);
 
   const createUpdatedParamsObjs = (updatedParamsNames, newEntId, paramsObj) => {
-    console.log('paramsObj', paramsObj);
+    // console.log('paramsObj', paramsObj);
     let newObj = {};
     const getId = (name) => {
       console.log('isInBreadcrumb(name)', name, isInBreadcrumb(name));
       return isInBreadcrumb(name) ? paramsObj[name].id : newEntId;
     };
 
-    updatedParamsNames.map((name, index) => 
-    (newObj = { ...newObj, [name]: { id: getId(name), index, name } })
-    );
+    updatedParamsNames.forEach((name, index) => {
+      newObj = { ...newObj, [name]: { id: getId(name), index, name } };
+    });
     return newObj;
   };
 

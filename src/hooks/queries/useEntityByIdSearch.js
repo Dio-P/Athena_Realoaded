@@ -1,6 +1,6 @@
-import { useState, useEffect } from "react";
-import { useLazyQuery } from "@apollo/client";
-import gql from "graphql-tag";
+import { useState, useEffect } from 'react';
+import { useLazyQuery } from '@apollo/client';
+import gql from 'graphql-tag';
 
 export const SEARCH_ENTITY_BY_ID_QUERY = gql`
   query ($id: ID!) {
@@ -41,23 +41,23 @@ export const SEARCH_ENTITY_BY_ID_QUERY = gql`
 `;
 
 const useEntityByIdSearch = () => {
-  const [returnedEntity, setReturnedEntity] = useState("");
+  const [returnedEntity, setReturnedEntity] = useState('');
 
-  const [query, { loading, error, data, refetch }] = useLazyQuery(
-    SEARCH_ENTITY_BY_ID_QUERY
+  const [query, { error, data, refetch }] = useLazyQuery(
+    SEARCH_ENTITY_BY_ID_QUERY,
   );
 
   const searchEntity = (id) => {
-    console.log("inside search entity ");
-    if(!returnedEntity) {
-      console.log("to query");
+    console.log('inside search entity ');
+    if (!returnedEntity) {
+      console.log('to query');
       query({
         variables: { id },
       });
     } if (returnedEntity) {
-      console.log("to refetch");
-      console.log("id", id);
-      refetch({ id })
+      console.log('to refetch');
+      console.log('id', id);
+      refetch({ id });
     }
   };
 
@@ -66,7 +66,7 @@ const useEntityByIdSearch = () => {
 
     // }
     if (error) {
-      console.error("error", error)
+      console.error('error', error);
     }
     if (data?.getEntityById) {
       setReturnedEntity(data.getEntityById);
@@ -82,7 +82,7 @@ const useEntityByIdSearch = () => {
   //     //     folderToBeDisplayedIn: Number(part.folderToBeDisplayedIn)
   //     //     }))
   //     const newApp = data.getAppById;
-  //     console.log("newApp$$$$", newApp);
+  //     console.log('newApp$$$$', newApp);
   //     // check if you are indeed getting strings here
   //     setAppToDisplay({ ...newApp });
   //   }
