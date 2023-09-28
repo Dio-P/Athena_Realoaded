@@ -200,7 +200,7 @@ SearchComboBox.propTypes = {
     id: PropTypes.string,
     name: PropTypes.arrayOf(PropTypes.string),
     type: PropTypes.arrayOf(PropTypes.string),
-    mainLink: PropTypes.arrayOf(PropTypes.string),
+    mainLinks: PropTypes.arrayOf(PropTypes.string),
     briefDescription: PropTypes.string,
     teamsResponsible: PropTypes.arrayOf(PropTypes.string),
     properties: PropTypes.shape({

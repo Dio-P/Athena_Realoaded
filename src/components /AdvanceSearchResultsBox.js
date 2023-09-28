@@ -115,18 +115,19 @@ AdvanceSearchResultsBox.propTypes = {
     id: PropTypes.string,
     name: PropTypes.string,
     type: PropTypes.string,
-    mainLink: PropTypes.arrayOf(PropTypes.string),
+    mainLinks: PropTypes.arrayOf(PropTypes.string),
     briefDescription: PropTypes.string,
     teamsResponsible: PropTypes.arrayOf(PropTypes.string),
     properties: PropTypes.shape({
       tags: PropTypes.arrayOf(PropTypes.string),
     }),
   })),
-  onClickOption: PropTypes.func.isRequired,
+  onClickOption: PropTypes.func,
 };
 
 AdvanceSearchResultsBox.defaultProps = {
   advanceSearchResults: {},
+  onClickOption: () => {},
 };
 
 export default AdvanceSearchResultsBox;

@@ -8,7 +8,7 @@ export const SEARCH_CHILDREN_BY_ID_QUERY = gql`
       id
       name
       type
-      mainLink
+      mainLinks
       briefDescription
       teamsResponsible
       properties {

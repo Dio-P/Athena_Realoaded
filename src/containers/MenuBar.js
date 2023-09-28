@@ -31,12 +31,14 @@ MenuBar.propTypes = {
       name: PropTypes.string,
     }),
   }),
-  renderChosenEntity: PropTypes.func.isRequired,
-  searchEntity: PropTypes.func.isRequired,
+  renderChosenEntity: PropTypes.func,
+  searchEntity: PropTypes.func,
 };
 
 MenuBar.defaultProps = {
   paramsCustomObj: {},
+  renderChosenEntity: () => {},
+  searchEntity: () => {},
 };
 
 export default MenuBar;

@@ -5,17 +5,19 @@ import App from './App';
 import useGetAllOfType from './hooks/queries/useGetAllOfType';
 import useParamsHelper from './hooks/useParamsHelper';
 import useEntityByIdSearch from './hooks/queries/useEntityByIdSearch';
+import useChildrenByIdsSearch from './hooks/queries/useChildrenByIdsSearch';
 
 jest.mock('./hooks/queries/useGetAllOfType');
 jest.mock('./hooks/useParamsHelper');
 jest.mock('./hooks/queries/useEntityByIdSearch');
+jest.mock('./hooks/queries/useChildrenByIdsSearch');
 
 const returnedEntity = {
   id: '4',
   name: 'CPub',
   type: 'team',
   leader: 'Danny Morgan',
-  mainLink: ['www.sommebbcDoc.co.uk'],
+  mainLinks: ['www.sommebbcDoc.co.uk'],
   briefDescription: 'Content Publishing',
   teamsResponsible: undefined,
   properties: {
@@ -49,6 +51,45 @@ const returnedEntity = {
   },
 };
 
+const returnedChildren = [{
+  id: '5',
+  name: 'Authoring',
+  type: 'subTeam',
+  leader: 'Matt Greenham',
+  mainLinks: ['www.authoringSlack.Chanel.co.uk'],
+  briefDescription: 'Content Publishing',
+  teamsResponsible: undefined,
+  properties: {
+    docs: ['2'],
+    tags: [],
+    technologies: [],
+  },
+  children: ['6', '7'],
+  connections: {
+    audienceFacing: false,
+    receivesDataFrom: undefined,
+    givesDataTo: undefined,
+  },
+  interactions: {
+    isLinkUpToDate: true,
+    comments: [
+      {
+        timeStamp: 'some date and time',
+        userId: 'some user Id or name',
+        text: 'some text',
+      },
+    ],
+    requestedActions: [
+      {
+        timeStamp: 'some date and time',
+        typeOfAction: 'some action type',
+        description: 'some coments',
+        requestingUserId: 'some user Id or name',
+      },
+    ],
+  },
+}];
+
 const searchEntity = jest.fn();
 
 beforeEach(() => {
@@ -61,6 +102,10 @@ beforeEach(() => {
   }));
   useEntityByIdSearch.mockImplementation(() => ([
     returnedEntity,
+    searchEntity,
+  ]));
+  useChildrenByIdsSearch.mockImplementation(() => ([
+    returnedChildren,
     searchEntity,
   ]));
 });

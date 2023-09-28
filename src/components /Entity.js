@@ -43,24 +43,26 @@ const Entity = ({
   }, [entity]);
 
   return (
-    <EntityContainer aria-label={`${entity.name}`}>
-      <ThisEntityContainer>
-        <h1>{capitaliseFirstLetters(entity.name)}</h1>
-        <EntityInfoBox>
-          <div>
-            description:
-          </div>
-          {/* {editDescription? */}
-          {/* <input value={entity.briefDescription}/> */}
-          {/* : */}
-          <div>
-            {entity.briefDescription}
-          </div>
-          {/* } */}
-        </EntityInfoBox>
-      </ThisEntityContainer>
+    entity
+      && (
+        <EntityContainer aria-label={`${entity.name}`}>
+          <ThisEntityContainer>
+            <h1>{capitaliseFirstLetters(entity.name)}</h1>
+            <EntityInfoBox>
+              <div>
+                description:
+              </div>
+              {/* {editDescription? */}
+              {/* <input value={entity.briefDescription}/> */}
+              {/* : */}
+              <div>
+                {entity.briefDescription}
+              </div>
+              {/* } */}
+            </EntityInfoBox>
+          </ThisEntityContainer>
 
-      {returnedChildren
+          {returnedChildren
       && (
       <EntityChildrenBox>
         {returnedChildren.map((childEntity) => (
@@ -76,7 +78,8 @@ const Entity = ({
       </EntityChildrenBox>
       )}
 
-    </EntityContainer>
+        </EntityContainer>
+      )
   );
 };
 
@@ -86,7 +89,7 @@ Entity.propTypes = {
     name: PropTypes.string,
     type: PropTypes.string,
     leader: PropTypes.string,
-    mainLink: PropTypes.arrayOf(PropTypes.string),
+    mainLinks: PropTypes.arrayOf(PropTypes.string),
     briefDescription: PropTypes.string,
     teamsResponsible: PropTypes.arrayOf(PropTypes.string),
     properties: PropTypes.shape({
@@ -118,7 +121,7 @@ Entity.propTypes = {
         },
       )),
     }),
-  }).isRequired,
+  }),
   // setDisplayedEntity: PropTypes.func.isRequired,
   paramsCustomObj: PropTypes.shape({
     cPub: PropTypes.shape({
@@ -131,6 +134,7 @@ Entity.propTypes = {
 };
 
 Entity.defaultProps = {
+  entity: undefined,
   paramsCustomObj: {},
 };
 

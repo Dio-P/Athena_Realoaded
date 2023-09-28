@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { render, screen, act } from '@testing-library/react';
 import { MockedProvider } from '@apollo/react-testing';
 import userEvent from '@testing-library/user-event';
 
@@ -26,14 +26,16 @@ describe('Search Bar', () => {
     expect(screen.getByLabelText('search for Entity')).toBeVisible();
   });
 
-  test('Should render AdvanceSearchResultsBox if Advance Search Bar is Open', async () => {
+  test('Should render AdvanceSearchResultsBox if Advance Search Bar is Open', () => {
     render(
       <MockedProvider addTypename={false}>
         <SearchBar />
       </MockedProvider>,
     );
 
-    await userEvent.click(screen.getByLabelText('Advanced Search'));
+    act(() => {
+      userEvent.click(screen.getByLabelText('Advanced Search'));
+    });
     expect(screen.getByLabelText('Advance Search Results')).toBeVisible();
   });
 });

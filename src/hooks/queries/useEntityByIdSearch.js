@@ -8,7 +8,7 @@ export const SEARCH_ENTITY_BY_ID_QUERY = gql`
       id
       name
       type
-      mainLink
+      mainLinks
       briefDescription
       teamsResponsible
       properties {
@@ -41,7 +41,7 @@ export const SEARCH_ENTITY_BY_ID_QUERY = gql`
 `;
 
 const useEntityByIdSearch = () => {
-  const [returnedEntity, setReturnedEntity] = useState('');
+  const [returnedEntity, setReturnedEntity] = useState(undefined);
 
   const [query, { error, data, refetch }] = useLazyQuery(
     SEARCH_ENTITY_BY_ID_QUERY,
@@ -72,21 +72,6 @@ const useEntityByIdSearch = () => {
       setReturnedEntity(data.getEntityById);
     }
   }, [data, error]);
-
-  // useEffect(() => {
-  //   if (data && data.getAppById) {
-  //     // const newApp = {
-  //     //   ...data.getAppById,
-  //     //   parts: data.getAppById.parts.map((part) => ({
-  //     //     ...part,
-  //     //     folderToBeDisplayedIn: Number(part.folderToBeDisplayedIn)
-  //     //     }))
-  //     const newApp = data.getAppById;
-  //     console.log('newApp$$$$', newApp);
-  //     // check if you are indeed getting strings here
-  //     setAppToDisplay({ ...newApp });
-  //   }
-  // }, [data]);
 
   return [returnedEntity, searchEntity];
 };

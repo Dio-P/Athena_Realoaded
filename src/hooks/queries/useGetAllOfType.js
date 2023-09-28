@@ -8,8 +8,8 @@ export const GET_ALL_OF_TYPE = gql`
   }`;
 
 const useGetAllOfType = (ofType, queryString) => {
-  const [allOfType, setAllOfType] = useState('');
-  const [filteredResults, setFilteredResults] = useState('');
+  const [allOfType, setAllOfType] = useState(undefined);
+  const [filteredResults, setFilteredResults] = useState(undefined);
 
   const [query, { loading, error, data }] = useLazyQuery(
     GET_ALL_OF_TYPE,
@@ -17,6 +17,7 @@ const useGetAllOfType = (ofType, queryString) => {
 
   useEffect(() => {
     if (ofType) {
+      console.log('ofType@', ofType);
       query({
         variables: { ofType },
       });
@@ -36,7 +37,7 @@ const useGetAllOfType = (ofType, queryString) => {
 
   useEffect(() => {
     if (allOfType) {
-      console.log('inside all of type');
+      console.log('inside all of type@@', allOfType);
       if (!queryString) {
         console.log('no query string ');
         setFilteredResults('');

@@ -19,11 +19,11 @@ const SearchBarContainer = styled.div`
 // when advanced search is open general search is disabled and used only to display results
 const SearchBar = ({ searchEntity }) => {
   const [isAdvancedSearchBlockOpen, setIsAdvancedSearchBlockOpen] = useState(false);
-  const [advanceQueryParameters, setAdvanceQueryParameters] = useState('');
+  const [advanceQueryParameters, setAdvanceQueryParameters] = useState(undefined);
   // const { returnedEntities, filterEntities } = useFilterEntityByQueryString();
   // here should go the query that will trigger the advance search.
 
-  const [entityToGet, setEntityToGet] = useState('');
+  const [entityToGet, setEntityToGet] = useState(undefined);
 
   const {
     returnedEntities: returnedAdvancedSearchOptions,
@@ -65,7 +65,11 @@ const SearchBar = ({ searchEntity }) => {
 };
 
 SearchBar.propTypes = {
-  searchEntity: PropTypes.func.isRequired,
+  searchEntity: PropTypes.func,
+};
+
+SearchBar.defaultProps = {
+  searchEntity: () => {},
 };
 
 export default SearchBar;

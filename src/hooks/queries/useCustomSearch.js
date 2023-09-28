@@ -4,12 +4,12 @@ import gql from 'graphql-tag';
 
 export const QUERY_ADVANCED_CUSTOME_SEARCH = gql`
 # if working change it to an array of strings
-  query ($tags: [String], $name: [String], $type: [String], $leader: [String], $teamsResponsible: [String], $mainLink: [String]) {
-    customEntitySearch(tags: $tags, name: $name, type: $type, leader: $leader, teamsResponsible: $teamsResponsible, mainLink: $mainLink) {
+  query ($tags: [String], $name: [String], $type: [String], $leader: [String], $teamsResponsible: [String], $mainLinks: [String]) {
+    customEntitySearch(tags: $tags, name: $name, type: $type, leader: $leader, teamsResponsible: $teamsResponsible, mainLinks: $mainLinks) {
       id
       name
       type
-      mainLink
+      mainLinks
       briefDescription
       teamsResponsible
       properties {
@@ -21,24 +21,24 @@ export const QUERY_ADVANCED_CUSTOME_SEARCH = gql`
 
 const useCustomSearchQuery = () => {
   // this needs to get the object with the choosenValues
-  const [returnedEntities, setReturnedEntities] = useState('');
+  const [returnedEntities, setReturnedEntities] = useState([]);
 
   const [query, { error, data, refetch }] = useLazyQuery(
     QUERY_ADVANCED_CUSTOME_SEARCH,
   );
 
   const trigerAdvancedSearch = ({
-    tags, name, type, leader, teamsResponsible, mainLink,
+    tags, name, type, leader, teamsResponsible, mainLinks,
   }) => {
     if (returnedEntities.length === 0) {
       query({
         variables: {
-          tags, name, type, leader, teamsResponsible, mainLink,
+          tags, name, type, leader, teamsResponsible, mainLinks,
         },
       });
     } else {
       refetch({
-        tags, name, type, leader, teamsResponsible, mainLink,
+        tags, name, type, leader, teamsResponsible, mainLinks,
       });
     }
   };

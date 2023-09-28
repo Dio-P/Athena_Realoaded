@@ -18,7 +18,7 @@ const App = () => {
     displayedEntityId, renderChosenEntity, setSearchParams,
   } = useParamsHelper(paramsCustomObj, setParamsCustomObj);
 
-  const [displayedEntity, setDisplayedEntity] = useState('');
+  const [displayedEntity, setDisplayedEntity] = useState(undefined);
 
   // this needs to go when we stop mocking
   useEffect(() => {
