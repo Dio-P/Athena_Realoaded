@@ -22,7 +22,7 @@ describe('AdvanceSearchResultsBox', () => {
         id: 'someId',
         name: 'Optimo',
         type: 'app',
-        mainLink: 'www.optimo.tools.bbc.co.uk',
+        mainLinks: ['www.optimo.tools.bbc.co.uk'],
         briefDescription: 'The best app in the world',
         teamsResponsible: ['authoring'],
         properties: {
@@ -44,7 +44,7 @@ describe('AdvanceSearchResultsBox', () => {
         id: 'someId',
         name: 'Optimo',
         type: 'app',
-        mainLink: 'www.optimo.tools.bbc.co.uk',
+        mainLinks: ['www.optimo.tools.bbc.co.uk'],
         briefDescription: 'The best app in the world',
         teamsResponsible: ['authoring'],
         properties: {

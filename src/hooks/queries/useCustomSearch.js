@@ -4,12 +4,12 @@ import gql from "graphql-tag";
 
 export const QUERY_ADVANCED_CUSTOME_SEARCH = gql`
 # if working change it to an array of strings
-  query ($tags: [String], $name: [String], $type: [String], $leader: [String], $teamsResponsible: [String], $mainLink: [String]) {
-    customEntitySearch(tags: $tags, name: $name, type: $type, leader: $leader, teamsResponsible: $teamsResponsible, mainLink: $mainLink) {
+  query ($tags: [String], $name: [String], $type: [String], $leader: [String], $teamsResponsible: [String], $mainLinks: [String]) {
+    customEntitySearch(tags: $tags, name: $name, type: $type, leader: $leader, teamsResponsible: $teamsResponsible, mainLinks: $mainLinks) {
       id
       name
       type
-      mainLink
+      mainLinks
       briefDescription
       teamsResponsible
       properties {
@@ -27,13 +27,13 @@ const useCustomSearchQuery = () => {
     QUERY_ADVANCED_CUSTOME_SEARCH
   );
 
-  const trigerAdvancedSearch = ({tags, name ,type ,leader, teamsResponsible, mainLink}) => {
+  const trigerAdvancedSearch = ({tags, name ,type ,leader, teamsResponsible, mainLinks}) => {
     if(returnedEntities.length === 0) {
       query({
-        variables: { tags, name ,type ,leader, teamsResponsible, mainLink },
+        variables: { tags, name ,type ,leader, teamsResponsible, mainLinks },
       });
     } else {
-      refetch({ tags, name ,type ,leader, teamsResponsible, mainLink })
+      refetch({ tags, name ,type ,leader, teamsResponsible, mainLinks })
     }
   };
 

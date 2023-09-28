@@ -8,7 +8,7 @@ export const QUERY_NAMES_BY_QUERYSTRING = gql`
       id
       name
       type
-      mainLink
+      mainLinks
       briefDescription
       teamsResponsible
       properties {

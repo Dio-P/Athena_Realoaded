@@ -3,7 +3,7 @@
   "name": "Authoring",
   "type": "subTeam",
   "leader": "Matt Greenham", 
-  "mainLink": "www.authoringSlack.Chanel.co.uk",
+  "mainLinks": ["www.authoringSlack.Chanel.co.uk"],
   "briefDescription": "Content Publishing",
   "teamsResponsible": [],
   "properties": {

@@ -86,7 +86,7 @@ Entity.propTypes = {
     name: PropTypes.string,
     type: PropTypes.string,
     leader: PropTypes.string,
-    mainLink: PropTypes.string,
+    mainLinks: PropTypes.arrayOf(PropTypes.string),
     briefDescription: PropTypes.string,
     teamsResponsible: PropTypes.arrayOf(PropTypes.string),
     properties: PropTypes.shape({

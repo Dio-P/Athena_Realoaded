@@ -15,7 +15,7 @@ const returnedEntity = {
   name: 'CPub',
   type: 'team',
   leader: 'Danny Morgan',
-  mainLink: 'www.sommebbcDoc.co.uk',
+  mainLinks: ['www.sommebbcDoc.co.uk'],
   briefDescription: 'Content Publishing',
   teamsResponsible: undefined,
   properties: {

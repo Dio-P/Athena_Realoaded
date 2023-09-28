@@ -8,7 +8,7 @@ export const FILTER_ENTITY_BY_QUERYSTRING_QUERY = gql`
       id
       name
       type
-      mainLink
+      mainLinks
       briefDescription
       teamsResponsible
       properties {

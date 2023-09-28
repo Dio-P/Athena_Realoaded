@@ -19,7 +19,7 @@ const propsWithChosenValues = {
   setIsOpen: jest.fn(),
   advanceQueryParameters: {
     name: ['Optimo', 'IGM'],
-    mainLink: ['https://optimo.int.tools.bbc.co.uk/assets/new/editor'],
+    mainLinks: ['https://optimo.int.tools.bbc.co.uk/assets/new/editor'],
     type: ['app'],
   },
   setAdvanceQueryParameters: jest.fn(),
@@ -49,7 +49,7 @@ describe('AdvancedSearchBlock', () => {
     expect(screen.getByLabelText('search for tags')).toBeVisible();
     expect(screen.getByLabelText('search for name')).toBeVisible();
     expect(screen.getByLabelText('search for type')).toBeVisible();
-    expect(screen.getByLabelText('search for mainLink')).toBeVisible();
+    expect(screen.getByLabelText('search for mainLinks')).toBeVisible();
     expect(screen.getByLabelText('search for briefDescription')).toBeVisible();
     expect(screen.getByLabelText('search for leader')).toBeVisible();
   });
@@ -61,7 +61,7 @@ describe('AdvancedSearchBlock', () => {
       screen.getByRole('button', { name: 'remove type app from query' }),
     ).toBeVisible();
     expect(
-      screen.getByRole('button', { name: 'remove mainLink https://optimo.int.tools.bbc.co.uk/assets/new/editor from query' }),
+      screen.getByRole('button', { name: 'remove mainLinks https://optimo.int.tools.bbc.co.uk/assets/new/editor from query' }),
     ).toBeVisible();
     expect(
       screen.getByRole('button', { name: 'remove name Optimo from query' }),
