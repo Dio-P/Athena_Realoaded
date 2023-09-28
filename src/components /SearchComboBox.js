@@ -198,8 +198,8 @@ SearchComboBox.propTypes = {
   ofType: PropTypes.string.isRequired,
   chosenValues: PropTypes.shape({
     id: PropTypes.string,
-    name: PropTypes.string,
-    type: PropTypes.string,
+    name: PropTypes.arrayOf(PropTypes.string),
+    type: PropTypes.arrayOf(PropTypes.string),
     mainLink: PropTypes.string,
     briefDescription: PropTypes.string,
     teamsResponsible: PropTypes.arrayOf(PropTypes.string),

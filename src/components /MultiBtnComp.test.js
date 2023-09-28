@@ -1,7 +1,10 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
+import styled from '@emotion/styled';
 import MultiBtnComp from './MultiBtnComp';
 import { refreshIcon } from '../helpers/svgIcons';
+
+const MockElement = styled.div``;
 
 describe('TagButton', () => {
   const tagBtnDefaultProps = {
@@ -33,6 +36,7 @@ describe('SmallButton', () => {
   };
 
   test('should display the correct aria-label', () => {
+    console.log('smallBtnDefaultProps.icon', smallBtnDefaultProps.icon);
     render(<MultiBtnComp {...smallBtnDefaultProps} />);
 
     expect(screen.getByLabelText('small button')).toBeVisible();
@@ -47,26 +51,25 @@ describe('SmallButton', () => {
 
 describe('MainButton', () => {
   const MockCustomButtonContainer = () => (
-    <div>
+    <MockElement>
       MockCustomButtonContainer
-    </div>
+    </MockElement>
   );
 
   describe('default version', () => {
     const defaultMainButtonDefaultProps = {
       CustomButtonContainer: MockCustomButtonContainer,
-      type: undefined, // why would anyone want to pass a type here?
       label: 'a label',
       clicked: false,
       onClickFunction: jest.fn(),
       aria: 'some aria-label',
     };
 
-    test('should render the correct aria-label', () => {
+    test('should render the correct aria-label if aria or type', () => {
       render(<MultiBtnComp {...defaultMainButtonDefaultProps} />);
 
       screen.debug();
-      expect(screen.getByLabelText('refresh')).toBeVisible();
+      expect(screen.getByLabelText('some aria-label')).toBeVisible();
     });
 
     // test('', () => {

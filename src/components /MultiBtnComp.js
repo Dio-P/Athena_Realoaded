@@ -208,23 +208,35 @@ const MainButton = ({
   onClickFunction,
   aria,
   // change all the above to 'aria-labelledby': ariaLabelledBy,
-}) => (
-  <mainBtn.Wrapper
-    onClick={onClickFunction}
-    aria-label={aria || `${type} button`}
-  >
-    <CustomButtonContainer>
-      <mainBtn.LabelContainer>
-        <mainBtn.Label>{capitaliseFirstLetters(label)}</mainBtn.Label>
-      </mainBtn.LabelContainer>
-      {type === 'checkbox' && (
-        <mainBtn.TickBoxWrapper>
-          <mainBtn.TickBox>{clicked && tickIcon}</mainBtn.TickBox>
-        </mainBtn.TickBoxWrapper>
-      )}
-    </CustomButtonContainer>
-  </mainBtn.Wrapper>
-);
+}) => {
+  const props = aria || type
+    ? {
+      onClick: onClickFunction,
+      'aria-label': aria || `${type} button`,
+    }
+    : {
+      onClick: onClickFunction,
+    };
+
+  const isCheckbox = type === 'checkbox';
+
+  return (
+    <mainBtn.Wrapper
+      {...props}
+    >
+      <CustomButtonContainer>
+        <mainBtn.LabelContainer>
+          <mainBtn.Label>{capitaliseFirstLetters(label)}</mainBtn.Label>
+        </mainBtn.LabelContainer>
+        { isCheckbox && (
+          <mainBtn.TickBoxWrapper>
+            <mainBtn.TickBox>{clicked && tickIcon}</mainBtn.TickBox>
+          </mainBtn.TickBoxWrapper>
+        )}
+      </CustomButtonContainer>
+    </mainBtn.Wrapper>
+  );
+};
 
 const DropDownButton = ({
   onClickFunction,
@@ -334,7 +346,6 @@ const MultiBtnComp = ({
     <div>
       <MainButton
         CustomButtonContainer={mainBtn.PlainVersionContainer}
-        type={type} // why would anyone pass a type here?
         label={label}
         clicked={clicked}
         onClickFunction={onClickFunction}
@@ -347,7 +358,7 @@ const MultiBtnComp = ({
 
 TagButton.propTypes = {
   label: PropTypes.string,
-  onClickFunction: PropTypes.func.isRequired,
+  onClickFunction: PropTypes.func,
   aria: PropTypes.string,
   withDelete: PropTypes.bool,
   type: PropTypes.string,
@@ -355,13 +366,14 @@ TagButton.propTypes = {
 
 TagButton.defaultProps = {
   label: '...',
+  onClickFunction: () => {},
   aria: '',
   withDelete: false,
   type: 'checkbox', // do we need that there
 };
 
 SmallButton.propTypes = {
-  icon: PropTypes.instanceOf(Element),
+  icon: PropTypes.instanceOf(Object),
   onClickFunction: PropTypes.func.isRequired,
   // type: PropTypes.string, // do we need that there
   aria: PropTypes.string,
@@ -374,24 +386,25 @@ SmallButton.defaultProps = {
 };
 
 MainButton.propTypes = {
-  CustomButtonContainer: PropTypes.instanceOf(Element), // is this the right value?
+  CustomButtonContainer: PropTypes.instanceOf(Object), // is this the right value?
   type: PropTypes.string, // ??
   label: PropTypes.string,
   clicked: PropTypes.bool,
-  onClickFunction: PropTypes.func.isRequired,
+  onClickFunction: PropTypes.func,
   aria: PropTypes.string,
 };
 
 MainButton.defaultProps = {
   CustomButtonContainer: mainBtn.PlainVersionContainer,
-  type: '', // ??
+  type: undefined,
   label: '...',
   clicked: false,
+  onClickFunction: () => {},
   aria: '',
 };
 
 DropDownButton.propTypes = {
-  onClickFunction: PropTypes.func.isRequired,
+  onClickFunction: PropTypes.func,
   isMenuOpen: PropTypes.bool,
   freshlyAddedValue: PropTypes.string, // ???
   chosenValue: PropTypes.string, // ???
@@ -400,6 +413,7 @@ DropDownButton.propTypes = {
 };
 
 DropDownButton.defaultProps = {
+  onClickFunction: () => {},
   isMenuOpen: false,
   freshlyAddedValue: '', // ??
   chosenValue: '',
@@ -411,8 +425,8 @@ MultiBtnComp.propTypes = {
   label: PropTypes.string,
   clicked: PropTypes.bool,
   type: PropTypes.string,
-  icon: PropTypes.instanceOf(Element),
-  onClickFunction: PropTypes.func.isRequired,
+  icon: PropTypes.instanceOf(Object),
+  onClickFunction: PropTypes.func,
   // renderConditional: PropTypes.,
   isMenuOpen: PropTypes.bool,
   freshlyAddedValue: PropTypes.string,
@@ -423,7 +437,8 @@ MultiBtnComp.defaultProps = {
   label: '...',
   clicked: false,
   type: '', // ??
-  icon: <> </>,
+  icon: undefined,
+  onClickFunction: () => {},
   // renderConditional: PropTypes.,
   isMenuOpen: false,
   freshlyAddedValue: '',
