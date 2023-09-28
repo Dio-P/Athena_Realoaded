@@ -16,7 +16,7 @@ const propsWithChosenValues = {
   ofType: 'type',
   chosenValues: {
     name: ['Optimo', 'IGM'],
-    mainLinks: ['https://optimo.int.tools.bbc.co.uk/assets/new/editor'],
+    mainLink: ['https://optimo.int.tools.bbc.co.uk/assets/new/editor'],
     type: ['app'],
   },
   onClickOption: jest.fn(),
@@ -77,7 +77,7 @@ describe('SearchComboBox', () => {
     userEvent.click(deleteButton);
 
     expect(propsWithChosenValues.onClickOption).toHaveBeenCalledWith({
-      mainLinks: ['https://optimo.int.tools.bbc.co.uk/assets/new/editor'],
+      mainLink: ['https://optimo.int.tools.bbc.co.uk/assets/new/editor'],
       name: ['Optimo', 'IGM'],
     });
   });
@@ -86,9 +86,9 @@ describe('SearchComboBox', () => {
     render(<SearchComboBox
       {...propsWithChosenValues}
       chosenValues={{
-        mainLinks: ['https://optimo.int.tools.bbc.co.uk/assets/new/editor'],
+        mainLink: ['https://optimo.int.tools.bbc.co.uk/assets/new/editor'],
         name: ['Optimo', 'IGM'],
-        type: ['app', 'mainLinks'],
+        type: ['app', 'mainLink'],
       }}
     />);
 
@@ -99,9 +99,9 @@ describe('SearchComboBox', () => {
 
     await userEvent.click(deleteButton);
     expect(propsWithChosenValues.onClickOption).toHaveBeenCalledWith({
-      mainLinks: ['https://optimo.int.tools.bbc.co.uk/assets/new/editor'],
+      mainLink: ['https://optimo.int.tools.bbc.co.uk/assets/new/editor'],
       name: ['Optimo', 'IGM'],
-      type: ['mainLinks'],
+      type: ['mainLink'],
     });
   });
 });

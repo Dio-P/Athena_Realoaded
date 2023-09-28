@@ -79,7 +79,7 @@ const AdvancedSearchBlock = ({
           />
 
           <SearchComboBox
-            ofType="mainLinks"
+            ofType="mainLink"
             chosenValues={advanceQueryParameters}
             onClickOption={setAdvanceQueryParameters}
           />
@@ -111,7 +111,7 @@ AdvancedSearchBlock.propTypes = {
     tags: PropTypes.arrayOf(PropTypes.string),
     name: PropTypes.arrayOf(PropTypes.string),
     type: PropTypes.arrayOf(PropTypes.string),
-    mainLinks: PropTypes.arrayOf(PropTypes.string),
+    mainLink: PropTypes.arrayOf(PropTypes.string),
     briefDescription: PropTypes.arrayOf(PropTypes.string),
     leader: PropTypes.arrayOf(PropTypes.string),
   }),

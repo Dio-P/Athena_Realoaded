@@ -115,7 +115,7 @@ AdvanceSearchResultsBox.propTypes = {
     id: PropTypes.string,
     name: PropTypes.string,
     type: PropTypes.string,
-    mainLinks: PropTypes.arrayOf(PropTypes.string),
+    mainLink: PropTypes.arrayOf(PropTypes.string),
     briefDescription: PropTypes.string,
     teamsResponsible: PropTypes.arrayOf(PropTypes.string),
     properties: PropTypes.shape({

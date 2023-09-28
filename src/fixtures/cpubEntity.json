@@ -3,7 +3,7 @@
   "name": "CPub",
   "type": "team",
   "leader": "Danny Morgan",
-  "mainLinks": ["www.somebbcDoc.co.uk"],
+  "mainLink": ["www.somebbcDoc.co.uk"],
   "briefDescription": "Content Publishing",
   "teamsResponsible": [],
   "properties": {
