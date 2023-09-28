@@ -32,7 +32,7 @@ describe('AdvanceSearchResultsBox', () => {
       ]}
     />);
 
-    screen.debug();
+    // screen.debug();
     expect(screen.getByText('Optimo')).toBeVisible();
     expect(screen.getByLabelText('choose Optimo')).toBeVisible();
   });
@@ -61,7 +61,7 @@ describe('AdvanceSearchResultsBox', () => {
   test('should not displays options if no results', () => {
     render(<AdvanceSearchResultsBox {...defaultProps} />);
 
-    screen.debug();
+    // screen.debug();
     expect(screen.queryByLabelText(/choose/)).not.toBeInTheDocument();
   });
   // is it rendering a magnifying glass?

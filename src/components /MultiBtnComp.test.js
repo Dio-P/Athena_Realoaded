@@ -68,7 +68,7 @@ describe('MainButton', () => {
     test('should render the correct aria-label if aria or type', () => {
       render(<MultiBtnComp {...defaultMainButtonDefaultProps} />);
 
-      screen.debug();
+      // screen.debug();
       expect(screen.getByLabelText('some aria-label')).toBeVisible();
     });
 

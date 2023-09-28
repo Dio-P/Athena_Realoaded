@@ -2,8 +2,16 @@ import React from 'react';
 import { render, screen, act } from '@testing-library/react';
 import { MockedProvider } from '@apollo/react-testing';
 import userEvent from '@testing-library/user-event';
+import useGetAllOfType from '../hooks/queries/useGetAllOfType';
 
 import SearchBar from './SearchBar';
+
+jest.mock('../hooks/queries/useGetAllOfType');
+
+beforeEach(() => {
+  jest.clearAllMocks();
+  useGetAllOfType.mockImplementation(() => ([[]]));
+});
 
 describe('Search Bar', () => {
   test('Should render advanced search block', () => {

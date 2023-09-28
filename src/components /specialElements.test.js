@@ -15,7 +15,7 @@ describe('WarningElement', () => {
 //   const mockSearch = jest.fn();
 //   test.only('', () => {
 //     render(<SearchBar searchingQuery="opti" search={mockSearch} />);
-//     screen.debug();
+//     // screen.debug();
 //     expect(screen.getByRole('textbox')).toBeVisible();
 //   });
 // });
