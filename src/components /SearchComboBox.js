@@ -146,17 +146,17 @@ const SearchComboBox = ({
 
       <OptionsWrapper>
         {allOptionsOfType
-          && allOptionsOfType.map((entity) => (
+          && allOptionsOfType.map((option) => (
             <DropdownOption
-              key={entity.id}
+              key={option}
               onClickOption={() => onClickOption(
                 {
                   ...chosenValues,
-                  [ofType]: chosenValues[ofType] ? [...chosenValues[ofType], entity] : [entity],
+                  [ofType]: chosenValues[ofType] ? [...chosenValues[ofType], option] : [option],
                 },
               )}
               ofType={ofType}
-              label={entity}
+              label={option}
             />
           ))}
       </OptionsWrapper>
