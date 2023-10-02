@@ -21,7 +21,7 @@ beforeEach(() => {
 
 describe('useChildrenByIdsSearch', () => {
   test('should return a list of children entities', () => {
-    useLazyQuery.mockImplementationOnce(() => ([
+    useLazyQuery.mockImplementation(() => ([
       query,
       {
         error: undefined,
@@ -32,12 +32,12 @@ describe('useChildrenByIdsSearch', () => {
       },
     ]));
     const { result } = renderHook(() => useChildrenByIdsSearch());
-    console.log('*', result);
-    // const [returnedChildren, searchChildren] = result.current;
+    const [returnedChildren, searchChildren] = result.current;
+    console.log('*', returnedChildren, searchChildren);
 
-    // act(() => {
-    //   searchChildren(['5']);
-    // });
-    // expect(returnedChildren).toStrictEqual(authoringEntity);
+    act(() => {
+      searchChildren(['5']);
+    });
+    expect(returnedChildren).toStrictEqual(authoringEntity);
   });
 });

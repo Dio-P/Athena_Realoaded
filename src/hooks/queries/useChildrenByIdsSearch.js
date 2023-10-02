@@ -69,13 +69,15 @@ const useChildrenByIdsSearch = () => {
     if (error) {
       console.error('error', error);
     }
-    if (data?.getChildrenById) {
-      console.log('error£$', error);
-      setReturnedChildren(data.getChildrenById);
-    }
+    // if (data?.getChildrenById) {
+    //   console.log('error£$', error);
+    //   setReturnedChildren(data.getChildrenById);
+    // }
   }, [data, error]);
 
-  return [returnedChildren, searchChildren];
+  // return [returnedChildren, searchChildren];
+  // do the filtering in the function body
+  return [data?.getChildrenById, searchChildren];
 };
 
 export default useChildrenByIdsSearch;
