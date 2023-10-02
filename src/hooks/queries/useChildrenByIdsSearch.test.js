@@ -38,6 +38,6 @@ describe('useChildrenByIdsSearch', () => {
     act(() => {
       searchChildren(['5']);
     });
-    expect(returnedChildren).toStrictEqual(authoringEntity);
+    expect(returnedChildren).toStrictEqual([authoringEntity]);
   });
 });
