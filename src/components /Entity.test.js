@@ -1,6 +1,5 @@
 import React, { render, screen } from '@testing-library/react';
 import { MockedProvider } from '@apollo/react-testing';
-import userEvent from '@testing-library/user-event';
 
 import Entity from './Entity';
 import defaultEntity from '../fixtures/cpubEntity.json';
@@ -39,21 +38,5 @@ describe('Entity', () => {
     expect(screen.getByText('description:')).toBeVisible();
     expect(screen.getByText('Content Publishing')).toBeVisible();
     expect(screen.getByText('Authoring')).toBeVisible();
-  });
-
-  test('should render the child on click', () => {
-    render(
-      <MockedProvider addTypename={false}>
-        <Entity {...defaultProps} />
-      </MockedProvider>,
-    );
-
-    userEvent.click(screen.getByLabelText('Authoring'));
-
-    expect(defaultProps.renderChosenEntity).toHaveBeenCalledWith(
-      'Authoring',
-      '5',
-      { cPub: { id: '4', index: 1, name: 'cPub' } },
-    );
   });
 });

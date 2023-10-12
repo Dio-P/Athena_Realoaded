@@ -1,5 +1,7 @@
 import React from 'react';
 import styled from '@emotion/styled';
+// import { css } from '@emotion/react';
+
 import PropTypes from 'prop-types';
 
 import capitaliseFirstLetters from '../helpers/capitaliseFirstLetters';
@@ -14,9 +16,54 @@ import {
 // import { defaultProps } from 'default-props';
 // import PropTypes from 'prop-types';
 
+const DefaultBtnWrapper = styled.div`
+display: flex;
+width: 100%;
+// width: 14em;
+cursor: pointer;
+margin: 8px;
+`;
+
+const DefaultBtnContainer = styled.button`
+  display: flex;
+  align-content: center;
+  background-color: ${styleVariables.colours.primaryBlue};
+  width: 100%;
+  border-radius: ${styleVariables.borderRadious.main};
+  margin: 20px 0px 20px 0px;
+  font-size: 18px;
+  box-shadow: ${styleVariables.boxShadow.bigButton};
+`;
+const DefaultIconWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  width: 100%;
+  max-width: 30px;
+  margin: 5px;
+`;
+
+const DefaultLabelContainer = styled.div`
+  margin: auto;
+  color: ${styleVariables.colours.primaryLight};
+  padding: 8px;
+  min-width: 141px;
+  min-height: 50px;
+  max-width: 140px;
+  max-height: 60px;
+  display: flex;
+  align-items: center;
+  text-align: left;
+`;
+
+const DefaultLabelStyle = styled.div`
+display: flex;
+align-items: center;
+width: 50%;
+font-size: 20px;
+`;
+
 const dropDownButton = {
-  ContainerWrapper: styled.div`
-    display: flex;
+  ContainerWrapper: styled(DefaultBtnWrapper)`
     border: solid black;
     align-content: center;
     width: 300px;
@@ -36,8 +83,7 @@ const dropDownButton = {
 };
 
 const smallBtn = {
-  Wrapper: styled.div`
-    display: flex;
+  Wrapper: styled(DefaultBtnWrapper)`
     right: 0;
     height: 35px;
     width: 35px;
@@ -45,9 +91,7 @@ const smallBtn = {
     background-color: ${styleVariables.colours.primaryPink};
     box-shadow: ${styleVariables.boxShadow.smallButton};
     border-radius: ${styleVariables.borderRadious.secondary};
-    margin: 8px;
     align-self: end;
-    cursor: pointer;
 
     &:active {
       box-shadow: none;
@@ -64,15 +108,8 @@ const smallBtn = {
 };
 
 const mainBtn = {
-  Wrapper: styled.div`
-    display: flex;
-    width: 14em;
-    cursor: pointer;
-    margin: 7px;
-  `,
-  AddingVersionContainer: styled.div`
-    display: flex;
-    align-content: center;
+  Wrapper: DefaultBtnWrapper,
+  AddingVersionContainer: styled(DefaultBtnContainer)`
     background-color: ${styleVariables.colours.primaryPink};
     min-width: 100px;
     min-height: 50px;
@@ -80,8 +117,6 @@ const mainBtn = {
     max-height: 60px;
     width: 90%;
     height: 90%;
-    box-shadow: ${styleVariables.boxShadow.bigButton};
-    border-radius: ${styleVariables.borderRadious.main};
     margin: 20px;
     font-size: 14px;
 
@@ -89,7 +124,7 @@ const mainBtn = {
       box-shadow: none;
   }
   `,
-  ClickedVersionContainer: styled.div`
+  ClickedVersionContainer: styled.button`
     display: flex;
     align-content: center;
     background-color: ${styleVariables.colours.primaryBlue};
@@ -99,38 +134,12 @@ const mainBtn = {
     margin: 20px 0px 20px 10px;
     font-size: 18px;
   `,
-  PlainVersionContainer: styled.div`
-    display: flex;
-    align-content: center;
-    background-color: ${styleVariables.colours.primaryBlue};
-    width: 100%;
+  PlainVersionContainer: DefaultBtnContainer,
+  LabelContainer: DefaultLabelContainer,
+  Label: DefaultLabelStyle,
+  TickBoxWrapper: styled(DefaultIconWrapper)`
     border-radius: ${styleVariables.borderRadious.main};
-    margin: 20px 0px 20px 0px;
-    font-size: 18px;
-    box-shadow: ${styleVariables.boxShadow.bigButton};
-  `,
-  LabelContainer: styled.div`
-    margin: auto;
-    color: ${styleVariables.colours.primaryLight};
-    padding: 8px;
-    min-width: 141px;
-    min-height: 50px;
-    max-width: 140px;
-    max-height: 60px;
-    display: flex;
-    align-items: center;
-    text-align: left;
-  `,
-  Label: styled.div`
-    display: flex;
-    align-items: center;
-  `,
-  TickBoxWrapper: styled.div`
-    display: flex;
-    border-radius: ${styleVariables.borderRadious.main};
-    align-items: center;
     background-color: ${styleVariables.colours.primaryBlue};
-    width: 100%;
     min-width: 30px;
     max-width: 60px;
   `,
@@ -207,6 +216,7 @@ const MainButton = ({
   clicked,
   onClickFunction,
   aria,
+  icon,
   // change all the above to 'aria-labelledby': ariaLabelledBy,
 }) => {
   const props = aria || type
@@ -219,7 +229,6 @@ const MainButton = ({
     };
 
   const isCheckbox = type === 'checkbox';
-
   return (
     <mainBtn.Wrapper
       {...props}
@@ -227,7 +236,16 @@ const MainButton = ({
       <CustomButtonContainer>
         <mainBtn.LabelContainer>
           <mainBtn.Label>{capitaliseFirstLetters(label)}</mainBtn.Label>
+
+          {icon
+          && (
+          <DefaultIconWrapper>
+            {icon}
+          </DefaultIconWrapper>
+          )}
+
         </mainBtn.LabelContainer>
+
         { isCheckbox && (
           <mainBtn.TickBoxWrapper>
             <mainBtn.TickBox>{clicked && tickIcon}</mainBtn.TickBox>
@@ -293,6 +311,7 @@ const MultiBtnComp = ({
         clicked={clicked}
         onClickFunction={onClickFunction}
         aria={aria}
+        icon={icon}
       />
     );
   }
@@ -392,6 +411,7 @@ MainButton.propTypes = {
   clicked: PropTypes.bool,
   onClickFunction: PropTypes.func,
   aria: PropTypes.string,
+  icon: PropTypes.instanceOf(Object),
 };
 
 MainButton.defaultProps = {
@@ -401,6 +421,7 @@ MainButton.defaultProps = {
   clicked: false,
   onClickFunction: () => {},
   aria: '',
+  icon: undefined,
 };
 
 DropDownButton.propTypes = {

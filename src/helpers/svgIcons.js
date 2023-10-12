@@ -63,7 +63,10 @@ export const tickIcon = (
     aria-label="confirm"
     aria-hidden
   >
-    <path fill="#1ee685" d="M32 7.2l-2.5-2.4L11 23.3h2L2.4 12.6 0 15.1l12 12.1 20-20z" />
+    <path
+      fill="#1ee685"
+      d="M32 7.2l-2.5-2.4L11 23.3h2L2.4 12.6 0 15.1l12 12.1 20-20z"
+    />
   </svg>
 );
 
@@ -96,5 +99,16 @@ export const moreIcon = (
     aria-label="more-vertical icon"
   >
     <path d="M13.2 1.6v5.8h5.6V1.6h-5.6zm0 11.5v5.8h5.6v-5.8h-5.6zm0 11.5v5.8h5.6v-5.8h-5.6z" />
+  </svg>
+);
+
+export const addIcon = (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 32 32"
+    aria-label="add icon"
+    className="css-1n8p6mz"
+  >
+    <path d="M29.6 13.4H18.7v-11h-5.4v11H2.4v5.3h10.9v11h5.4v-11h10.9v-5.3z" />
   </svg>
 );
