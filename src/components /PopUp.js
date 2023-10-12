@@ -6,13 +6,13 @@ import { deleteIcon } from '../helpers/svgIcons';
 import { OverlayElem } from './specialElements';
 import MultiBtnComp from './MultiBtnComp';
 
-const PopUpContainer = styled.div`
+const PopUpWrapper = styled.div`
   width: 100%;
   height: 100%;
 `;
 
 // the bellow height needs to change when I find a best way to make this iteractive
-const PopUpWrapper = styled.div`
+const PopUpContainer = styled.div`
   z-index: 101;
   position: absolute;
   width: auto;
@@ -23,7 +23,7 @@ const PopUpWrapper = styled.div`
   bottom: 50%;
 `;
 
-const EditAppWrapper = styled.div`
+const ComponentToDisplayWrapper = styled.div`
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -32,19 +32,19 @@ const EditAppWrapper = styled.div`
 
 const PopUp = ({ isPopUpOpen, ComponentToDisplay, setIsPopUpOpen }) => (
   isPopUpOpen && (
-    <PopUpContainer>
+    <PopUpWrapper>
       <OverlayElem />
-      <PopUpWrapper>
-        <EditAppWrapper>
+      <PopUpContainer>
+        <ComponentToDisplayWrapper>
           <MultiBtnComp
             onClickFunction={() => setIsPopUpOpen(false)}
             type="small"
             icon={deleteIcon}
           />
           <ComponentToDisplay />
-        </EditAppWrapper>
-      </PopUpWrapper>
-    </PopUpContainer>
+        </ComponentToDisplayWrapper>
+      </PopUpContainer>
+    </PopUpWrapper>
   )
 );
 
