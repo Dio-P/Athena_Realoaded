@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import WarningElement from './specialElements';
+import { WarningElement } from './specialElements';
 
 describe('WarningElement', () => {
   test('', () => {

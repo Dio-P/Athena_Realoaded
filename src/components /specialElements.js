@@ -22,6 +22,33 @@ const WarningIconContainer = styled.div`
   width: 20px;
 `;
 
+const Overlay = styled.div`
+  opacity: 0.9;
+  background-color: #686B6E;
+  width: 100%;
+  height: 100%;
+  z-index: 100;
+  top: 0;
+  left: 0;
+  position: fixed;
+`;
+
+export const WarningElement = ({ info }) => (
+  <WarningElementWrapper>
+    <WarningHeaderContainer>
+      <WarningIconContainer>
+        {warningIcon}
+      </WarningIconContainer>
+      <strong>Warning: </strong>
+    </WarningHeaderContainer>
+    {` ${info}`}
+  </WarningElementWrapper>
+);
+
+export const OverlayElem = () => (
+  <Overlay />
+);
+
 // const SearchBarWrapper = styled.div`
 //   display: flex;
 //   align-items: center;
@@ -40,18 +67,6 @@ const WarningIconContainer = styled.div`
 // margin-right: 3px;
 // border-radius: ${styleVariables.borderRadious.main};
 // `;
-
-const WarningElement = ({ info }) => (
-  <WarningElementWrapper>
-    <WarningHeaderContainer>
-      <WarningIconContainer>
-        {warningIcon}
-      </WarningIconContainer>
-      <strong>Warning: </strong>
-    </WarningHeaderContainer>
-    {` ${info}`}
-  </WarningElementWrapper>
-);
 
 // export const SearchBar = ({ searchingQuery, search }) => (
 //   <SearchBarWrapper>
@@ -72,8 +87,7 @@ const WarningElement = ({ info }) => (
 //     }
 //   </DropDownWrapperContainer>
 // );
+
 WarningElement.propTypes = {
   info: PropTypes.string.isRequired,
 };
-
-export default WarningElement;
