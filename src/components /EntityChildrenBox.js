@@ -1,23 +1,31 @@
 import React from 'react';
+import styled from '@emotion/styled';
 import PropTypes from 'prop-types';
 import MultiBtnComp from './MultiBtnComp';
 
+const EntityChildrenBoxContainer = styled.div`
+  display: flex;
+`;
+
 const EntityChildrenBox = ({ returnedChildren, renderChosenEntity, paramsCustomObj }) => (
-  returnedChildren
-      && (
-      <EntityChildrenBox>
-        {returnedChildren.map((childEntity) => (
-          <MultiBtnComp
-            aria={childEntity.name}
-            label={childEntity.name}
-            key={childEntity.name}
-            onClickFunction={
+
+  <EntityChildrenBoxContainer>
+    {console.log('returnedChildren$$', returnedChildren)}
+    {returnedChildren.map((childEntity) => {
+      console.log('childEntity$', childEntity);
+      return (
+        <MultiBtnComp
+          aria={childEntity.name}
+          label={childEntity.name}
+          key={childEntity.name}
+          onClickFunction={
               () => renderChosenEntity(childEntity.name, childEntity.id, paramsCustomObj)
             }
-          />
-        ))}
-      </EntityChildrenBox>
-      )
+        />
+      );
+    })}
+  </EntityChildrenBoxContainer>
+
 );
 
 EntityChildrenBox.propTypes = {

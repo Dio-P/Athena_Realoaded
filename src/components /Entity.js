@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
-import MultiBtnComp from './MultiBtnComp';
 import useChildrenByIdsSearch from '../hooks/queries/useChildrenByIdsSearch';
 import capitaliseFirstLetters from '../helpers/capitaliseFirstLetters';
+import EntityChildrenBox from './EntityChildrenBox';
 
 const EntityContainer = styled.div`
   display: flex;
@@ -22,10 +22,6 @@ const EntityInfoBox = styled.div`
   flex-direction: column;
   margin: 10px 5px 10px 5px;
   padding: 10px;
-`;
-
-const EntityChildrenBox = styled.div`
-  display: flex;
 `;
 
 const Entity = ({
@@ -61,22 +57,14 @@ const Entity = ({
               {/* } */}
             </EntityInfoBox>
           </ThisEntityContainer>
-
           {returnedChildren
-      && (
-      <EntityChildrenBox>
-        {returnedChildren.map((childEntity) => (
-          <MultiBtnComp
-            aria={childEntity.name}
-            label={childEntity.name}
-            key={childEntity.name}
-            onClickFunction={
-              () => renderChosenEntity(childEntity.name, childEntity.id, paramsCustomObj)
-            }
+          && (
+          <EntityChildrenBox
+            returnedChildren={returnedChildren}
+            renderChosenEntity={renderChosenEntity}
+            paramsCustomObj={paramsCustomObj}
           />
-        ))}
-      </EntityChildrenBox>
-      )}
+          )}
 
         </EntityContainer>
       )
