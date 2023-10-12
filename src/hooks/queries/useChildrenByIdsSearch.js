@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useLazyQuery } from '@apollo/client';
 import gql from 'graphql-tag';
 
@@ -41,8 +41,6 @@ export const SEARCH_CHILDREN_BY_ID_QUERY = gql`
 `;
 
 const useChildrenByIdsSearch = () => {
-  const [returnedChildren, setReturnedChildren] = useState('');
-
   const [query, {
     error, data, refetch,
   }] = useLazyQuery(
