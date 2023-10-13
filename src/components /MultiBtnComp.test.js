@@ -35,6 +35,13 @@ describe('SmallButton', () => {
     aria: 'small button',
   };
 
+  // test('type small should render a small button', () => {
+  //   console.log('smallBtnDefaultProps.icon', smallBtnDefaultProps.icon);
+  //   render(<MultiBtnComp {...smallBtnDefaultProps} />);
+
+  //   expect(screen.getByLabelText('small button')).toBeVisible();
+  // });
+
   test('should display the correct aria-label', () => {
     console.log('smallBtnDefaultProps.icon', smallBtnDefaultProps.icon);
     render(<MultiBtnComp {...smallBtnDefaultProps} />);
