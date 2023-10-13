@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 import { useLazyQuery } from '@apollo/client';
 import gql from 'graphql-tag';
 
@@ -41,7 +41,9 @@ const useGetAllOfType = (ofType, queryString) => {
     return undefined;
   };
 
-  return [filterResults];
+  const filteredResults = useMemo(() => filterResults(), [queryString]);
+
+  return [filteredResults];
 };
 
 export default useGetAllOfType;

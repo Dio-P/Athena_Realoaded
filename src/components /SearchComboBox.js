@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useState } from 'react';
 import styled from '@emotion/styled';
 import PropTypes from 'prop-types';
 
@@ -104,7 +104,7 @@ const SearchComboBox = ({
   onClickOption,
 }) => {
   const [queryString, setQueryString] = useState('');
-  const [getAllOptionsOfType] = useGetAllOfType(ofType, queryString);
+  const [allOptionsOfType] = useGetAllOfType(ofType, queryString);
 
   const removeChoice = (choiceToRemove) => {
     const { [ofType]: ofThisType, ...typesWithoutThis } = chosenValues;
@@ -119,9 +119,6 @@ const SearchComboBox = ({
 
     onClickOption(updatedFields);
   };
-
-  const allOptionsOfType = useMemo(() => getAllOptionsOfType(), [queryString]);
-  console.log('allOptionsOfType***', allOptionsOfType);
 
   console.log('allOptionsOfType$$', allOptionsOfType);
   return (

@@ -23,10 +23,11 @@ describe('useGetAllOfType', () => {
     const { result } = renderHook(() => useGetAllOfType('tags', ''));
     const [filteredResults] = result.current;
 
-    let allOfType;
-    await act(async () => {
-      allOfType = await filteredResults();
-    });
-    expect(allOfType).toStrictEqual(['app', 'dataBase', 'client', 'bbc']);
+    // let allOfType;
+    // await act(async () => {
+    //   allOfType = await filteredResults();
+    // });
+
+    expect(filteredResults).toStrictEqual(['app', 'dataBase', 'client', 'bbc']);
   });
 });
