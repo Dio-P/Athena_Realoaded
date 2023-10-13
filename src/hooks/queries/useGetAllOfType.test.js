@@ -21,7 +21,7 @@ beforeEach(() => {
 describe('useGetAllOfType', () => {
   test('should return all the options if no query', async () => {
     const { result } = renderHook(() => useGetAllOfType('tags', ''));
-    const filteredResults = result.current;
+    const [filteredResults] = result.current;
 
     let allOfType;
     await act(async () => {

@@ -30,7 +30,7 @@ const useGetAllOfType = (ofType, queryString) => {
   }, [error, loading]);
 
   const filterResults = () => {
-    if (data.getAll) {
+    if (data?.getAll) {
       if (!queryString) {
         return data.getAll;
       }
@@ -41,7 +41,7 @@ const useGetAllOfType = (ofType, queryString) => {
     return undefined;
   };
 
-  return filterResults;
+  return [filterResults];
 };
 
 export default useGetAllOfType;
