@@ -2,8 +2,27 @@ import React from 'react';
 import styled from '@emotion/styled';
 import PropTypes from 'prop-types';
 
-import { warningIcon } from '../helpers/svgIcons';
-// import styleVariables from '../styleVariables';
+import { warningIcon, magnifyingGlassIcon } from '../helpers/svgIcons';
+import styleVariables from '../styleVariables';
+
+const SearchInputWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  width: 200px;
+  margin-bottom: 3px;
+`;
+
+const MagnifyingGlassIconWrapper = styled.div`
+  width: 23px;
+  height: 23px;
+  padding: 3px;
+`;
+
+const CustomSearchInput = styled.input`
+width: 100%;
+margin-right: 3px;
+border-radius: ${styleVariables.borderRadious.main};
+`;
 
 const WarningElementWrapper = styled.div`
   color: red;
@@ -33,6 +52,26 @@ const Overlay = styled.div`
   position: fixed;
 `;
 
+export const SearchInput = ({
+  searchingQuery,
+  search,
+  name,
+  placeholder,
+  disabled,
+}) => (
+  <SearchInputWrapper>
+    <MagnifyingGlassIconWrapper>{magnifyingGlassIcon}</MagnifyingGlassIconWrapper>
+    <CustomSearchInput
+      type="text"
+      name={name}
+      value={searchingQuery}
+      onChange={search}
+      placeholder={placeholder}
+      disabled={disabled}
+    />
+  </SearchInputWrapper>
+);
+
 export const WarningElement = ({ info }) => (
   <WarningElementWrapper>
     <WarningHeaderContainer>
@@ -49,37 +88,6 @@ export const OverlayElem = () => (
   <Overlay />
 );
 
-// const SearchBarWrapper = styled.div`
-//   display: flex;
-//   align-items: center;
-//   width: 200px;
-//   margin-bottom: 3px;
-// `;
-
-// const MagnifyingGlassIconWrapper = styled.div`
-//   width: 23px;
-//   height: 23px;
-//   padding: 3px;
-// `;
-
-// const SearchInput = styled.input`
-// width: 100%;
-// margin-right: 3px;
-// border-radius: ${styleVariables.borderRadious.main};
-// `;
-
-// export const SearchBar = ({ searchingQuery, search }) => (
-//   <SearchBarWrapper>
-//     <MagnifyingGlassIconWrapper>{magnifyingGlassIcon}</MagnifyingGlassIconWrapper>
-//     <SearchInput
-//       type="text"
-//       name="dropDownSearch"
-//       value={searchingQuery}
-//       onChange={search}
-//     />
-//   </SearchBarWrapper>
-// );
-
 // export const DropDownWrapper = ({Component, isOpen, setIsOpen}) => (
 //   <DropDownWrapperContainer onClick={() => setIsOpen(false)}>
 //     { isOpen &&
@@ -90,4 +98,20 @@ export const OverlayElem = () => (
 
 WarningElement.propTypes = {
   info: PropTypes.string.isRequired,
+};
+
+SearchInput.propTypes = {
+  searchingQuery: PropTypes.string,
+  search: PropTypes.func,
+  name: PropTypes.string,
+  placeholder: PropTypes.string,
+  disabled: PropTypes.bool,
+};
+
+SearchInput.defaultProps = {
+  searchingQuery: undefined,
+  search: () => {},
+  name: 'search',
+  placeholder: 'search',
+  disabled: false,
 };
