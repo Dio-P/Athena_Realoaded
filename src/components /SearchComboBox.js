@@ -3,7 +3,8 @@ import styled from '@emotion/styled';
 import PropTypes from 'prop-types';
 
 import styleVariables from '../styleVariables';
-import { deleteIcon, magnifyingGlassIcon } from '../helpers/svgIcons';
+import { deleteIcon } from '../helpers/svgIcons';
+import { SearchInput } from './specialElements';
 import capitaliseFirstLetters from '../helpers/capitaliseFirstLetters';
 import useGetAllOfType from '../hooks/queries/useGetAllOfType';
 
@@ -14,18 +15,6 @@ const SearchBarContainer = styled.div`
   width: 200px;
   margin-bottom: 3px;
   padding: 10px;
-`;
-
-const MagnifyingGlassIconWrapper = styled.div`
-  width: 23px;
-  height: 23px;
-  padding: 3px;
-`;
-
-const SearchInput = styled.input`
-  width: 100%;
-  margin-right: 3px;
-  border-radius: ${styleVariables.borderRadious.main};
 `;
 
 const OptionsWrapper = styled.div`
@@ -133,9 +122,6 @@ const SearchComboBox = ({
 
   return (
     <SearchBarContainer aria-label={`search for ${ofType}`}>
-      <MagnifyingGlassIconWrapper>
-        {magnifyingGlassIcon}
-      </MagnifyingGlassIconWrapper>
 
       <SearchInput
         type="text"

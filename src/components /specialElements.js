@@ -54,7 +54,7 @@ const Overlay = styled.div`
 
 export const SearchInput = ({
   searchingQuery,
-  search,
+  onChange,
   name,
   placeholder,
   disabled,
@@ -65,7 +65,7 @@ export const SearchInput = ({
       type="text"
       name={name}
       value={searchingQuery}
-      onChange={search}
+      onChange={onChange}
       placeholder={placeholder}
       disabled={disabled}
     />
@@ -102,7 +102,7 @@ WarningElement.propTypes = {
 
 SearchInput.propTypes = {
   searchingQuery: PropTypes.string,
-  search: PropTypes.func,
+  onChange: PropTypes.func,
   name: PropTypes.string,
   placeholder: PropTypes.string,
   disabled: PropTypes.bool,
@@ -110,7 +110,7 @@ SearchInput.propTypes = {
 
 SearchInput.defaultProps = {
   searchingQuery: undefined,
-  search: () => {},
+  onChange: () => {},
   name: 'search',
   placeholder: 'search',
   disabled: false,

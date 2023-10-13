@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
 import styleVariables from '../styleVariables';
-import { magnifyingGlassIcon } from '../helpers/svgIcons';
+import { SearchInput } from './specialElements';
 import capitaliseFirstLetters from '../helpers/capitaliseFirstLetters';
 
 const SearchBarContainer = styled.div`
@@ -12,18 +12,6 @@ const SearchBarContainer = styled.div`
   width: 200px;
   margin-bottom: 3px;
   padding: 10px;
-`;
-
-const MagnifyingGlassIconWrapper = styled.div`
-  width: 23px;
-  height: 23px;
-  padding: 3px;
-`;
-
-const SearchInput = styled.input`
-  width: 100%;
-  margin-right: 3px;
-  border-radius: ${styleVariables.borderRadious.main};
 `;
 
 const OptionsWrapper = styled.div`
@@ -77,9 +65,6 @@ const AdvanceSearchResultsBox = ({
   onClickOption,
 }) => (
   <SearchBarContainer aria-label="Advance Search Results">
-    <MagnifyingGlassIconWrapper>
-      {magnifyingGlassIcon}
-    </MagnifyingGlassIconWrapper>
 
     <SearchInput
       name="advanceSearchDisplayBox"
