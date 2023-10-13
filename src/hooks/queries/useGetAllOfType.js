@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useLazyQuery } from '@apollo/client';
 import gql from 'graphql-tag';
 
@@ -8,9 +8,6 @@ export const GET_ALL_OF_TYPE = gql`
   }`;
 
 const useGetAllOfType = (ofType, queryString) => {
-  const [allOfType, setAllOfType] = useState(undefined);
-  const [filteredResults, setFilteredResults] = useState(undefined);
-
   const [query, { loading, error, data }] = useLazyQuery(
     GET_ALL_OF_TYPE,
   );
@@ -25,31 +22,26 @@ const useGetAllOfType = (ofType, queryString) => {
   }, [ofType]);
 
   useEffect(() => {
-    if (data) {
-      console.log('data£$', data);
-      setAllOfType(data.getAll);
-    } if (error) {
+    if (error) {
       console.error(error);
     } if (loading) {
       console.log('loading');
     }
-  }, [data, error, loading]);
+  }, [error, loading]);
 
-  useEffect(() => {
-    if (allOfType) {
-      console.log('inside all of type@@', allOfType);
+  const filterResults = () => {
+    if (data.getAll) {
       if (!queryString) {
-        console.log('no query string ');
-        setFilteredResults('');
-      } else {
-        setFilteredResults(allOfType.filter((type) => (
-          type.includes(queryString)
-        )));
+        return data.getAll;
       }
+      return data.getAll.filter((type) => (
+        type.includes(queryString)
+      ));
     }
-  }, [queryString]);
+    return undefined;
+  };
 
-  return [filteredResults];
+  return filterResults;
 };
 
 export default useGetAllOfType;

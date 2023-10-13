@@ -120,6 +120,10 @@ const SearchComboBox = ({
     onClickOption(updatedFields);
   };
 
+  // const optionsOfType = useMemo(getAllOptionsOfType, [queryString]);
+  // console.log('optionsOfType***', optionsOfType);
+
+  console.log('allOptionsOfType$$', allOptionsOfType);
   return (
     <SearchBarContainer aria-label={`search for ${ofType}`}>
 
@@ -131,7 +135,7 @@ const SearchComboBox = ({
       />
 
       <OptionsWrapper>
-        {allOptionsOfType
+        {allOptionsOfType.length > 0
           && allOptionsOfType.map((option) => (
             <DropdownOption
               key={option}

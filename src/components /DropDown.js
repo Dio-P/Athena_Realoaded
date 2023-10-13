@@ -1,11 +1,15 @@
-import { useMemo, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import styled from '@emotion/styled';
+import PropTypes from 'prop-types';
+
+import useGetAllOfType from '../hooks/queries/useGetAllOfType';
+
 import capitaliseFirstLetters from '../helpers/capitaliseFirstLetters';
 import styleVariables from '../styleVariables';
-import { SearchBar } from './specialElements';
+import { SearchInput } from './specialElements';
 // import { useSearchBar } from '../hooks/useAddNewConnectionBlock';
 import MultiBtnComp from './MultiBtnComp';
-import useParamsHelper from '../hooks/useParamsHelper';
+// import useParamsHelper from '../hooks/useParamsHelper';
 
 const DropDownContainer = styled.div`
   display: flex;
@@ -37,16 +41,16 @@ const SingleDropDownElementWrapper = styled.div`
   align-items: center;
   width: 99%;
   height: 45px;
-  background-color: ${(props) => (!props.isAddFolderBtn
+  background-color: ${(props) => (!props.isAddNewOptionBtn
     ? styleVariables.colours.tertiaryBlue
     : styleVariables.colours.tertiaryPink)};
-  border-radius: ${(props) => (!props.isAddFolderBtn ? null : styleVariables.borderRadious.main)};
+  border-radius: ${(props) => (!props.isAddNewOptionBtn ? null : styleVariables.borderRadious.main)};
   color: black;
   margin: 1px;
-  margin-top: ${(props) => props.isAddFolderBtn && '4px'};
+  margin-top: ${(props) => props.isAddNewOptionBtn && '4px'};
 
   &:hover {
-    background-color: ${(props) => (!props.isAddFolderBtn
+    background-color: ${(props) => (!props.isAddNewOptionBtn
     ? styleVariables.colours.secondaryBlue
     : styleVariables.colours.secondaryPink)};
   }
@@ -60,66 +64,105 @@ const DropDownLabel = styled.div`
 const SingleDropdownElement = ({
   onClickOption,
   label,
-  isAddFolderBtn,
+  isAddNewOptionBtn,
 }) => (
   <SingleDropDownElementWrapper
     onClick={onClickOption}
-    isAddFolderBtn={isAddFolderBtn}
+    isAddNewOptionBtn={isAddNewOptionBtn}
   >
     <DropDownLabel>{capitaliseFirstLetters(label)}</DropDownLabel>
   </SingleDropDownElementWrapper>
 );
 
 const DropDown = ({
-
+  chosenValue,
+  freshlyAddedValue,
+  searchingQuery,
+  onClickOption,
+  hasAddOptionBtn,
+  addOptionLabel,
+  onClickAddOption,
 }) => {
-  const allData = useMemo(
-    () => (freshlyAddedValue ? [...preexistingData, freshlyAddedValue] : preexistingData),
-    [preexistingData, freshlyAddedValue],
-  );
+  // const allData = useMemo(
+  //   () => (freshlyAddedValue ? [...preexistingData, freshlyAddedValue] : preexistingData),
+  //   [preexistingData, freshlyAddedValue],
+  // );
 
-  const { search, searchingQuery, filteredData } = useSearchBar(allData);
-  const {
-    manageDdOpenParam,
-    params: { isDdOpen },
-  } = useParamsHelper();
+  // const { search, searchingQuery, filteredData } = useSearchBar(allData);
+  // const {
+  //   manageDdOpenParam,
+  //   params: { isDdOpen },
+  // } = useParamsHelper();
+  const [isDropdownOpen, useIsDropdownOpen] = useState();
 
   const optionsToRender = !searchingQuery ? allData : filteredData;
 
   return (
     <DropDownContainer>
-      <GenericButtonIcon
-        onClickFunction={manageDdOpenParam}
+      <MultiBtnComp
+        onClickFunction={useIsDropdownOpen}
         type="dropDown"
-        isMenuOpen={isDdOpen}
+        isMenuOpen={isDropdownOpen}
         freshlyAddedValue={freshlyAddedValue}
         chosenValue={chosenValue}
       />
       {isDropdownOpen
         && (
         <DropDownUnitWrapper>
-          <SearchBar searchingQuery={searchingQuery} search={search} />
+          <SearchInput searchingQuery={searchingQuery} onChange={search} />
           <OptionsWrapper>
-            {optionsToRender.map((folder, index) => (
+            {optionsToRender.map((option) => (
               <SingleDropdownElement
-                onClickOption={() => onClickOption(folder)}
-                label={folder.name}
-                key={index}
+                onClickOption={() => onClickOption(option)}
+                label={option}
+                key={option}
               />
             ))}
           </OptionsWrapper>
-          {providingAdditionalOption
+          {hasAddOptionBtn
             && (
             <SingleDropdownElement
-              onClickOption={onClickingAdditionalOption}
-              label={dDBtnLabel}
-              isAddFolderBtn
+              onClickOption={onClickAddOption}
+              label={addOptionLabel}
+              isAddNewOptionBtn
             />
             )}
         </DropDownUnitWrapper>
         )}
     </DropDownContainer>
   );
+};
+
+SingleDropdownElement.propTypes = {
+  onClickOption: PropTypes.func,
+  label: PropTypes.string,
+  isAddNewOptionBtn: PropTypes.bool,
+};
+
+SingleDropdownElement.defaultProps = {
+  onClickOption: () => {},
+  label: undefined,
+  isAddNewOptionBtn: false,
+};
+
+DropDown.propTypes = {
+  chosenValue: PropTypes.string,
+  freshlyAddedValue: PropTypes.string,
+  searchingQuery: PropTypes.string,
+  onClickOption: PropTypes.func,
+  hasAddOptionBtn: PropTypes.bool,
+  addOptionLabel: PropTypes.string,
+  onClickAddOption: PropTypes.func,
+};
+
+DropDown.defaultProps = {
+  chosenValue: '',
+  freshlyAddedValue: undefined,
+  searchingQuery: '',
+  onClickOption: () => {},
+  hasAddOptionBtn: false,
+  addOptionLabel: undefined,
+  onClickAddOption: () => {},
 };
 
 export default DropDown;
