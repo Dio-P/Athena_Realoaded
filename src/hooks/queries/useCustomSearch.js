@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useLazyQuery } from '@apollo/client';
 import gql from 'graphql-tag';
 
@@ -21,7 +21,7 @@ export const QUERY_ADVANCED_CUSTOME_SEARCH = gql`
 
 const useCustomSearchQuery = () => {
   // this needs to get the object with the choosenValues
-  const [returnedEntities, setReturnedEntities] = useState([]);
+  // const [returnedEntities, setReturnedEntities] = useState([]);
 
   const [query, { error, data, refetch }] = useLazyQuery(
     QUERY_ADVANCED_CUSTOME_SEARCH,
@@ -30,7 +30,7 @@ const useCustomSearchQuery = () => {
   const trigerAdvancedSearch = ({
     tags, name, type, leader, teamsResponsible, mainLinks,
   }) => {
-    if (returnedEntities.length === 0) {
+    if (data?.customEntitySearch.length === 0) {
       query({
         variables: {
           tags, name, type, leader, teamsResponsible, mainLinks,
@@ -50,9 +50,9 @@ const useCustomSearchQuery = () => {
     if (error) {
       console.error('error', error);
     }
-    if (data?.customEntitySearch) {
-      setReturnedEntities(data.customEntitySearch);
-    }
+    // if (data?.customEntitySearch) {
+    //   setReturnedEntities(data.customEntitySearch);
+    // }
   }, [data, error]);
 
   // useEffect(() => {
@@ -70,7 +70,7 @@ const useCustomSearchQuery = () => {
   //   }
   // }, [data]);
 
-  return { returnedEntities, trigerAdvancedSearch };
+  return { returnedEntities: data?.customEntitySearch || [], trigerAdvancedSearch };
 };
 
 export default useCustomSearchQuery;

@@ -1,4 +1,4 @@
-import { renderHook, act } from '@testing-library/react';
+import { renderHook } from '@testing-library/react';
 import { useLazyQuery } from '@apollo/client';
 import useGetAllOfType from './useGetAllOfType';
 
@@ -29,5 +29,12 @@ describe('useGetAllOfType', () => {
     // });
 
     expect(filteredResults).toStrictEqual(['app', 'dataBase', 'client', 'bbc']);
+  });
+
+  test('should return filtered results if query', async () => {
+    const { result } = renderHook(() => useGetAllOfType('tags', 'data'));
+    const [filteredResults] = result.current;
+
+    expect(filteredResults).toStrictEqual(['dataBase']);
   });
 });

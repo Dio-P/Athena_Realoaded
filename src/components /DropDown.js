@@ -9,6 +9,7 @@ import style from '../styleVariables';
 import { SearchInput } from './specialElements';
 // import { useSearchBar } from '../hooks/useAddNewConnectionBlock';
 import MultiBtnComp from './MultiBtnComp';
+import useCustomSearchQuery from '../hooks/queries/useCustomSearch';
 // import useParamsHelper from '../hooks/useParamsHelper';
 
 const DropDownContainer = styled.div`
@@ -94,8 +95,10 @@ const DropDown = ({
   //   params: { isDdOpen },
   // } = useParamsHelper();
   const [isDropdownOpen, useIsDropdownOpen] = useState();
+  const { returnedEntities, trigerAdvancedSearch } = useCustomSearchQuery();
 
-  const optionsToRender = !searchingQuery ? allData : filteredData;
+  const optionsToRender = returnedEntities;
+  // const optionsToRender = !searchingQuery ? allData : filteredData;
 
   return (
     <DropDownContainer>
@@ -109,7 +112,10 @@ const DropDown = ({
       {isDropdownOpen
         && (
         <DropDownUnitWrapper>
-          <SearchInput searchingQuery={searchingQuery} onChange={search} />
+          <SearchInput
+            searchingQuery={searchingQuery}
+            onChange={(e) => trigerAdvancedSearch({ name: e.target.value })}
+          />
           <OptionsWrapper>
             {optionsToRender.map((option) => (
               <SingleDropdownElement

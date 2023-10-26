@@ -4,29 +4,36 @@ import PropTypes from 'prop-types';
 import MultiBtnComp from './MultiBtnComp';
 import { addIcon } from '../helpers/svgIcons';
 
+const EntityChildrenBoxWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
 const EntityChildrenBoxContainer = styled.div`
   display: flex;
+  width: 100%;
+  flex-flow: row wrap;
 `;
 
 const EntityChildrenBox = ({ returnedChildren, renderChosenEntity, paramsCustomObj }) => (
-
-  <EntityChildrenBoxContainer>
+  <EntityChildrenBoxWrapper>
     <MultiBtnComp
       label="Add Child"
       type="add"
       icon={addIcon}
     />
-    {returnedChildren.map((childEntity) => (
-      <MultiBtnComp
-        aria={childEntity.name}
-        label={childEntity.name}
-        key={childEntity.name}
-        onClickFunction={
-              () => renderChosenEntity(childEntity.name, childEntity.id, paramsCustomObj)
-            }
-      />
-    ))}
-  </EntityChildrenBoxContainer>
+    <EntityChildrenBoxContainer>
+      {returnedChildren.map((childEntity) => (
+        <MultiBtnComp
+          aria={childEntity.name}
+          label={childEntity.name}
+          key={childEntity.name}
+          onClickFunction={
+                () => renderChosenEntity(childEntity.name, childEntity.id, paramsCustomObj)
+              }
+        />
+      ))}
+    </EntityChildrenBoxContainer>
+  </EntityChildrenBoxWrapper>
 
 );
 

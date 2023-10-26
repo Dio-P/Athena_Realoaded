@@ -14,7 +14,6 @@ const useGetAllOfType = (ofType, queryString) => {
 
   useEffect(() => {
     if (ofType) {
-      console.log('ofType@', ofType);
       query({
         variables: { ofType },
       });
