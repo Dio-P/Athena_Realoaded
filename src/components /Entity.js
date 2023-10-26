@@ -8,7 +8,6 @@ import EntityChildrenBox from './EntityChildrenBox';
 const EntityContainer = styled.div`
   display: flex;
   font-size: 23px;
-
 `;
 
 const ThisEntityContainer = styled.div`
