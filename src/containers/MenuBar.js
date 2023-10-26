@@ -9,17 +9,27 @@ const MenuBarContainer = styled.div`
   flex-direction: column;
 `;
 
+const ThemeToggle = styled.button`
+  background-color: red;
+  height: 25px;
+  width: 25px;
+`;
+
 const MenuBar = ({
   paramsCustomObj,
   renderChosenEntity,
   searchEntity,
-  // theme,
-  // setTheme,
+  theme,
+  setTheme,
 }) => (
   <MenuBarContainer aria-label="menu bar">
     <BreadcrumbsMenu
       paramsCustomObj={paramsCustomObj}
       renderChosenEntity={renderChosenEntity}
+    />
+    <ThemeToggle onClick={() => setTheme(
+      theme === 'dark' ? 'light' : 'dark',
+    )}
     />
     <SearchBar searchEntity={searchEntity} />
   </MenuBarContainer>
@@ -35,12 +45,16 @@ MenuBar.propTypes = {
   }),
   renderChosenEntity: PropTypes.func,
   searchEntity: PropTypes.func,
+  theme: PropTypes.string,
+  setTheme: PropTypes.func,
 };
 
 MenuBar.defaultProps = {
   paramsCustomObj: {},
   renderChosenEntity: () => {},
   searchEntity: () => {},
+  theme: 'light',
+  setTheme: () => {},
 };
 
 export default MenuBar;

@@ -1,38 +1,41 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import styled from '@emotion/styled';
 // import { css } from '@emotion/react';
 
 import PropTypes from 'prop-types';
 
 import capitaliseFirstLetters from '../helpers/capitaliseFirstLetters';
-import style, { colours } from '../styleVariables';
+import style, { colours, themeStyle } from '../styleVariables';
 import {
   tickIcon,
   arrowDownIcon,
   arrowUpIcon,
   deleteIcon,
 } from '../helpers/svgIcons';
+import ThemeContext from '../context/ThemeContext';
 // import WarningElement from './specialElements';
 // import { defaultProps } from 'default-props';
 // import PropTypes from 'prop-types';
 
+// const theme = 'light';
+
 const DefaultBtnWrapper = styled.div`
-display: flex;
-width: 100%;
-// width: 14em;
-cursor: pointer;
-margin: 8px;
+  display: flex;
+  width: 100%;
+  // width: 14em;
+  cursor: pointer;
+  margin: 8px;
 `;
 
 const DefaultBtnContainer = styled.button`
   display: flex;
   align-content: center;
-  background-color: ${style.variables.btn.typeDefault};
+  background-color: ${style.variables.btn.ofTypeDefault.light};
   width: 100%;
   border-radius: ${style.variables.borderRadious.main};
-  margin: 20px 0px 20px 0px;
+  margin: 20px;
   font-size: 18px;
-  box-shadow: ${style.variables.boxShadow.large.light};
+  box-shadow: ${(props) => style.variables.boxShadow.large[props.theme]};
 `;
 const DefaultIconWrapper = styled.div`
   display: flex;
@@ -44,7 +47,7 @@ const DefaultIconWrapper = styled.div`
 
 const DefaultLabelContainer = styled.div`
   margin: auto;
-  color: ${colours.primaryLight};
+  color: ${(props) => themeStyle[props.theme].defaultType};
   padding: 8px;
   min-width: 141px;
   min-height: 50px;
@@ -56,10 +59,10 @@ const DefaultLabelContainer = styled.div`
 `;
 
 const DefaultLabelStyle = styled.div`
-display: flex;
-align-items: center;
-width: 50%;
-font-size: 20px;
+  display: flex;
+  align-items: center;
+  width: 50%;
+  font-size: 20px;
 `;
 
 const dropDownButton = {
@@ -174,6 +177,13 @@ const TagBtn = {
   `,
 };
 
+// const ToggleBtn = () => (
+//   <label className="switch">
+//     <input type="checkbox" />
+//     <span className="slider round" />
+//   </label>
+// );
+
 const TagButton = ({
   label,
   onClickFunction,
@@ -217,6 +227,7 @@ const MainButton = ({
   onClickFunction,
   aria,
   icon,
+  theme,
   // change all the above to 'aria-labelledby': ariaLabelledBy,
 }) => {
   const props = aria || type
@@ -233,8 +244,8 @@ const MainButton = ({
     <mainBtn.Wrapper
       {...props}
     >
-      <CustomButtonContainer theme="light">
-        <mainBtn.LabelContainer>
+      <CustomButtonContainer theme={theme}>
+        <mainBtn.LabelContainer theme={theme}>
           <mainBtn.Label>{capitaliseFirstLetters(label)}</mainBtn.Label>
 
           {icon
@@ -292,6 +303,7 @@ const MultiBtnComp = ({
   chosenValue,
   aria,
 }) => {
+  const theme = useContext(ThemeContext);
   if (type === 'small') {
     return (
       <SmallButton
@@ -312,6 +324,7 @@ const MultiBtnComp = ({
         onClickFunction={onClickFunction}
         aria={aria}
         icon={icon}
+        theme={theme}
       />
     );
   }
@@ -369,6 +382,7 @@ const MultiBtnComp = ({
         clicked={clicked}
         onClickFunction={onClickFunction}
         aria={aria}
+        theme={theme}
       />
       {/* {renderConditional(label) && <WarningElement info='will be deleted if not choosen' />} */}
     </div>
@@ -412,6 +426,7 @@ MainButton.propTypes = {
   onClickFunction: PropTypes.func,
   aria: PropTypes.string,
   icon: PropTypes.instanceOf(Object),
+  theme: PropTypes.string,
 };
 
 MainButton.defaultProps = {
@@ -422,6 +437,7 @@ MainButton.defaultProps = {
   onClickFunction: () => {},
   aria: '',
   icon: undefined,
+  theme: 'light',
 };
 
 DropDownButton.propTypes = {

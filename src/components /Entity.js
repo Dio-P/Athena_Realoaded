@@ -7,6 +7,8 @@ import EntityChildrenBox from './EntityChildrenBox';
 
 const EntityContainer = styled.div`
   display: flex;
+  font-size: 23px;
+
 `;
 
 const ThisEntityContainer = styled.div`
@@ -42,13 +44,15 @@ const Entity = ({
   return (
     entity
       && (
-        <EntityContainer aria-label={`${entity.name}`}>
+        <EntityContainer
+          aria-label={`${entity.name}`}
+        >
           <ThisEntityContainer>
             <h1>{capitaliseFirstLetters(entity.name)}</h1>
             <EntityInfoBox>
-              <div>
-                description:
-              </div>
+              <h3>
+                Description:
+              </h3>
               {/* {editDescription? */}
               {/* <input value={entity.briefDescription}/> */}
               {/* : */}

@@ -1,12 +1,12 @@
 import styled from '@emotion/styled';
 
-// const lightThemeShadow = '#2b2a28';
+// const lightthemeStylehadow = '#2b2a28';
 
-// export const chosenTheme = (themeName) => {
-//   switch (themeName) {
-//     case 'light': return 'lightTheme';
-//     case 'dark': return 'darkTheme';
-//     default: return 'lightTheme';
+// export const chosenthemeStyle = (themeStyleName) => {
+//   switch (themeStyleName) {
+//     case 'light': return 'lightthemeStyle';
+//     case 'dark': return 'darkthemeStyle';
+//     default: return 'lightthemeStyle';
 //   }
 // };
 
@@ -27,10 +27,10 @@ export const colours = {
   secondaryDark: '#2b2a28',
 };
 
-const themes = {
+export const themeStyle = {
   light: {
     backgroundColour: colours.primaryLight,
-    defaultType: colours.primaryLight,
+    defaultTypeColour: colours.secondaryDark,
     shadow: colours.secondaryDark,
     defaultBtn: {
       typeColour: colours.primaryLight,
@@ -47,18 +47,18 @@ const themes = {
   },
   dark: {
     backgroundColour: colours.primaryDark,
-    defaultType: colours.primaryLight,
+    defaultTypeColour: colours.secondaryLight,
     shadow: colours.secondaryLight,
     defaultBtn: {
-      typeColour: colours.primaryLight,
+      ofTypeColour: colours.primaryLight,
       backgroundColour: colours.primaryBlue,
     },
     addBtn: {
-      typeColour: colours.primaryLight,
+      ofTypeColour: colours.primaryLight,
       backgroundColour: colours.primaryPink,
     },
     smallBtn: {
-      typeColour: colours.primaryLight,
+      ofTypeColour: colours.primaryLight,
       backgroundColour: colours.primaryPink,
     },
   },
@@ -66,32 +66,36 @@ const themes = {
 
 const style = {
   variables: {
+    typeColour: {
+      light: themeStyle.light.defaultTypeColour,
+      dark: themeStyle.dark.defaultTypeColour,
+    },
     backgroundColour: {
       light: colours.primaryLight,
       dark: colours.primaryDark,
     },
     btn: {
-      typeDefault: {
-        light: themes.light.defaultBtn,
-        dark: themes.dark.defaultBtn,
+      ofTypeDefault: {
+        light: themeStyle.light.defaultBtn.backgroundColour,
+        dark: themeStyle.dark.defaultBtn.backgroundColour,
       },
-      typeAdd: {
-        light: themes.light.addBtn,
-        dark: themes.dark.addBtn,
+      ofTypeAdd: {
+        light: themeStyle.light.addBtn,
+        dark: themeStyle.dark.addBtn,
       },
-      typeSmall: {
-        light: themes.light.smallBtn,
-        dark: themes.dark.smallBtn,
+      ofTypeSmall: {
+        light: themeStyle.light.smallBtn,
+        dark: themeStyle.dark.smallBtn,
       },
     },
     boxShadow: {
       large: {
-        light: `${themes.light.shadow} 0.5em 0.5em 0.3em`,
-        dark: `${themes.dark.shadow} 0.5em 0.5em 0.3em`,
+        light: `${themeStyle.light.shadow} 0.5em 0.5em 0.3em`,
+        dark: `${themeStyle.dark.shadow} 0.5em 0.5em 0.3em`,
       },
       small: {
-        light: `${themes.light.shadow} 0.2em 0.2em 0.1em`,
-        dark: `${themes.dark.shadow} 0.2em 0.2em 0.1em`,
+        light: `${themeStyle.light.shadow} 0.2em 0.2em 0.1em`,
+        dark: `${themeStyle.dark.shadow} 0.2em 0.2em 0.1em`,
       },
     },
     borderRadious: {
