@@ -29,6 +29,7 @@ const Entity = ({
   // setDisplayedEntity,
   paramsCustomObj,
   renderChosenEntity,
+  // theme,
 }) => {
   const [returnedChildren, searchChildren] = useChildrenByIdsSearch();
 

@@ -1,11 +1,11 @@
-import React, { useMemo, useState } from 'react';
+import React, { useState } from 'react';
 import styled from '@emotion/styled';
 import PropTypes from 'prop-types';
 
-import useGetAllOfType from '../hooks/queries/useGetAllOfType';
+// import useGetAllOfType from '../hooks/queries/useGetAllOfType';
 
 import capitaliseFirstLetters from '../helpers/capitaliseFirstLetters';
-import styleVariables from '../styleVariables';
+import style from '../styleVariables';
 import { SearchInput } from './specialElements';
 // import { useSearchBar } from '../hooks/useAddNewConnectionBlock';
 import MultiBtnComp from './MultiBtnComp';
@@ -17,12 +17,12 @@ const DropDownContainer = styled.div`
 
 const DropDownUnitWrapper = styled.div`
   display: flex;
-  border-radius: ${styleVariables.borderRadious.main};
-  box-shadow: ${styleVariables.boxShadow.bigButton};
+  border-radius: ${style.variables.borderRadious.main};
+  box-shadow: ${style.variables.boxShadow.large};
   flex-direction: column;
   align-content: center;
-  background-color: ${styleVariables.colours.primaryLight};
-  border: solid ${styleVariables.colours.secondaryOrange};
+  background-color: ${style.variables.colours.primaryLight};
+  border: solid ${style.variables.colours.secondaryOrange};
   padding: 6px 7px;
   overflow: hidden;
   height: 100%;
@@ -33,7 +33,7 @@ const OptionsWrapper = styled.div`
   display: flex;
   flex-direction: column;
   overflow: scroll;
-  border-radius: ${styleVariables.borderRadious.main};
+  border-radius: ${style.variables.borderRadious.main};
 `;
 
 const SingleDropDownElementWrapper = styled.div`
@@ -42,17 +42,17 @@ const SingleDropDownElementWrapper = styled.div`
   width: 99%;
   height: 45px;
   background-color: ${(props) => (!props.isAddNewOptionBtn
-    ? styleVariables.colours.tertiaryBlue
-    : styleVariables.colours.tertiaryPink)};
-  border-radius: ${(props) => (!props.isAddNewOptionBtn ? null : styleVariables.borderRadious.main)};
+    ? style.variables.colours.tertiaryBlue
+    : style.variables.colours.tertiaryPink)};
+  border-radius: ${(props) => (!props.isAddNewOptionBtn ? null : style.variables.borderRadious.main)};
   color: black;
   margin: 1px;
   margin-top: ${(props) => props.isAddNewOptionBtn && '4px'};
 
   &:hover {
     background-color: ${(props) => (!props.isAddNewOptionBtn
-    ? styleVariables.colours.secondaryBlue
-    : styleVariables.colours.secondaryPink)};
+    ? style.variables.colours.secondaryBlue
+    : style.variables.colours.secondaryPink)};
   }
   cursor: pointer;
 `;

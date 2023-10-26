@@ -1,10 +1,17 @@
 // import "./App.css";
 
 import React, { useEffect, useState } from 'react';
+import styled from '@emotion/styled';
 import useEntityByIdSearch from './hooks/queries/useEntityByIdSearch';
+
+import style from './styleVariables';
 import Entity from './components /Entity';
 import useParamsHelper from './hooks/useParamsHelper';
 import MenuBar from './containers/MenuBar';
+
+const AthenaContainer = styled.div`
+  background-color: ${(props) => style.variables.backgroundColour[props.theme]}
+`;
 
 const firstRender = {
   cPub: { id: '4', index: 1, name: 'cPub' },
@@ -19,6 +26,7 @@ const App = () => {
   } = useParamsHelper(paramsCustomObj, setParamsCustomObj);
 
   const [displayedEntity, setDisplayedEntity] = useState(undefined);
+  const [theme, setTheme] = useState('light');
 
   // this needs to go when we stop mocking
   useEffect(() => {
@@ -36,11 +44,13 @@ const App = () => {
   }, [returnedEntity]);
 
   return (
-    <div>
+    <AthenaContainer theme={theme}>
       <MenuBar
         paramsCustomObj={paramsCustomObj}
         renderChosenEntity={renderChosenEntity}
         searchEntity={searchEntity}
+        theme={theme}
+        setTheme={setTheme}
       />
       {returnedEntity && (
         <Entity
@@ -48,9 +58,10 @@ const App = () => {
           setDisplayedEntity={(child) => setDisplayedEntity(child)}
           paramsCustomObj={paramsCustomObj}
           renderChosenEntity={renderChosenEntity}
+          theme={theme}
         />
       )}
-    </div>
+    </AthenaContainer>
   );
 };
 

@@ -3,7 +3,7 @@ import styled from '@emotion/styled';
 import PropTypes from 'prop-types';
 
 import { warningIcon, magnifyingGlassIcon } from '../helpers/svgIcons';
-import styleVariables from '../styleVariables';
+import style from '../styleVariables';
 
 const SearchInputWrapper = styled.div`
   display: flex;
@@ -21,7 +21,7 @@ const MagnifyingGlassIconWrapper = styled.div`
 const CustomSearchInput = styled.input`
 width: 100%;
 margin-right: 3px;
-border-radius: ${styleVariables.borderRadious.main};
+border-radius: ${style.variables.borderRadious.main};
 `;
 
 const WarningElementWrapper = styled.div`

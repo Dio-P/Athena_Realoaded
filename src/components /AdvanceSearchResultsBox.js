@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
-import styleVariables from '../styleVariables';
+import style from '../styleVariables';
 import { SearchInput } from './specialElements';
 import capitaliseFirstLetters from '../helpers/capitaliseFirstLetters';
 
@@ -18,7 +18,7 @@ const OptionsWrapper = styled.div`
   display: flex;
   flex-direction: column;
   overflow: scroll;
-  border-radius: ${styleVariables.borderRadious.main};
+  border-radius: ${style.variables.borderRadious.main};
 `;
 
 const SingleDropDownElementWrapper = styled.div`
@@ -27,17 +27,17 @@ const SingleDropDownElementWrapper = styled.div`
   width: 99%;
   height: 45px;
   background-color: ${(props) => (!props.isAddFolderBtn
-    ? styleVariables.colours.tertiaryBlue
-    : styleVariables.colours.tertiaryPink)};
-  border-radius: ${(props) => (!props.isAddFolderBtn ? null : styleVariables.borderRadious.main)};
+    ? style.variables.colours.tertiaryBlue
+    : style.variables.colours.tertiaryPink)};
+  border-radius: ${(props) => (!props.isAddFolderBtn ? null : style.variables.borderRadious.main)};
   color: black;
   margin: 1px;
   margin-top: ${(props) => props.isAddFolderBtn && '4px'};
 
   &:hover {
     background-color: ${(props) => (!props.isAddFolderBtn
-    ? styleVariables.colours.secondaryBlue
-    : styleVariables.colours.secondaryPink)};
+    ? style.variables.colours.secondaryBlue
+    : style.variables.colours.secondaryPink)};
   }
   cursor: pointer;
 `;

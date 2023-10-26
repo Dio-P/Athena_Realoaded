@@ -13,6 +13,8 @@ const MenuBar = ({
   paramsCustomObj,
   renderChosenEntity,
   searchEntity,
+  // theme,
+  // setTheme,
 }) => (
   <MenuBarContainer aria-label="menu bar">
     <BreadcrumbsMenu

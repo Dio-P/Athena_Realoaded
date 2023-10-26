@@ -5,7 +5,7 @@ import styled from '@emotion/styled';
 import PropTypes from 'prop-types';
 
 import capitaliseFirstLetters from '../helpers/capitaliseFirstLetters';
-import styleVariables from '../styleVariables';
+import style, { colours } from '../styleVariables';
 import {
   tickIcon,
   arrowDownIcon,
@@ -27,12 +27,12 @@ margin: 8px;
 const DefaultBtnContainer = styled.button`
   display: flex;
   align-content: center;
-  background-color: ${styleVariables.colours.primaryBlue};
+  background-color: ${style.variables.btn.typeDefault};
   width: 100%;
-  border-radius: ${styleVariables.borderRadious.main};
+  border-radius: ${style.variables.borderRadious.main};
   margin: 20px 0px 20px 0px;
   font-size: 18px;
-  box-shadow: ${styleVariables.boxShadow.bigButton};
+  box-shadow: ${style.variables.boxShadow.large.light};
 `;
 const DefaultIconWrapper = styled.div`
   display: flex;
@@ -44,7 +44,7 @@ const DefaultIconWrapper = styled.div`
 
 const DefaultLabelContainer = styled.div`
   margin: auto;
-  color: ${styleVariables.colours.primaryLight};
+  color: ${colours.primaryLight};
   padding: 8px;
   min-width: 141px;
   min-height: 50px;
@@ -69,7 +69,7 @@ const dropDownButton = {
     width: 300px;
     height: 35px;
     align-items: center;
-    border-radius: ${styleVariables.borderRadious.secondary};
+    border-radius: ${style.variables.borderRadious.secondary};
   `,
   Container: styled.div`
     display: flex;
@@ -88,9 +88,9 @@ const smallBtn = {
     height: 35px;
     width: 35px;
     color: black;
-    background-color: ${styleVariables.colours.primaryPink};
-    box-shadow: ${styleVariables.boxShadow.smallButton};
-    border-radius: ${styleVariables.borderRadious.secondary};
+    background-color: ${colours.primaryPink};
+    box-shadow: ${style.variables.boxShadow.small};
+    border-radius: ${style.variables.borderRadious.secondary};
     align-self: end;
 
     &:active {
@@ -110,7 +110,7 @@ const smallBtn = {
 const mainBtn = {
   Wrapper: DefaultBtnWrapper,
   AddingVersionContainer: styled(DefaultBtnContainer)`
-    background-color: ${styleVariables.colours.primaryPink};
+    background-color: ${colours.primaryPink};
     min-width: 100px;
     min-height: 50px;
     max-width: 140px;
@@ -127,10 +127,10 @@ const mainBtn = {
   ClickedVersionContainer: styled.button`
     display: flex;
     align-content: center;
-    background-color: ${styleVariables.colours.primaryBlue};
+    background-color: ${colours.primaryBlue};
     width: 100%;
-    border: solid ${styleVariables.colours.primaryGreen};
-    border-radius: ${styleVariables.borderRadious.main};
+    border: solid ${colours.primaryGreen};
+    border-radius: ${style.variables.borderRadious.main};
     margin: 20px 0px 20px 10px;
     font-size: 18px;
   `,
@@ -138,14 +138,14 @@ const mainBtn = {
   LabelContainer: DefaultLabelContainer,
   Label: DefaultLabelStyle,
   TickBoxWrapper: styled(DefaultIconWrapper)`
-    border-radius: ${styleVariables.borderRadious.main};
-    background-color: ${styleVariables.colours.primaryBlue};
+    border-radius: ${style.variables.borderRadious.main};
+    background-color: ${colours.primaryBlue};
     min-width: 30px;
     max-width: 60px;
   `,
   TickBox: styled.div`
-    border-radius: ${styleVariables.borderRadious.main};
-    background-color: ${styleVariables.colours.primaryLight};
+    border-radius: ${style.variables.borderRadious.main};
+    background-color: ${colours.primaryLight};
     margin: auto;
     height: 80%;
     width: 80%;
@@ -156,7 +156,7 @@ const TagBtn = {
   Container: styled.div`
     display: flex;
     color: white;
-    background-color: ${styleVariables.colours.primaryBlue};
+    background-color: ${colours.primaryBlue};
     height: 20px;
     width: 90px;
     margin: 5px;
@@ -233,7 +233,7 @@ const MainButton = ({
     <mainBtn.Wrapper
       {...props}
     >
-      <CustomButtonContainer>
+      <CustomButtonContainer theme="light">
         <mainBtn.LabelContainer>
           <mainBtn.Label>{capitaliseFirstLetters(label)}</mainBtn.Label>
 
