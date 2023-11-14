@@ -29,7 +29,7 @@ const App = () => {
   } = useParamsHelper(paramsCustomObj, setParamsCustomObj);
 
   const [displayedEntity, setDisplayedEntity] = useState(undefined);
-  const [theme, setTheme] = useState('light');
+  const [theme, setTheme] = useState('dark');
 
   // this needs to go when we stop mocking
   useEffect(() => {
