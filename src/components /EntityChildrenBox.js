@@ -3,6 +3,7 @@ import styled from '@emotion/styled';
 import PropTypes from 'prop-types';
 import MultiBtnComp from './MultiBtnComp';
 import PopUp from './PopUp';
+import AddChildForm from './popUpComponents/Forms/AddChildForm';
 import { addIcon } from '../helpers/svgIcons';
 
 const EntityChildrenBoxWrapper = styled.div`
@@ -39,7 +40,14 @@ const EntityChildrenBox = ({ returnedChildren, renderChosenEntity, paramsCustomO
           ))}
         </EntityChildrenBoxContainer>
       </EntityChildrenBoxWrapper>
-      <PopUp />
+      {isAddChildrenFormOpen
+      && (
+      <PopUp
+        ComponentToDisplay={AddChildForm}
+        isPopUpOpen={isAddChildrenFormOpen}
+        setIsPopUpOpen={setIsAddChildrenFormOpen}
+      />
+      )}
     </>
 
   );

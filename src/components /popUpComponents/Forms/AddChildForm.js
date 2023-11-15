@@ -2,9 +2,10 @@ import React, { useState } from 'react';
 import DropDown from '../../DropDown';
 
 const AddChildForm = () => {
-  const [one, useOne] = useState();
+  const [one] = useState('This is the AddChildForm');
   return (
     <>
+      {one}
       <DropDown />
       <DropDown />
     </>

@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 // import useGetAllOfType from '../hooks/queries/useGetAllOfType';
 
 import capitaliseFirstLetters from '../helpers/capitaliseFirstLetters';
-import style from '../styleVariables';
+import style, { colours } from '../styleVariables';
 import { SearchInput } from './specialElements';
 // import { useSearchBar } from '../hooks/useAddNewConnectionBlock';
 import MultiBtnComp from './MultiBtnComp';
@@ -22,8 +22,8 @@ const DropDownUnitWrapper = styled.div`
   box-shadow: ${style.variables.boxShadow.large};
   flex-direction: column;
   align-content: center;
-  background-color: ${style.variables.colours.primaryLight};
-  border: solid ${style.variables.colours.secondaryOrange};
+  background-color: ${colours.primaryLight};
+  border: solid ${colours.secondaryOrange};
   padding: 6px 7px;
   overflow: hidden;
   height: 100%;
@@ -43,8 +43,8 @@ const SingleDropDownElementWrapper = styled.div`
   width: 99%;
   height: 45px;
   background-color: ${(props) => (!props.isAddNewOptionBtn
-    ? style.variables.colours.tertiaryBlue
-    : style.variables.colours.tertiaryPink)};
+    ? colours.tertiaryBlue
+    : colours.tertiaryPink)};
   border-radius: ${(props) => (!props.isAddNewOptionBtn ? null : style.variables.borderRadious.main)};
   color: black;
   margin: 1px;
@@ -52,8 +52,8 @@ const SingleDropDownElementWrapper = styled.div`
 
   &:hover {
     background-color: ${(props) => (!props.isAddNewOptionBtn
-    ? style.variables.colours.secondaryBlue
-    : style.variables.colours.secondaryPink)};
+    ? colours.secondaryBlue
+    : colours.secondaryPink)};
   }
   cursor: pointer;
 `;

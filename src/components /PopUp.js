@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from '@emotion/styled';
 import PropTypes from 'prop-types';
-import style from '../styleVariables';
+import { colours } from '../styleVariables';
 import { deleteIcon } from '../helpers/svgIcons';
 import { OverlayElem } from './specialElements';
 import MultiBtnComp from './MultiBtnComp';
@@ -27,7 +27,7 @@ const ComponentToDisplayWrapper = styled.div`
   display: flex;
   flex-direction: column;
   height: 100%;
-  background-color: ${style.variables.colours.primaryLight};
+  background-color: ${colours.primaryLight};
 `;
 
 const PopUp = ({ isPopUpOpen, ComponentToDisplay, setIsPopUpOpen }) => (
