@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from '@emotion/styled';
 import PropTypes from 'prop-types';
 import MultiBtnComp from './MultiBtnComp';
+import PopUp from './PopUp';
 import { addIcon } from '../helpers/svgIcons';
 
 const EntityChildrenBoxWrapper = styled.div`
@@ -14,29 +15,35 @@ const EntityChildrenBoxContainer = styled.div`
   flex-flow: row wrap;
 `;
 
-const EntityChildrenBox = ({ returnedChildren, renderChosenEntity, paramsCustomObj }) => (
-  <EntityChildrenBoxWrapper>
-    <MultiBtnComp
-      label="Add Child"
-      type="add"
-      icon={addIcon}
-    />
-    <EntityChildrenBoxContainer>
-      {returnedChildren.map((childEntity) => (
+const EntityChildrenBox = ({ returnedChildren, renderChosenEntity, paramsCustomObj }) => {
+  const [isAddChildrenFormOpen, setIsAddChildrenFormOpen] = useState(false);
+  return (
+    <>
+      <EntityChildrenBoxWrapper>
         <MultiBtnComp
-          aria={childEntity.name}
-          label={childEntity.name}
-          key={childEntity.name}
-          onClickFunction={
-                () => renderChosenEntity(childEntity.name, childEntity.id, paramsCustomObj)
-              }
+          label="Add Child"
+          type="add"
+          icon={addIcon}
+          onClickFunction={() => setIsAddChildrenFormOpen(!isAddChildrenFormOpen)}
         />
-      ))}
-    </EntityChildrenBoxContainer>
-  </EntityChildrenBoxWrapper>
+        <EntityChildrenBoxContainer>
+          {returnedChildren.map((childEntity) => (
+            <MultiBtnComp
+              aria={childEntity.name}
+              label={childEntity.name}
+              key={childEntity.name}
+              onClickFunction={
+                  () => renderChosenEntity(childEntity.name, childEntity.id, paramsCustomObj)
+                }
+            />
+          ))}
+        </EntityChildrenBoxContainer>
+      </EntityChildrenBoxWrapper>
+      <PopUp />
+    </>
 
-);
-
+  );
+};
 EntityChildrenBox.propTypes = {
   returnedChildren: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.string,
