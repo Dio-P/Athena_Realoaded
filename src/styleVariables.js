@@ -71,8 +71,8 @@ const style = {
       dark: themeStyle.dark.defaultTypeColour,
     },
     backgroundColour: {
-      light: colours.primaryLight,
-      dark: colours.primaryDark,
+      light: themeStyle.light.backgroundColour,
+      dark: themeStyle.dark.backgroundColour,
     },
     btn: {
       ofTypeDefault: {

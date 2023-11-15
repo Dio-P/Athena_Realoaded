@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import styled from '@emotion/styled';
 import PropTypes from 'prop-types';
-import { colours } from '../styleVariables';
+import style from '../styleVariables';
+import ThemeContext from '../context/ThemeContext';
 import { deleteIcon } from '../helpers/svgIcons';
 import { OverlayElem } from './specialElements';
 import MultiBtnComp from './MultiBtnComp';
@@ -27,15 +28,18 @@ const ComponentToDisplayWrapper = styled.div`
   display: flex;
   flex-direction: column;
   height: 100%;
-  background-color: ${colours.primaryLight};
+  background-color: ${(props) => style.variables.backgroundColour[props.theme]};
 `;
 
-const PopUp = ({ isPopUpOpen, ComponentToDisplay, setIsPopUpOpen }) => (
-  isPopUpOpen && (
+const PopUp = ({ isPopUpOpen, ComponentToDisplay, setIsPopUpOpen }) => {
+  const theme = useContext(ThemeContext);
+
+  return (
+    isPopUpOpen && (
     <PopUpWrapper>
       <OverlayElem />
       <PopUpContainer>
-        <ComponentToDisplayWrapper>
+        <ComponentToDisplayWrapper theme={theme}>
           <MultiBtnComp
             onClickFunction={() => setIsPopUpOpen(false)}
             type="small"
@@ -45,9 +49,9 @@ const PopUp = ({ isPopUpOpen, ComponentToDisplay, setIsPopUpOpen }) => (
         </ComponentToDisplayWrapper>
       </PopUpContainer>
     </PopUpWrapper>
-  )
-);
-
+    )
+  );
+};
 PopUp.propTypes = {
   isPopUpOpen: PropTypes.bool,
   ComponentToDisplay: PropTypes.instanceOf(Object).isRequired,
