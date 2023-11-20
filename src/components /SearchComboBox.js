@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from '@emotion/styled';
 import PropTypes from 'prop-types';
 
-import style from '../styleVariables';
+import style, { colours } from '../styleVariables';
 import { deleteIcon } from '../helpers/svgIcons';
 import { SearchInput } from './specialElements';
 import capitaliseFirstLetters from '../helpers/capitaliseFirstLetters';
@@ -30,8 +30,8 @@ const SingleDropDownElementWrapper = styled.div`
   width: 99%;
   height: 45px;
   background-color: ${(props) => (!props.isAddFolderBtn
-    ? style.variables.colours.tertiaryBlue
-    : style.variables.colours.tertiaryPink)};
+    ? colours.tertiaryBlue
+    : colours.tertiaryPink)};
   border-radius: ${(props) => (!props.isAddFolderBtn ? null : style.variables.borderRadious.main)};
   color: black;
   margin: 1px;
@@ -39,8 +39,8 @@ const SingleDropDownElementWrapper = styled.div`
 
   &:hover {
     background-color: ${(props) => (!props.isAddFolderBtn
-    ? style.variables.colours.secondaryBlue
-    : style.variables.colours.secondaryPink)};
+    ? colours.secondaryBlue
+    : colours.secondaryPink)};
   }
   cursor: pointer;
 `;
@@ -104,7 +104,13 @@ const SearchComboBox = ({
   onClickOption,
 }) => {
   const [queryString, setQueryString] = useState('');
+  const [allOptions, setAllOptions] = useState(undefined);
+
   const [allOptionsOfType] = useGetAllOfType(ofType, queryString);
+
+  useEffect(() => {
+    setAllOptions(allOptionsOfType);
+  }, [allOptionsOfType]);
 
   const removeChoice = (choiceToRemove) => {
     const { [ofType]: ofThisType, ...typesWithoutThis } = chosenValues;
@@ -120,7 +126,7 @@ const SearchComboBox = ({
     onClickOption(updatedFields);
   };
 
-  console.log('allOptionsOfType$$', allOptionsOfType);
+  console.log('allOptions$$', allOptions);
   return (
     <SearchBarContainer aria-label={`search for ${ofType}`}>
 
@@ -132,8 +138,8 @@ const SearchComboBox = ({
       />
 
       <OptionsWrapper>
-        {allOptionsOfType?.length > 0
-          && allOptionsOfType.map((option) => (
+        {allOptions?.length > 0
+          && allOptions.map((option) => (
             <DropdownOption
               key={option}
               onClickOption={() => onClickOption(
