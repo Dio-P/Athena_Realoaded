@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useLazyQuery } from '@apollo/client';
 import gql from 'graphql-tag';
 
@@ -39,8 +39,8 @@ export const FILTER_ENTITY_BY_QUERYSTRING_QUERY = gql`
     }
   }`;
 
-const useFilterEntityByQueryString = () => {
-  const [returnedEntities, setReturnedEntities] = useState('');
+const useFilterEntityByQueryString = (queryString, ofType) => {
+  // const [returnedEntities, setReturnedEntities] = useState('');
 
   const [query, {
     loading, error, data, refetch,
@@ -49,34 +49,39 @@ const useFilterEntityByQueryString = () => {
   );
 
   useEffect(() => {
-    if (data) {
-      console.log('data', data);
-      setReturnedEntities(data.filterEntityByQueryString);
-    } if (error) {
+    // if (data) {
+    //   console.log('data', data);
+    //   setReturnedEntities(data.filterEntityByQueryString);
+    // }
+    if (error) {
       console.log('error:', error);
       console.error(error);
     } if (loading) {
       console.log('loading');
     }
-  }, [data, error, loading]);
+  }, [error, loading]);
 
-  const filterEntities = (queryString) => {
-    console.log('queryString is:', queryString, 'of type:', typeof queryString);
-    if (!returnedEntities) {
-      console.log('to query');
-      query({
+  const getFilteredOptions = () => {
+    if (!data) {
+      return query({
         variables: { queryString },
       });
-    } if (queryString === '') {
-      setReturnedEntities('');
-    } else {
-      refetch(
+    } if (data) {
+      return refetch(
         { queryString },
       );
     }
+    return [];
   };
 
-  return { returnedEntities, filterEntities };
+  const filterEntities = () => {
+    const isQuery = !(queryString === '');
+    const options = isQuery ? getFilteredOptions(queryString) : '';
+
+    return options;
+  };
+
+  return { returnedEntities: filterEntities() };
 };
 
 export default useFilterEntityByQueryString;

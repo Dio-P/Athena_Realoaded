@@ -7,6 +7,7 @@ import { deleteIcon } from '../helpers/svgIcons';
 import { SearchInput } from './specialElements';
 import capitaliseFirstLetters from '../helpers/capitaliseFirstLetters';
 import useGetAllOfType from '../hooks/queries/useGetAllOfType';
+import useFilterEntityByQueryString from '../hooks/queries/useFilterEntityByQueryString';
 
 const SearchBarContainer = styled.div`
   display: flex;
@@ -107,6 +108,7 @@ const SearchComboBox = ({
   const [allOptions, setAllOptions] = useState(undefined);
 
   const [allOptionsOfType] = useGetAllOfType(ofType, queryString);
+  const { returnedEntities } = useFilterEntityByQueryString(queryString, ofType);
 
   useEffect(() => {
     setAllOptions(allOptionsOfType);
