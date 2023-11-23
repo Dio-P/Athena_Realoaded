@@ -31,10 +31,10 @@ const useGetAllOfType = (ofType, queryString) => {
   const filterResults = () => {
     if (data?.getAll) {
       if (!queryString) {
-        return data.getAll;
+        return '';
       }
       return data.getAll.filter((type) => (
-        type.includes(queryString)
+        type.toLowerCase().includes(queryString)
       ));
     }
     return undefined;

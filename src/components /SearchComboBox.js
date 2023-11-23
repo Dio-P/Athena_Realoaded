@@ -130,12 +130,12 @@ const SearchComboBox = ({
     onClickOption(updatedFields);
   };
 
-  console.log('allOptions$$', allOptions);
   return (
     <SearchBarContainer aria-label={`search for ${ofType}`}>
 
       <SearchInput
         type="text"
+        ofType={ofType}
         name="dropDownSearch"
         placeholder={`${ofType}s`}
         onChange={(e) => setQueryString(e.target.value)}

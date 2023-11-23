@@ -58,6 +58,7 @@ export const SearchInput = ({
   name,
   placeholder,
   disabled,
+  ofType,
 }) => (
   <SearchInputWrapper>
     <MagnifyingGlassIconWrapper>{magnifyingGlassIcon}</MagnifyingGlassIconWrapper>
@@ -68,6 +69,7 @@ export const SearchInput = ({
       onChange={onChange}
       placeholder={placeholder}
       disabled={disabled}
+      aria-label={`${ofType} input`}
     />
   </SearchInputWrapper>
 );
@@ -106,6 +108,7 @@ SearchInput.propTypes = {
   name: PropTypes.string,
   placeholder: PropTypes.string,
   disabled: PropTypes.bool,
+  ofType: PropTypes.string,
 };
 
 SearchInput.defaultProps = {
@@ -114,4 +117,5 @@ SearchInput.defaultProps = {
   name: 'search',
   placeholder: 'search',
   disabled: false,
+  ofType: undefined,
 };

@@ -58,30 +58,27 @@ describe('SearchComboBox', () => {
     ).toBeVisible();
   });
 
-  // test('should filter options according to the query correctly', () => {
-  //   render(<SearchComboBox {...defaultProps} />);
+  test('should filter options according to the query correctly', () => {
+    render(<SearchComboBox {...defaultProps} />);
 
-  //   expect(screen.getByRole('textbox')).toBeVisible();
-  //   expect(
-  //     screen.queryByRole('button', { name: 'add type app to query' }),
-  //   ).toBeVisible();
-  //   expect(
-  //     screen.queryByRole('button', { name: 'add type company to query' }),
-  //   ).toBeVisible();
-  //   expect(
-  //     screen.queryByRole('button', { name: 'add type department to query' }),
-  //   ).toBeVisible();
-  //   expect(
-  //     screen.queryByRole('button', { name: 'add type subTeam to query' }),
-  //   ).toBeVisible();
-  //   expect(
-  //     screen.queryByRole('button', { name: 'add type team to query' }),
-  //   ).toBeVisible();
-  // });
+    const inputbox = screen.getByLabelText('type input');
+
+    userEvent.type(inputbox, 'ap');
+    expect(
+      screen.queryByRole('button', { name: 'add type app to query' }),
+    ).toBeVisible();
+    screen.debug();
+
+    expect(
+      screen.queryByRole('button', { name: 'add type team to query' }),
+    ).not.toBeVisible();
+  });
 
   test('should render all values chosen as parameters', () => {
     render(<SearchComboBox {...propsWithChosenValues} />);
-
+    expect(
+      screen.queryByRole('button', { name: 'add type app to query' }),
+    ).toBeVisible();
     expect(
       screen.getByRole('button', { name: 'remove type app from query' }),
     ).toBeVisible();
