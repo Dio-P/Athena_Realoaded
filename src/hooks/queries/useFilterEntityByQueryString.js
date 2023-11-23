@@ -62,14 +62,16 @@ const useFilterEntityByQueryString = (queryString, ofType) => {
   }, [error, loading]);
 
   const getFilteredOptions = () => {
-    if (!data) {
-      return query({
-        variables: { queryString },
-      });
-    } if (data) {
-      return refetch(
-        { queryString },
-      );
+    if (ofType === 'entity') {
+      if (!data) {
+        return query({
+          variables: { queryString },
+        });
+      } if (data) {
+        return refetch(
+          { queryString },
+        );
+      }
     }
     return [];
   };

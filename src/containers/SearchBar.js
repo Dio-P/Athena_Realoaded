@@ -50,7 +50,7 @@ const SearchBar = ({ searchEntity }) => {
       {!isAdvancedSearchBlockOpen
         ? (
           <SearchComboBox
-            ofType="Entity"
+            ofType="entity"
             chosenValues={entityToGet}
             onClickOption={setEntityToGet}
           />
