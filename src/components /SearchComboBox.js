@@ -7,7 +7,8 @@ import { deleteIcon } from '../helpers/svgIcons';
 import { SearchInput } from './specialElements';
 import capitaliseFirstLetters from '../helpers/capitaliseFirstLetters';
 import useGetAllOfType from '../hooks/queries/useGetAllOfType';
-import useFilterEntityByQueryString from '../hooks/queries/useFilterEntityByQueryString';
+// import useFilterEntityByQueryString from '../hooks/queries/useFilterEntityByQueryString';
+import useSearchComboBoxHelper from '../hooks/useSearchComboBoxHelper';
 
 const SearchBarContainer = styled.div`
   display: flex;
@@ -108,7 +109,8 @@ const SearchComboBox = ({
   const [allOptions, setAllOptions] = useState(undefined);
 
   const [allOptionsOfType] = useGetAllOfType(ofType, queryString);
-  const { returnedEntities } = useFilterEntityByQueryString(queryString, ofType);
+  // const { returnedEntities } = useFilterEntityByQueryString(queryString, ofType);
+  const [createUpdatePayload] = useSearchComboBoxHelper();
 
   useEffect(() => {
     setAllOptions(allOptionsOfType);
@@ -144,12 +146,12 @@ const SearchComboBox = ({
           && allOptions.map((option) => (
             <DropdownOption
               key={option}
-              onClickOption={() => onClickOption(
-                {
-                  ...chosenValues,
-                  [ofType]: chosenValues[ofType] ? [...chosenValues[ofType], option] : [option],
-                },
-              )}
+              onClickOption={() => onClickOption(createUpdatePayload(ofType, chosenValues, option))}
+                // {
+                //   ...chosenValues,
+                //   [ofType]: chosenValues[ofType] ? [...chosenValues[ofType], option] : [option],
+                // },
+              // )}
               ofType={ofType}
               label={option}
             />

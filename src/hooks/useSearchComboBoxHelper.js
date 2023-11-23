@@ -1,12 +1,10 @@
-import React from 'react';
-
-const useSearchComboBoxHelper = (ofType, chosenValues, option) => {
-  const createAdvanceValuesUpdate = () => ({
+const useSearchComboBoxHelper = () => {
+  const createAdvanceValuesUpdate = (ofType, chosenValues, option) => ({
     ...chosenValues,
     [ofType]: chosenValues[ofType] ? [...chosenValues[ofType], option] : [option],
   });
 
-  const handleOnClickFunction = () => {
+  const createUpdatePayload = (ofType, chosenValues, option) => {
     switch (ofType) {
       case 'entity': return option;
 
@@ -14,7 +12,7 @@ const useSearchComboBoxHelper = (ofType, chosenValues, option) => {
     }
   };
 
-  return { updateValue: handleOnClickFunction() };
+  return [createUpdatePayload];
 };
 
 export default useSearchComboBoxHelper;
