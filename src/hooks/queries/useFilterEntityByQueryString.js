@@ -39,7 +39,7 @@ export const FILTER_ENTITY_BY_QUERYSTRING_QUERY = gql`
     }
   }`;
 
-const useFilterEntityByQueryString = (queryString, ofType) => {
+const useFilterEntityByQueryString = async (ofType, queryString) => {
   // const [returnedEntities, setReturnedEntities] = useState('');
 
   const [query, {
@@ -62,7 +62,10 @@ const useFilterEntityByQueryString = (queryString, ofType) => {
   }, [error, loading]);
 
   const getFilteredOptions = () => {
+    console.log('getFilteredOptions out');
     if (ofType === 'entity') {
+      console.log('getFilteredOptions in');
+
       if (!data) {
         return query({
           variables: { queryString },
@@ -72,18 +75,24 @@ const useFilterEntityByQueryString = (queryString, ofType) => {
           { queryString },
         );
       }
+      return '';
     }
     return [];
   };
 
   const filterEntities = () => {
-    const isQuery = !(queryString === '');
-    const options = isQuery ? getFilteredOptions(queryString) : '';
+    console.log('ofType', ofType);
+    if (ofType === 'entity') {
+      const isQuery = !(queryString === '');
+      const options = isQuery ? getFilteredOptions(queryString) : '';
 
-    return options;
+      return options;
+    }
+    console.log('filterEntities to be undefined');
+    return undefined;
   };
 
-  return { returnedEntities: filterEntities() };
+  return { returnedEntities: await filterEntities() };
 };
 
 export default useFilterEntityByQueryString;

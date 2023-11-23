@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import styled from '@emotion/styled';
 import PropTypes from 'prop-types';
 
@@ -6,8 +6,9 @@ import style, { colours } from '../styleVariables';
 import { deleteIcon } from '../helpers/svgIcons';
 import { SearchInput } from './specialElements';
 import capitaliseFirstLetters from '../helpers/capitaliseFirstLetters';
-import useGetAllOfType from '../hooks/queries/useGetAllOfType';
-import useFilterEntityByQueryString from '../hooks/queries/useFilterEntityByQueryString';
+// import useGetAllOfType from '../hooks/queries/useGetAllOfType';
+// import useFilterEntityByQueryString from '../hooks/queries/useFilterEntityByQueryString';
+import useQueryManager from '../hooks/useQueryManager';
 import useSearchComboBoxHelper from '../hooks/useSearchComboBoxHelper';
 
 const SearchBarContainer = styled.div`
@@ -106,19 +107,20 @@ const SearchComboBox = ({
   onClickOption,
 }) => {
   const [queryString, setQueryString] = useState('');
-  const [allOptions, setAllOptions] = useState(undefined);
+  // const [allOptions, setAllOptions] = useState(undefined);
 
-  const [allOptionsOfType] = useGetAllOfType(ofType, queryString);
-  const { returnedEntities } = useFilterEntityByQueryString(queryString, ofType);
+  const [allOptions] = useQueryManager(ofType, queryString);
+  // const [allOptionsOfType] = useGetAllOfType(ofType, queryString);
+  // const { returnedEntities } = useFilterEntityByQueryString(ofType, queryString);
   const [createUpdatePayload] = useSearchComboBoxHelper();
 
-  useEffect(() => {
-    if (allOptionsOfType?.length) {
-      setAllOptions(allOptionsOfType);
-    } if (returnedEntities?.length) {
-      setAllOptions(returnedEntities);
-    }
-  }, [allOptionsOfType, returnedEntities]);
+  // useEffect(() => {
+  //   if (allOptionsOfType?.length) {
+  //     setAllOptions(allOptionsOfType);
+  //   } if (returnedEntities?.length) {
+  //     setAllOptions(returnedEntities);
+  //   }
+  // }, [allOptionsOfType, returnedEntities]);
   // const allOptions = returnedEntities || allOptionsOfType;
   const removeChoice = (choiceToRemove) => {
     const { [ofType]: ofThisType, ...typesWithoutThis } = chosenValues;

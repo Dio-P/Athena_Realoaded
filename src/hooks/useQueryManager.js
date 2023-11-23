@@ -44,8 +44,10 @@ export const GET_ALL_OF_TYPE = gql`
     getAll(ofType: $ofType)
   }`;
 
-const useGetAllOfType = (ofType, queryString) => {
-  const [advanceQuery, { loading: advanceLoading, error: advanceError, data: advanceData }] = useLazyQuery(
+const useQueryManager = (ofType, queryString) => {
+  const [
+    advanceQuery,
+    { loading: advanceLoading, error: advanceError, data: advanceData }] = useLazyQuery(
     GET_ALL_OF_TYPE,
   );
 
@@ -65,20 +67,20 @@ const useGetAllOfType = (ofType, queryString) => {
   }, [ofType]);
 
   useEffect(() => {
-    if (advanceError || generalData) {
-      console.error(advanceError || generalData);
+    if (advanceError || generalError) {
+      console.error(advanceError || generalError);
     } if (advanceLoading || generalLoading) {
       console.log('loading');
     }
-  }, [advanceError, generalData, advanceLoading]);
+  }, [advanceError, generalError, advanceLoading, generalLoading]);
 
   const queryFilteredGeneralOptions = () => {
     if (!generalData) {
-      return query({
+      return generalQuery({
         variables: { queryString },
       });
-    } if (data) {
-      return refetch(
+    } if (generalData) {
+      return generalRefetch(
         { queryString },
       );
     }
@@ -86,11 +88,8 @@ const useGetAllOfType = (ofType, queryString) => {
   };
 
   const filterAdvanceOptions = () => {
-    if (data?.getAll) {
-      if (!queryString) {
-        return '';
-      }
-      return data.getAll.filter((type) => (
+    if (advanceData?.getAll) {
+      return advanceData.getAll.filter((type) => (
         type.toLowerCase().includes(queryString)
       ));
     }
@@ -104,16 +103,15 @@ const useGetAllOfType = (ofType, queryString) => {
       }
       switch (ofType) {
         case 'entity': return queryFilteredGeneralOptions();
-        default: return 
+        default: return filterAdvanceOptions();
       }
-
     }
-
+    return undefined;
   };
 
-  const filteredResults = useMemo(() => filterAdvanceOptions(), [queryString]);
+  const dropdownOptions = useMemo(() => getRightOptions(), [queryString]);
 
-  return [filteredResults];
+  return [dropdownOptions];
 };
 
-export default useGetAllOfType;
+export default useQueryManager;
