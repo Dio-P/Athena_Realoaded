@@ -135,7 +135,7 @@ const SearchComboBox = ({
 
     onClickOption(updatedFields);
   };
-
+  console.log('allOptions$$', allOptions);
   return (
     <SearchBarContainer aria-label={`search for ${ofType}`}>
 
@@ -151,10 +151,10 @@ const SearchComboBox = ({
         {allOptions?.length > 0
           && allOptions.map((option) => (
             <DropdownOption
-              key={option}
+              key={option.name}
               onClickOption={() => onClickOption(createUpdatePayload(ofType, chosenValues, option))}
               ofType={ofType}
-              label={option}
+              label={option.name || option}
             />
           ))}
       </OptionsWrapper>

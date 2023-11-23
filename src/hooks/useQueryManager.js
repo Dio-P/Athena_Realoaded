@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from 'react';
+import { useEffect, useState } from 'react';
 import { useLazyQuery } from '@apollo/client';
 import gql from 'graphql-tag';
 
@@ -45,6 +45,7 @@ export const GET_ALL_OF_TYPE = gql`
   }`;
 
 const useQueryManager = (ofType, queryString) => {
+  const [options, setOptions] = useState();
   const [
     advanceQuery,
     { loading: advanceLoading, error: advanceError, data: advanceData }] = useLazyQuery(
@@ -74,17 +75,28 @@ const useQueryManager = (ofType, queryString) => {
     }
   }, [advanceError, generalError, advanceLoading, generalLoading]);
 
-  const queryFilteredGeneralOptions = () => {
-    if (!generalData) {
-      return generalQuery({
+  const queryFilteredGeneralOptions = async () => {
+    if (!generalData?.filterEntityByQueryString) {
+      const results = generalQuery({
         variables: { queryString },
+      }).then((generalOptionsPromiseResults) => {
+        console.log('generalOptionsPromiseResults.data', generalOptionsPromiseResults.data.filterEntityByQueryString);
+        return generalOptionsPromiseResults.data.filterEntityByQueryString;
       });
-    } if (generalData) {
-      return generalRefetch(
+      console.log('results£££', results);
+      return results;
+      // return generalOptions;
+    } if (generalData?.filterEntityByQueryString) {
+      const results = generalRefetch(
         { queryString },
-      );
+      ).then((generalOptionsPromiseResults) => {
+        console.log('generalOptionsPromiseResults.data2', generalOptionsPromiseResults.data.filterEntityByQueryString);
+        return generalOptionsPromiseResults.data.filterEntityByQueryString;
+      });
+      console.log('results£££2', results);
+      return results;
     }
-    return undefined;
+    return [];
   };
 
   const filterAdvanceOptions = () => {
@@ -96,8 +108,9 @@ const useQueryManager = (ofType, queryString) => {
     return undefined;
   };
 
-  const getRightOptions = () => {
+  const getRightOptions = async () => {
     if (ofType) {
+      console.log('queryFilteredGeneralOptions()@@', queryFilteredGeneralOptions());
       if (!queryString) {
         return [];
       }
@@ -109,9 +122,15 @@ const useQueryManager = (ofType, queryString) => {
     return undefined;
   };
 
-  const dropdownOptions = useMemo(() => getRightOptions(), [queryString]);
-
-  return [dropdownOptions];
+  // const dropdownOptions = useMemo(() => getRightOptions(), [queryString]);
+  useEffect(() => {
+    (async () => {
+      setOptions(await getRightOptions());
+    })();
+  }, [queryString]);
+  // console.log('queryFilteredGeneralOptions()@@', queryFilteredGeneralOptions());
+  console.log('options@@', options);
+  return [options];
 };
 
 export default useQueryManager;
