@@ -44,7 +44,7 @@ export const GET_ALL_OF_TYPE = gql`
     getAll(ofType: $ofType)
   }`;
 
-const useQueryManager = (ofType, queryString) => {
+const useComboboxQueryManager = (ofType, queryString) => {
   const [options, setOptions] = useState();
   const [
     advanceQuery,
@@ -122,7 +122,7 @@ const useQueryManager = (ofType, queryString) => {
     return undefined;
   };
 
-  // const dropdownOptions = useMemo(() => getRightOptions(), [queryString]);
+  // const dropdownOptions = useMemo(() => await getRightOptions(), [queryString]);
   useEffect(() => {
     (async () => {
       setOptions(await getRightOptions());
@@ -133,4 +133,5 @@ const useQueryManager = (ofType, queryString) => {
   return [options];
 };
 
-export default useQueryManager;
+export default useComboboxQueryManager;
+// change to useQueryManager

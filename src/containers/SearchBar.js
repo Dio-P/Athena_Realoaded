@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from '@emotion/styled';
 import PropTypes from 'prop-types';
 
@@ -31,6 +31,9 @@ const SearchBar = ({ searchEntity }) => {
   } = useCustomSearchQuery();
   // Should I move advance query parameters state in here ?
 
+  useEffect(() => {
+    console.log('advanceQueryParameters***', advanceQueryParameters);
+  }, [advanceQueryParameters]);
   const onClickSearch = () => {
     console.log('advanceQueryParameters', advanceQueryParameters);
     trigerAdvancedSearch(advanceQueryParameters);

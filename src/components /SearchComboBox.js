@@ -8,7 +8,7 @@ import { SearchInput } from './specialElements';
 import capitaliseFirstLetters from '../helpers/capitaliseFirstLetters';
 // import useGetAllOfType from '../hooks/queries/useGetAllOfType';
 // import useFilterEntityByQueryString from '../hooks/queries/useFilterEntityByQueryString';
-import useQueryManager from '../hooks/useQueryManager';
+import useComboboxQueryManager from '../hooks/queries/useComboboxQueryManager';
 import useSearchComboBoxHelper from '../hooks/useSearchComboBoxHelper';
 
 const SearchBarContainer = styled.div`
@@ -89,16 +89,20 @@ const ChosenEntity = ({
   onClickRemove,
   ofType,
 }) => (
+  value && value?.length > 0
+  && (
   <ChosenEntityWrapper>
+    {console.log('value@@', value)}
     {capitaliseFirstLetters(value)}
     <XBoxWrapper
       onClick={onClickRemove}
       role="button"
-      aria-label={`remove ${ofType} ${value} from query`} // is this all right?
+      aria-label={`remove ${ofType} ${value} from query`}
     >
       {deleteIcon}
     </XBoxWrapper>
   </ChosenEntityWrapper>
+  )
 );
 
 const SearchComboBox = ({
@@ -109,10 +113,10 @@ const SearchComboBox = ({
   const [queryString, setQueryString] = useState('');
   // const [allOptions, setAllOptions] = useState(undefined);
 
-  const [allOptions] = useQueryManager(ofType, queryString);
+  const [allOptions] = useComboboxQueryManager(ofType, queryString);
   // const [allOptionsOfType] = useGetAllOfType(ofType, queryString);
   // const { returnedEntities } = useFilterEntityByQueryString(ofType, queryString);
-  const [createUpdatePayload] = useSearchComboBoxHelper();
+  const [createUpdatePayload] = useSearchComboBoxHelper(chosenValues);
 
   // useEffect(() => {
   //   if (allOptionsOfType?.length) {
@@ -149,17 +153,22 @@ const SearchComboBox = ({
 
       <OptionsWrapper>
         {allOptions?.length > 0
-          && allOptions.map((option) => (
-            <DropdownOption
-              key={option.name}
-              onClickOption={() => onClickOption(createUpdatePayload(ofType, chosenValues, option))}
-              ofType={ofType}
-              label={option.name || option}
-            />
-          ))}
+          && allOptions.map((option) => {
+            console.log('option***£', option);
+            return (
+              <DropdownOption
+                key={option.id || option}
+                onClickOption={() => onClickOption(
+                  createUpdatePayload(ofType, chosenValues, option.name || option),
+                )}
+                ofType={ofType}
+                label={option.name || option}
+              />
+            );
+          })}
       </OptionsWrapper>
 
-      {chosenValues[ofType]?.length > 0 && (
+      {!(ofType === 'entity') && chosenValues[ofType]?.length > 0 && (
         <ChoicesWrapper>
           {chosenValues[ofType].map((singleValue) => (
             <ChosenEntity
