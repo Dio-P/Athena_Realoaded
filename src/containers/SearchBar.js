@@ -23,7 +23,7 @@ const SearchBar = ({ searchEntity }) => {
   // const { returnedEntities, filterEntities } = useFilterEntityByQueryString();
   // here should go the query that will trigger the advance search.
 
-  const [entityToGet, setEntityToGet] = useState(undefined);
+  // const [entityToGet, setEntityToGet] = useState(undefined);
 
   const {
     returnedEntities: returnedAdvancedSearchOptions,
@@ -54,8 +54,8 @@ const SearchBar = ({ searchEntity }) => {
         ? (
           <SearchComboBox
             ofType="entity"
-            chosenValues={entityToGet}
-            onClickOption={setEntityToGet}
+            // chosenValues={entityToGet}
+            onClickOption={searchEntity}
           />
         ) : (
           <AdvanceSearchResultsBox

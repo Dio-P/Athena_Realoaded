@@ -7,35 +7,35 @@ export const FILTER_ENTITY_BY_QUERYSTRING_QUERY = gql`
     filterEntityByQueryString(queryString: $queryString) {
       id
       name
-      type
-      mainLinks
-      briefDescription
-      teamsResponsible
-      properties {
-        docs
-        tags
-        technologies
-      }
-      children
-      connections {
-        audienceFacing
-        receivesDataFrom
-        givesDataTo
-      }
-      interactions {
-        isLinkUpToDate
-        comments {
-          timeStamp
-          userId
-          text
-        }
-        requestedActions {
-          timeStamp
-          typeOfAction
-          description
-          requestingUserId
-        }
-      }
+      # type
+      # mainLinks
+      # briefDescription
+      # teamsResponsible
+      # properties {
+      #   docs
+      #   tags
+      #   technologies
+      # }
+      # children
+      # connections {
+      #   audienceFacing
+      #   receivesDataFrom
+      #   givesDataTo
+      # }
+      # interactions {
+      #   isLinkUpToDate
+      #   comments {
+      #     timeStamp
+      #     userId
+      #     text
+      #   }
+      #   requestedActions {
+      #     timeStamp
+      #     typeOfAction
+      #     description
+      #     requestingUserId
+      #   }
+      # }
     }
   }`;
 

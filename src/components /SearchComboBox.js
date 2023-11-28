@@ -92,7 +92,6 @@ const ChosenEntity = ({
   value && value?.length > 0
   && (
   <ChosenEntityWrapper>
-    {console.log('value@@', value)}
     {capitaliseFirstLetters(value)}
     <XBoxWrapper
       onClick={onClickRemove}
@@ -139,7 +138,6 @@ const SearchComboBox = ({
 
     onClickOption(updatedFields);
   };
-  console.log('allOptions$$', allOptions);
   return (
     <SearchBarContainer aria-label={`search for ${ofType}`}>
 
@@ -153,19 +151,16 @@ const SearchComboBox = ({
 
       <OptionsWrapper>
         {allOptions?.length > 0
-          && allOptions.map((option) => {
-            console.log('option***£', option);
-            return (
-              <DropdownOption
-                key={option.id || option}
-                onClickOption={() => onClickOption(
-                  createUpdatePayload(ofType, chosenValues, option.name || option),
-                )}
-                ofType={ofType}
-                label={option.name || option}
-              />
-            );
-          })}
+          && allOptions.map((option) => (
+            <DropdownOption
+              key={option.id || option}
+              onClickOption={() => onClickOption(
+                createUpdatePayload(ofType, chosenValues, option),
+              )}
+              ofType={ofType}
+              label={option.name || option}
+            />
+          ))}
       </OptionsWrapper>
 
       {!(ofType === 'entity') && chosenValues[ofType]?.length > 0 && (
