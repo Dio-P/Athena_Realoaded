@@ -79,21 +79,16 @@ const useComboboxQueryManager = (ofType, queryString) => {
     if (!generalData?.filterEntityByQueryString) {
       const results = generalQuery({
         variables: { queryString },
-      }).then((generalOptionsPromiseResults) => {
-        console.log('generalOptionsPromiseResults.data', generalOptionsPromiseResults.data.filterEntityByQueryString);
-        return generalOptionsPromiseResults.data.filterEntityByQueryString;
-      });
-      console.log('results£££', results);
+      }).then((generalOptionsResults) => generalOptionsResults.data.filterEntityByQueryString);
+
       return results;
-      // return generalOptions;
     } if (generalData?.filterEntityByQueryString) {
       const results = generalRefetch(
         { queryString },
-      ).then((generalOptionsPromiseResults) => {
-        console.log('generalOptionsPromiseResults.data2', generalOptionsPromiseResults.data.filterEntityByQueryString);
-        return generalOptionsPromiseResults.data.filterEntityByQueryString;
-      });
-      console.log('results£££2', results);
+      ).then(
+        (generalOptionsResults) => generalOptionsResults.data.filterEntityByQueryString,
+      );
+
       return results;
     }
     return [];
@@ -110,7 +105,6 @@ const useComboboxQueryManager = (ofType, queryString) => {
 
   const getRightOptions = async () => {
     if (ofType) {
-      console.log('queryFilteredGeneralOptions()@@', queryFilteredGeneralOptions());
       if (!queryString) {
         return [];
       }
@@ -122,14 +116,12 @@ const useComboboxQueryManager = (ofType, queryString) => {
     return undefined;
   };
 
-  // const dropdownOptions = useMemo(() => await getRightOptions(), [queryString]);
   useEffect(() => {
     (async () => {
       setOptions(await getRightOptions());
     })();
   }, [queryString]);
-  // console.log('queryFilteredGeneralOptions()@@', queryFilteredGeneralOptions());
-  console.log('options@@', options);
+
   return [options];
 };
 
