@@ -32,11 +32,17 @@ const Entity = ({
   renderChosenEntity,
   // theme,
 }) => {
+  const {
+    name,
+    id,
+    children,
+    briefDescription,
+  } = entity;
   const [returnedChildren, searchChildren] = useChildrenByIdsSearch();
 
   useEffect(() => {
-    if (entity?.children) {
-      searchChildren(entity.children);
+    if (children) {
+      searchChildren(children);
     }
   }, [entity]);
 
@@ -44,10 +50,10 @@ const Entity = ({
     entity
       && (
         <EntityContainer
-          aria-label={`${entity.name}`}
+          aria-label={`${name}`}
         >
           <ThisEntityContainer>
-            <h1>{capitaliseFirstLetters(entity.name)}</h1>
+            <h1>{capitaliseFirstLetters(name)}</h1>
             <EntityInfoBox>
               <h3>
                 Description:
@@ -56,7 +62,7 @@ const Entity = ({
               {/* <input value={entity.briefDescription}/> */}
               {/* : */}
               <div>
-                {entity.briefDescription}
+                {briefDescription}
               </div>
               {/* } */}
             </EntityInfoBox>
@@ -67,6 +73,7 @@ const Entity = ({
             returnedChildren={returnedChildren}
             renderChosenEntity={renderChosenEntity}
             paramsCustomObj={paramsCustomObj}
+            thisEntity={{ name, id }}
           />
           )}
 

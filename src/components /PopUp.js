@@ -31,7 +31,12 @@ const ComponentToDisplayWrapper = styled.div`
   background-color: ${(props) => style.variables.backgroundColour[props.theme]};
 `;
 
-const PopUp = ({ isPopUpOpen, ComponentToDisplay, setIsPopUpOpen }) => {
+const PopUp = ({
+  isPopUpOpen,
+  ComponentToDisplay,
+  setIsPopUpOpen,
+  onClickFunctions,
+}) => {
   const theme = useContext(ThemeContext);
 
   return (
@@ -45,7 +50,7 @@ const PopUp = ({ isPopUpOpen, ComponentToDisplay, setIsPopUpOpen }) => {
             type="small"
             icon={deleteIcon}
           />
-          <ComponentToDisplay />
+          <ComponentToDisplay onClickFunctions={onClickFunctions} />
         </ComponentToDisplayWrapper>
       </PopUpContainer>
     </PopUpWrapper>
@@ -56,11 +61,13 @@ PopUp.propTypes = {
   isPopUpOpen: PropTypes.bool,
   ComponentToDisplay: PropTypes.instanceOf(Object).isRequired,
   setIsPopUpOpen: PropTypes.func,
+  onClickFunctions: PropTypes.objectOf(PropTypes.func),
 };
 
 PopUp.defaultProps = {
   isPopUpOpen: false,
   setIsPopUpOpen: () => {},
+  onClickFunctions: {},
 };
 
 export default PopUp;

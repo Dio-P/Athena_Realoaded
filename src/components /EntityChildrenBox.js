@@ -16,8 +16,25 @@ const EntityChildrenBoxContainer = styled.div`
   flex-flow: row wrap;
 `;
 
-const EntityChildrenBox = ({ returnedChildren, renderChosenEntity, paramsCustomObj }) => {
+const EntityChildrenBox = ({
+  returnedChildren,
+  renderChosenEntity,
+  paramsCustomObj,
+  thisEntity,
+}) => {
   const [isAddChildrenFormOpen, setIsAddChildrenFormOpen] = useState(false);
+  const [parent, setParent] = useState(thisEntity);
+  const [newChild, setNewChild] = useState(undefined);
+
+  const callUpdateParentWithNewChild = () => {
+    console.log(`this ${parent} should be updated when I connect this function to update parent by id`);
+    console.log(`this ${newChild} should now display in the parent when I connect this function`);
+  };
+
+  const saveNewChild = () => {
+    callUpdateParentWithNewChild();
+  };
+
   return (
     <>
       <EntityChildrenBoxWrapper>
@@ -40,14 +57,16 @@ const EntityChildrenBox = ({ returnedChildren, renderChosenEntity, paramsCustomO
           ))}
         </EntityChildrenBoxContainer>
       </EntityChildrenBoxWrapper>
-      {isAddChildrenFormOpen
-      && (
       <PopUp
         ComponentToDisplay={AddChildForm}
         isPopUpOpen={isAddChildrenFormOpen}
         setIsPopUpOpen={setIsAddChildrenFormOpen}
+        onClickFunctions={{
+          setParent,
+          setNewChild,
+          saveNewChild,
+        }}
       />
-      )}
     </>
 
   );
@@ -72,6 +91,10 @@ EntityChildrenBox.propTypes = {
       name: PropTypes.string,
     }),
   }),
+  thisEntity: PropTypes.objectOf({
+    name: PropTypes.string,
+    id: PropTypes.string,
+  }).isRequired,
 };
 
 EntityChildrenBox.defaultProps = {
