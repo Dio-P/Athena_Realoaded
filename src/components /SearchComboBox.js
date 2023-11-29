@@ -67,6 +67,23 @@ const XBoxWrapper = styled.div`
   margin: 1px 2px 1px 2px;
 `;
 
+const AddOptionBtnWrapper = styled.div`
+display: flex;
+align-items: center;
+width: 99%;
+height: 45px;
+background-color: ${(colours.tertiaryPink)};
+border-radius: ${(style.variables.borderRadious.main)};
+color: black;
+margin: 1px;
+margin-top: '4px';
+
+&:hover {
+  background-color: ${(colours.secondaryPink)};
+}
+cursor: pointer;
+`;
+
 const DropdownOption = ({
   onClickOption,
   label,
@@ -108,6 +125,9 @@ const SearchComboBox = ({
   ofType,
   chosenValues,
   onClickOption,
+  hasAddOptionBtn,
+  onClickAddOption,
+  addOptionLabel,
 }) => {
   const [queryString, setQueryString] = useState('');
   // const [allOptions, setAllOptions] = useState(undefined);
@@ -175,6 +195,16 @@ const SearchComboBox = ({
           ))}
         </ChoicesWrapper>
       )}
+      {hasAddOptionBtn
+        && (
+        <AddOptionBtnWrapper>
+          <DropdownOption
+            onClickOption={onClickAddOption}
+            label={addOptionLabel}
+            isAddNewOptionBtn
+          />
+        </AddOptionBtnWrapper>
+        )}
     </SearchBarContainer>
   );
 };
@@ -210,10 +240,16 @@ SearchComboBox.propTypes = {
     }),
   }),
   onClickOption: PropTypes.func.isRequired,
+  hasAddOptionBtn: PropTypes.bool,
+  onClickAddOption: PropTypes.func,
+  addOptionLabel: PropTypes.string,
 };
 
 SearchComboBox.defaultProps = {
   chosenValues: {},
+  hasAddOptionBtn: false,
+  onClickAddOption: () => {},
+  addOptionLabel: undefined,
 };
 
 export default SearchComboBox;

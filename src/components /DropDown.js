@@ -4,106 +4,98 @@ import PropTypes from 'prop-types';
 
 // import useGetAllOfType from '../hooks/queries/useGetAllOfType';
 
-import capitaliseFirstLetters from '../helpers/capitaliseFirstLetters';
-import style, { colours } from '../styleVariables';
-import { SearchInput } from './specialElements';
+// import capitaliseFirstLetters from '../helpers/capitaliseFirstLetters';
+// import style, { colours } from '../styleVariables';
+// import { SearchInput } from './specialElements';
 // import { useSearchBar } from '../hooks/useAddNewConnectionBlock';
 import MultiBtnComp from './MultiBtnComp';
-import useCustomSearchQuery from '../hooks/queries/useCustomSearch';
+// import useCustomSearchQuery from '../hooks/queries/useCustomSearch';
+import SearchComboBox from './SearchComboBox';
 // import useParamsHelper from '../hooks/useParamsHelper';
 
 const DropDownContainer = styled.div`
   display: flex;
-`;
-
-const DropDownUnitWrapper = styled.div`
-  display: flex;
-  border-radius: ${style.variables.borderRadious.main};
-  box-shadow: ${style.variables.boxShadow.large};
   flex-direction: column;
-  align-content: center;
-  background-color: ${colours.primaryLight};
-  border: solid ${colours.secondaryOrange};
-  padding: 6px 7px;
-  overflow: hidden;
-  height: 100%;
-  width: 200px;
 `;
 
-const OptionsWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  overflow: scroll;
-  border-radius: ${style.variables.borderRadious.main};
-`;
+// const DropDownUnitWrapper = styled.div`
+//   display: flex;
+//   border-radius: ${style.variables.borderRadious.main};
+//   box-shadow: ${style.variables.boxShadow.large};
+//   flex-direction: column;
+//   align-content: center;
+//   background-color: ${colours.primaryLight};
+//   border: solid ${colours.secondaryOrange};
+//   padding: 6px 7px;
+//   overflow: hidden;
+//   height: 100%;
+//   width: 200px;
+// `;
 
-const SingleDropDownElementWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  width: 99%;
-  height: 45px;
-  background-color: ${(props) => (!props.isAddNewOptionBtn
-    ? colours.tertiaryBlue
-    : colours.tertiaryPink)};
-  border-radius: ${(props) => (!props.isAddNewOptionBtn ? null : style.variables.borderRadious.main)};
-  color: black;
-  margin: 1px;
-  margin-top: ${(props) => props.isAddNewOptionBtn && '4px'};
+// const OptionsWrapper = styled.div`
+//   display: flex;
+//   flex-direction: column;
+//   overflow: scroll;
+//   border-radius: ${style.variables.borderRadious.main};
+// `;
 
-  &:hover {
-    background-color: ${(props) => (!props.isAddNewOptionBtn
-    ? colours.secondaryBlue
-    : colours.secondaryPink)};
-  }
-  cursor: pointer;
-`;
+// const SingleDropDownElementWrapper = styled.div`
+//   display: flex;
+//   align-items: center;
+//   width: 99%;
+//   height: 45px;
+//   background-color: ${(props) => (!props.isAddNewOptionBtn
+//     ? colours.tertiaryBlue
+//     : colours.tertiaryPink)};
+//   border-radius: ${
+// (props) => (!props.isAddNewOptionBtn ? null : style.variables.borderRadious.main)};
+//   color: black;
+//   margin: 1px;
+//   margin-top: ${(props) => props.isAddNewOptionBtn && '4px'};
 
-const DropDownLabel = styled.div`
-  margin: auto;
-`;
+//   &:hover {
+//     background-color: ${(props) => (!props.isAddNewOptionBtn
+//     ? colours.secondaryBlue
+//     : colours.secondaryPink)};
+//   }
+//   cursor: pointer;
+// `;
 
-const SingleDropdownElement = ({
-  onClickOption,
-  label,
-  isAddNewOptionBtn,
-}) => (
-  <SingleDropDownElementWrapper
-    onClick={onClickOption}
-    isAddNewOptionBtn={isAddNewOptionBtn}
-  >
-    <DropDownLabel>{capitaliseFirstLetters(label)}</DropDownLabel>
-  </SingleDropDownElementWrapper>
-);
+// const DropDownLabel = styled.div`
+//   margin: auto;
+// `;
+
+// const SingleDropdownElement = ({
+//   onClickOption,
+//   label,
+//   isAddNewOptionBtn,
+// }) => (
+//   <SingleDropDownElementWrapper
+//     onClick={onClickOption}
+//     isAddNewOptionBtn={isAddNewOptionBtn}
+//   >
+//     <DropDownLabel>{capitaliseFirstLetters(label)}</DropDownLabel>
+//   </SingleDropDownElementWrapper>
+// );
 
 const DropDown = ({
   chosenValue,
   freshlyAddedValue,
-  searchingQuery,
+  // searchingQuery,
   onClickOption,
-  hasAddOptionBtn,
-  addOptionLabel,
-  onClickAddOption,
+  // hasAddOptionBtn,
+  // addOptionLabel,
+  // onClickAddOption,
 }) => {
-  // const allData = useMemo(
-  //   () => (freshlyAddedValue ? [...preexistingData, freshlyAddedValue] : preexistingData),
-  //   [preexistingData, freshlyAddedValue],
-  // );
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  // const { returnedEntities, trigerAdvancedSearch } = useCustomSearchQuery();
 
-  // const { search, searchingQuery, filteredData } = useSearchBar(allData);
-  // const {
-  //   manageDdOpenParam,
-  //   params: { isDdOpen },
-  // } = useParamsHelper();
-  const [isDropdownOpen, useIsDropdownOpen] = useState();
-  const { returnedEntities, trigerAdvancedSearch } = useCustomSearchQuery();
-
-  const optionsToRender = returnedEntities;
-  // const optionsToRender = !searchingQuery ? allData : filteredData;
+  // const optionsToRender = returnedEntities;
 
   return (
     <DropDownContainer>
       <MultiBtnComp
-        onClickFunction={useIsDropdownOpen}
+        onClickFunction={() => setIsDropdownOpen(!isDropdownOpen)}
         type="dropDown"
         isMenuOpen={isDropdownOpen}
         freshlyAddedValue={freshlyAddedValue}
@@ -111,64 +103,69 @@ const DropDown = ({
       />
       {isDropdownOpen
         && (
-        <DropDownUnitWrapper>
-          <SearchInput
-            searchingQuery={searchingQuery}
-            onChange={(e) => trigerAdvancedSearch({ name: e.target.value })}
-          />
-          <OptionsWrapper>
-            {optionsToRender.map((option) => (
-              <SingleDropdownElement
-                onClickOption={() => onClickOption(option)}
-                label={option}
-                key={option}
-              />
-            ))}
-          </OptionsWrapper>
-          {hasAddOptionBtn
-            && (
-            <SingleDropdownElement
-              onClickOption={onClickAddOption}
-              label={addOptionLabel}
-              isAddNewOptionBtn
-            />
-            )}
-        </DropDownUnitWrapper>
+        // <DropDownUnitWrapper>
+        //   <SearchInput
+        //     searchingQuery={searchingQuery}
+        //     onChange={(e) => trigerAdvancedSearch({ name: e.target.value })}
+        //   />
+        //   <OptionsWrapper>
+        //     {optionsToRender.map((option) => (
+        //       <SingleDropdownElement
+        //         onClickOption={() => onClickOption(option)}
+        //         label={option}
+        //         key={option}
+        //       />
+        //     ))}
+        //   </OptionsWrapper>
+        //   {hasAddOptionBtn
+        //     && (
+        //     <SingleDropdownElement
+        //       onClickOption={onClickAddOption}
+        //       label={addOptionLabel}
+        //       isAddNewOptionBtn
+        //     />
+        //     )}
+        // </DropDownUnitWrapper>
+        <SearchComboBox
+          ofType="entity"
+          onClickOption={onClickOption}
+          chosenValues={chosenValue}
+        />
         )}
     </DropDownContainer>
   );
 };
 
-SingleDropdownElement.propTypes = {
-  onClickOption: PropTypes.func,
-  label: PropTypes.string,
-  isAddNewOptionBtn: PropTypes.bool,
-};
+// SingleDropdownElement.propTypes = {
+//   onClickOption: PropTypes.func,
+//   label: PropTypes.string,
+//   isAddNewOptionBtn: PropTypes.bool,
+// };
 
-SingleDropdownElement.defaultProps = {
-  onClickOption: () => {},
-  label: undefined,
-  isAddNewOptionBtn: false,
-};
+// SingleDropdownElement.defaultProps = {
+//   onClickOption: () => {},
+//   label: undefined,
+//   isAddNewOptionBtn: false,
+// };
 
 DropDown.propTypes = {
   chosenValue: PropTypes.string,
   freshlyAddedValue: PropTypes.string,
-  searchingQuery: PropTypes.string,
   onClickOption: PropTypes.func,
-  hasAddOptionBtn: PropTypes.bool,
-  addOptionLabel: PropTypes.string,
-  onClickAddOption: PropTypes.func,
+  // searchingQuery: PropTypes.string,
+  // hasAddOptionBtn: PropTypes.bool,
+  // addOptionLabel: PropTypes.string,
+  // onClickAddOption: PropTypes.func,
 };
 
 DropDown.defaultProps = {
   chosenValue: '',
   freshlyAddedValue: undefined,
-  searchingQuery: '',
   onClickOption: () => {},
-  hasAddOptionBtn: false,
-  addOptionLabel: undefined,
-  onClickAddOption: () => {},
+  // searchingQuery: '',
+  // hasAddOptionBtn: false,
+  // addOptionLabel: undefined,
+  // onClickAddOption: () => {},
 };
 
 export default DropDown;
