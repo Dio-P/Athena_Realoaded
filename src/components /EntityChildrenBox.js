@@ -5,6 +5,7 @@ import MultiBtnComp from './MultiBtnComp';
 import PopUp from './PopUp';
 import AddChildForm from './popUpComponents/Forms/AddChildForm';
 import { addIcon } from '../helpers/svgIcons';
+import useUpdateEntityById from '../hooks/queries/useUpdateEntityById';
 
 const EntityChildrenBoxWrapper = styled.div`
   display: flex;
@@ -22,17 +23,20 @@ const EntityChildrenBox = ({
   paramsCustomObj,
   thisEntity,
 }) => {
+  const [triggerUpdateEntityById] = useUpdateEntityById();
   const [isAddChildrenFormOpen, setIsAddChildrenFormOpen] = useState(false);
   const [parent, setParent] = useState(thisEntity);
-  const [newChild, setNewChild] = useState(undefined);
+  const [newChild, setNewChild] = useState(undefined); // this should be an array
 
-  const callUpdateParentWithNewChild = () => {
+  const updateParentWithNewChild = () => {
     console.log(`this ${parent} should be updated when I connect this function to update parent by id`);
     console.log(`this ${newChild} should now display in the parent when I connect this function`);
   };
 
   const saveNewChild = () => {
-    callUpdateParentWithNewChild();
+    console.log('save new entity has been clicked ');
+    updateParentWithNewChild();
+    triggerUpdateEntityById(parent);
   };
 
   return (
@@ -62,9 +66,9 @@ const EntityChildrenBox = ({
         isPopUpOpen={isAddChildrenFormOpen}
         setIsPopUpOpen={setIsAddChildrenFormOpen}
         onClickFunctions={{
-          setParent,
-          setNewChild,
-          saveNewChild,
+          setParent: () => setParent,
+          setNewChild: () => setNewChild,
+          saveNewChild: () => saveNewChild,
         }}
       />
     </>

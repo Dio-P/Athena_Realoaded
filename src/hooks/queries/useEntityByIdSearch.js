@@ -49,12 +49,13 @@ const useEntityByIdSearch = () => {
 
   const searchEntity = (id) => {
     if (!data?.getEntityById) {
-      query({
+      return query({
         variables: { id },
-      });
+      }).then((response) => response.data.getEntityById);
     } if (data?.getEntityById) {
-      refetch({ id });
+      return refetch({ id });
     }
+    return undefined;
   };
 
   useEffect(() => {

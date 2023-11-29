@@ -22,6 +22,12 @@ const AddChildForm = ({ onClickFunctions }) => {
         // chosenValues={entityToGet}
         // onClickOption={setEntityToGet}
       />
+      <button
+        type="button"
+        onClick={() => onClickFunctions.saveNewChild()}
+      >
+        update
+      </button>
     </>
   );
 };
