@@ -43,6 +43,7 @@ const App = () => {
   }, [displayedEntityId]);
 
   useEffect(() => {
+    console.log('returnedEntity', returnedEntity);
     setDisplayedEntity(returnedEntity);
   }, [returnedEntity]);
 
@@ -56,7 +57,7 @@ const App = () => {
           theme={theme}
           setTheme={setTheme}
         />
-        {returnedEntity && (
+        {returnedEntity?.length && (
           <Entity
             entity={displayedEntity}
             setDisplayedEntity={(child) => setDisplayedEntity(child)}
