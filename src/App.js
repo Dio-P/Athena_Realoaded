@@ -57,7 +57,7 @@ const App = () => {
           theme={theme}
           setTheme={setTheme}
         />
-        {returnedEntity?.length && (
+        {returnedEntity && (
           <Entity
             entity={displayedEntity}
             setDisplayedEntity={(child) => setDisplayedEntity(child)}

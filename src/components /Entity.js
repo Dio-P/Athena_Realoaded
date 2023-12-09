@@ -133,7 +133,7 @@ Entity.propTypes = {
 };
 
 Entity.defaultProps = {
-  entity: undefined,
+  entity: {},
   paramsCustomObj: {},
 };
 
