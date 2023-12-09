@@ -24,7 +24,7 @@ const AddChildForm = ({ onClickFunctions }) => {
       />
       <button
         type="button"
-        onClick={() => onClickFunctions.saveNewChild()}
+        onClick={() => onClickFunctions.saveNewChildren()}
       >
         update
       </button>

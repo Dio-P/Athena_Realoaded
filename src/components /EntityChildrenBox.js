@@ -33,10 +33,10 @@ const EntityChildrenBox = ({
     console.log(`this ${newChild} should now display in the parent when I connect this function`);
   };
 
-  const saveNewChild = () => {
-    console.log('save new entity has been clicked ');
+  const saveNewChildren = (newChildren) => {
+    console.log('save new child has been clicked ');
     updateParentWithNewChild();
-    triggerUpdateEntityById(parent);
+    triggerUpdateEntityById(parent.id, newChildren);
   };
 
   return (
@@ -66,9 +66,9 @@ const EntityChildrenBox = ({
         isPopUpOpen={isAddChildrenFormOpen}
         setIsPopUpOpen={setIsAddChildrenFormOpen}
         onClickFunctions={{
-          setParent: () => setParent,
-          setNewChild: () => setNewChild,
-          saveNewChild: () => saveNewChild,
+          setParent: () => setParent(),
+          setNewChild: () => setNewChild(),
+          saveNewChildren: () => saveNewChildren(),
         }}
       />
     </>

@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-// import { useLazyQuery } from '@apollo/client';
+import { useLazyQuery } from '@apollo/client';
 import gql from 'graphql-tag';
 import useEntityByIdSearch from './useEntityByIdSearch';
 
@@ -48,22 +48,30 @@ const useUpdateEntityById = () => {
     console.log('entity', entity);
   }, [entity]);
 
-  // const [updateEntity, { error }] = useLazyQuery(
-  //   UPDATE_ENTITY_BY_ID_QUERY,
-  // );
+  const [updateDbEntity, { error }] = useLazyQuery(
+    UPDATE_ENTITY_BY_ID_QUERY,
+  );
 
-  // useEffect(() => {
-  //   if (error) {
-  //     console.log('error');
-  //   }
-  // }, []);
+  useEffect(() => {
+    if (error) {
+      console.log('error');
+    }
+  }, [error]);
 
-  const triggerUpdateEntityById = async (id, changesToBeApplied) => {
+  const updateEntity = (entityToBeUpdated, newChildren) => ({
+    ...entityToBeUpdated,
+    children: {
+      ...entityToBeUpdated.children,
+      ...newChildren,
+    },
+  });
+  const triggerUpdateEntityById = async (id, newChildren) => {
+    console.log('id, changesToBeApplied', id, newChildren);
     const entityToBeUpdated = await searchEntity(id);
     console.log('entityToBeUpdated', entityToBeUpdated);
-    console.log('changesToBeApplied', changesToBeApplied);
-    // const updatedEntity = changesToBeApplied(entityToBeUpdated);
-    // updateEntity(id, updatedEntity);
+    console.log('newChildren', newChildren);
+    const updatedEntity = updateEntity(entityToBeUpdated, newChildren);
+    updateDbEntity(id, updatedEntity);
   };
 
   return [triggerUpdateEntityById];

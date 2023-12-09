@@ -51,7 +51,7 @@ const useEntityByIdSearch = () => {
     if (!data?.getEntityById) {
       return query({
         variables: { id },
-      }).then((response) => response.data.getEntityById);
+      }).then((response) => response?.data?.getEntityById);
     } if (data?.getEntityById) {
       return refetch({ id });
     }
