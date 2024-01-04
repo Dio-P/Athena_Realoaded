@@ -16,6 +16,11 @@ const DropDown = ({
 }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
+  const onClickAndClose = (optionId) => {
+    onClickOption(optionId);
+    setIsDropdownOpen(false);
+  };
+
   return (
     <DropDownContainer>
       <MultiBtnComp
@@ -29,7 +34,7 @@ const DropDown = ({
         && (
         <SearchComboBox
           ofType="entity"
-          onClickOption={onClickOption}
+          onClickOption={onClickAndClose}
           chosenValues={chosenValue}
         />
         )}

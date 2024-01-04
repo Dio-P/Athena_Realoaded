@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from '@emotion/styled';
 import PropTypes from 'prop-types';
 import MultiBtnComp from './MultiBtnComp';
@@ -27,6 +27,10 @@ const EntityChildrenBox = ({
   const [isAddChildrenFormOpen, setIsAddChildrenFormOpen] = useState(false);
   const [parent, setParent] = useState(thisEntity);
   const [newChild, setNewChild] = useState(undefined); // this should be an array
+
+  useEffect(() => {
+    console.log('parent****', parent);
+  }, [parent]);
 
   const updateParentWithNewChild = () => {
     console.log(`this ${parent} should be updated when I connect this function to update parent by id`);
@@ -66,7 +70,7 @@ const EntityChildrenBox = ({
         isPopUpOpen={isAddChildrenFormOpen}
         setIsPopUpOpen={setIsAddChildrenFormOpen}
         onClickFunctions={{
-          setParent: () => setParent(),
+          setNewParent: (newParent) => setParent(newParent),
           setNewChild: () => setNewChild(),
           saveNewChildren: () => saveNewChildren(),
         }}

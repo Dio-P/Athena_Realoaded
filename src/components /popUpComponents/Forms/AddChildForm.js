@@ -11,6 +11,7 @@ const AddChildForm = ({ onClickFunctions }) => {
       {/* parent entity */}
       {/* same component as to add from root with lock function to warn when trying to unlock */}
       <DropDown onClickOption={onClickFunctions?.setNewParent} />
+      {/* above is were the magic happens */}
       <SearchComboBox
         ofType="entity"
         // chosenValues={entityToGet}
