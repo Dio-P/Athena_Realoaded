@@ -6,6 +6,7 @@ import PopUp from './PopUp';
 import AddChildForm from './popUpComponents/Forms/AddChildForm';
 import { addIcon } from '../helpers/svgIcons';
 import useUpdateEntityById from '../hooks/queries/useUpdateEntityById';
+import useEntityByIdSearch from '../hooks/queries/useEntityByIdSearch';
 
 const EntityChildrenBoxWrapper = styled.div`
   display: flex;
@@ -28,9 +29,11 @@ const EntityChildrenBox = ({
   const [parent, setParent] = useState(thisEntity);
   const [newChild, setNewChild] = useState(undefined); // this should be an array
 
+  const [newParent, searchEntity] = useEntityByIdSearch();
   useEffect(() => {
-    console.log('parent****', parent);
-  }, [parent]);
+    console.log('newParent****', newParent);
+    setParent(newParent);
+  }, [newParent]);
 
   const updateParentWithNewChild = () => {
     console.log(`this ${parent} should be updated when I connect this function to update parent by id`);
@@ -70,9 +73,12 @@ const EntityChildrenBox = ({
         isPopUpOpen={isAddChildrenFormOpen}
         setIsPopUpOpen={setIsAddChildrenFormOpen}
         onClickFunctions={{
-          setNewParent: (newParent) => setParent(newParent),
+          setNewParent: (newParentId) => searchEntity(newParentId),
           setNewChild: () => setNewChild(),
           saveNewChildren: () => saveNewChildren(),
+        }}
+        values={{
+          parent: parent?.name,
         }}
       />
     </>

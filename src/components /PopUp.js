@@ -36,6 +36,7 @@ const PopUp = ({
   ComponentToDisplay,
   setIsPopUpOpen,
   onClickFunctions,
+  values,
 }) => {
   const theme = useContext(ThemeContext);
 
@@ -50,7 +51,10 @@ const PopUp = ({
             type="small"
             icon={deleteIcon}
           />
-          <ComponentToDisplay onClickFunctions={onClickFunctions} />
+          <ComponentToDisplay
+            onClickFunctions={onClickFunctions}
+            values={values}
+          />
         </ComponentToDisplayWrapper>
       </PopUpContainer>
     </PopUpWrapper>
@@ -62,12 +66,14 @@ PopUp.propTypes = {
   ComponentToDisplay: PropTypes.instanceOf(Object).isRequired,
   setIsPopUpOpen: PropTypes.func,
   onClickFunctions: PropTypes.objectOf(PropTypes.func),
+  values: PropTypes.objectOf(PropTypes.string),
 };
 
 PopUp.defaultProps = {
   isPopUpOpen: false,
   setIsPopUpOpen: () => {},
   onClickFunctions: {},
+  values: {},
 };
 
 export default PopUp;

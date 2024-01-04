@@ -13,6 +13,7 @@ const DropDown = ({
   chosenValue,
   freshlyAddedValue,
   onClickOption,
+  title,
 }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
@@ -29,6 +30,7 @@ const DropDown = ({
         isMenuOpen={isDropdownOpen}
         freshlyAddedValue={freshlyAddedValue}
         chosenValue={chosenValue}
+        title={title}
       />
       {isDropdownOpen
         && (
@@ -46,12 +48,17 @@ DropDown.propTypes = {
   chosenValue: PropTypes.string,
   freshlyAddedValue: PropTypes.string,
   onClickOption: PropTypes.func,
+  title: PropTypes.objectOf(PropTypes.string),
 };
 
 DropDown.defaultProps = {
   chosenValue: '',
   freshlyAddedValue: undefined,
   onClickOption: () => {},
+  title: {
+    withValue: '',
+    withoutValue: '',
+  },
 };
 
 export default DropDown;

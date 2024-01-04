@@ -3,14 +3,21 @@ import PropTypes from 'prop-types';
 import DropDown from '../../DropDown';
 import SearchComboBox from '../../SearchComboBox';
 
-const AddChildForm = ({ onClickFunctions }) => {
+const AddChildForm = ({ onClickFunctions, values }) => {
   const [one] = useState('This is the AddChildForm');
   return (
     <>
       {one}
       {/* parent entity */}
       {/* same component as to add from root with lock function to warn when trying to unlock */}
-      <DropDown onClickOption={onClickFunctions?.setNewParent} />
+      <DropDown
+        onClickOption={onClickFunctions?.setNewParent}
+        chosenValue={values.parent}
+        title={{
+          withValue: 'Parent: ',
+          withoutValue: 'Please choose a parent',
+        }}
+      />
       {/* above is were the magic happens */}
       <SearchComboBox
         ofType="entity"
@@ -35,8 +42,12 @@ const AddChildForm = ({ onClickFunctions }) => {
 
 AddChildForm.propTypes = {
   onClickFunctions: PropTypes.objectOf(PropTypes.func),
+  values: PropTypes.objectOf(PropTypes.string),
 };
 AddChildForm.defaultProps = {
   onClickFunctions: {},
+  values: {
+    parent: '',
+  },
 };
 export default AddChildForm;

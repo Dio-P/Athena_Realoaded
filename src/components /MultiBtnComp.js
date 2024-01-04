@@ -274,11 +274,12 @@ const DropDownButton = ({
   chosenValue,
   type,
   aria,
+  title,
 }) => {
-  const folderName = freshlyAddedValue?.name || chosenValue;
+  const value = freshlyAddedValue?.name || chosenValue;
   const dropDownButtonTitle = (freshlyAddedValue || chosenValue)
-    ? `Folder to display new part in: ${capitaliseFirstLetters(folderName)}`
-    : 'Choose a folder to display part in';
+    ? `${title.withValue}${capitaliseFirstLetters(value)}`
+    : title.withoutValue;
   return (
     <dropDownButton.ContainerWrapper aria-label={aria || `${type} button`}>
       <dropDownButton.Container onClick={onClickFunction}>
@@ -302,6 +303,7 @@ const MultiBtnComp = ({
   freshlyAddedValue,
   chosenValue,
   aria,
+  title,
 }) => {
   const theme = useContext(ThemeContext);
   if (type === 'small') {
@@ -350,6 +352,7 @@ const MultiBtnComp = ({
         type={type}
         aria={aria}
         providingAdditionalOption
+        title={title}
       />
     );
   }
@@ -447,6 +450,7 @@ DropDownButton.propTypes = {
   chosenValue: PropTypes.string, // ???
   type: PropTypes.string, // ??
   aria: PropTypes.string,
+  title: PropTypes.objectOf(PropTypes.string).isRequired,
 };
 
 DropDownButton.defaultProps = {
@@ -469,6 +473,7 @@ MultiBtnComp.propTypes = {
   freshlyAddedValue: PropTypes.string,
   chosenValue: PropTypes.string,
   aria: PropTypes.string,
+  title: PropTypes.objectOf(PropTypes.string),
 };
 MultiBtnComp.defaultProps = {
   label: '...',
@@ -481,6 +486,10 @@ MultiBtnComp.defaultProps = {
   freshlyAddedValue: '',
   chosenValue: '',
   aria: '',
+  title: {
+    withValue: '',
+    withoutValue: 'please choose a ',
+  },
 };
 
 export default MultiBtnComp;
