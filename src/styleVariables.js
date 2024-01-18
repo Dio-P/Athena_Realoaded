@@ -44,6 +44,12 @@ export const themeStyle = {
       typeColour: colours.primaryLight,
       backgroundColour: colours.primaryPink,
     },
+    radioBtn: {
+      ofTypeColour: colours.primaryLight,
+      backgroundColour: colours.primaryPink,
+      active: colours.primaryPink,
+      inactive: colours.secondaryPink,
+    },
   },
   dark: {
     backgroundColour: colours.primaryDark,
@@ -60,6 +66,12 @@ export const themeStyle = {
     smallBtn: {
       ofTypeColour: colours.primaryLight,
       backgroundColour: colours.primaryPink,
+    },
+    radioBtn: {
+      ofTypeColour: colours.primaryLight,
+      backgroundColour: colours.primaryPink,
+      active: colours.primaryPink,
+      inactive: colours.secondaryPink,
     },
   },
 };
@@ -86,6 +98,10 @@ const style = {
       ofTypeSmall: {
         light: themeStyle.light.smallBtn,
         dark: themeStyle.dark.smallBtn,
+      },
+      ofTypeRadio: {
+        light: themeStyle.light.radioBtn,
+        dark: themeStyle.dark.radioBtn,
       },
     },
     boxShadow: {

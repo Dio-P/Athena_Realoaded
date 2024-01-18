@@ -18,6 +18,7 @@ import ThemeContext from '../context/ThemeContext';
 // import PropTypes from 'prop-types';
 
 // const theme = 'light';
+import RadioBtn from './buttons/RadioBtn';
 
 const DefaultBtnWrapper = styled.div`
   display: flex;
@@ -294,6 +295,7 @@ const DropDownButton = ({
 
 const MultiBtnComp = ({
   label,
+  rightLabel,
   clicked,
   type,
   icon,
@@ -313,6 +315,16 @@ const MultiBtnComp = ({
         onClickFunction={onClickFunction}
         type={type}
         aria={aria}
+      />
+    );
+  }
+  if (type === 'radio') {
+    return (
+      <RadioBtn
+        leftLabel={label}
+        rightLabel={rightLabel}
+        value={chosenValue}
+        setValue={onClickFunction}
       />
     );
   }
@@ -464,6 +476,7 @@ DropDownButton.defaultProps = {
 
 MultiBtnComp.propTypes = {
   label: PropTypes.string,
+  rightLabel: PropTypes.string,
   clicked: PropTypes.bool,
   type: PropTypes.string,
   icon: PropTypes.instanceOf(Object),
@@ -477,6 +490,7 @@ MultiBtnComp.propTypes = {
 };
 MultiBtnComp.defaultProps = {
   label: '...',
+  rightLabel: undefined,
   clicked: false,
   type: '', // ??
   icon: undefined,

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from '@emotion/styled';
 import PropTypes from 'prop-types';
 import DropDown from '../../DropDown';
@@ -18,6 +18,19 @@ const ExistingChildOrNotBtnContainer = styled.div`
 const AddChildFormWrapper = ({ onClickFunctions, values }) => {
   const [one] = useState('This is the AddChildFormWrapper');
   const [isExistingChild, setIsExistingChild] = useState(false);
+  const [radioValue, setRadioValue] = useState('');
+
+  const leftOption = 'New Child';
+  const rightOption = 'Existing Child';
+
+  useEffect(() => {
+    if (radioValue === leftOption) {
+      setIsExistingChild(true);
+    }
+    if (radioValue === rightOption) {
+      setIsExistingChild(false);
+    }
+  }, [radioValue]);
   // {
   //   id: "5",
   //   name: "Authoring",
@@ -69,19 +82,26 @@ const AddChildFormWrapper = ({ onClickFunctions, values }) => {
           withoutValue: 'Please choose a parent',
         }}
       />
+      <ExistingChildOrNotBtnContainer>
+        <MultiBtnComp
+          type="radio"
+          chosenValue={radioValue}
+          onClickFunction={setRadioValue}
+          label={leftOption}
+          rightLabel={rightOption}
+        />
+        {/* <MultiBtnComp
+        type="add"
+        label="New Child"
+        onClickFunction={() => setIsExistingChild(false)}
+        />
+        <MultiBtnComp
+        type="add"
+        label="Existing Child"
+        onClickFunction={() => setIsExistingChild(true)}
+        /> */}
+      </ExistingChildOrNotBtnContainer>
       <BodyContainer>
-        <ExistingChildOrNotBtnContainer>
-          <MultiBtnComp
-            type="add"
-            label="New Child"
-            onClickFunction={() => setIsExistingChild(false)}
-          />
-          <MultiBtnComp
-            type="add"
-            label="Existing Child"
-            onClickFunction={() => setIsExistingChild(true)}
-          />
-        </ExistingChildOrNotBtnContainer>
         { isExistingChild
           ? (
             <SearchComboBox
