@@ -128,6 +128,7 @@ const SearchComboBox = ({
   hasAddOptionBtn,
   onClickAddOption,
   addOptionLabel,
+  exclude,
 }) => {
   const [queryString, setQueryString] = useState('');
   // const [allOptions, setAllOptions] = useState(undefined);
@@ -171,16 +172,20 @@ const SearchComboBox = ({
 
       <OptionsWrapper>
         {allOptions?.length > 0
-          && allOptions.map((option) => (
-            <DropdownOption
-              key={option.id || option}
-              onClickOption={() => onClickOption(
-                createUpdatePayload(ofType, chosenValues, option),
-              )}
-              ofType={ofType}
-              label={option.name || option}
-            />
-          ))}
+          && allOptions
+            .filter((option) => (
+              exclude && !(exclude.includes(option))
+            ))
+            .map((option) => (
+              <DropdownOption
+                key={option.id || option}
+                onClickOption={() => onClickOption(
+                  createUpdatePayload(ofType, chosenValues, option),
+                )}
+                ofType={ofType}
+                label={option.name || option}
+              />
+            ))}
       </OptionsWrapper>
 
       {!(ofType === 'entity') && chosenValues[ofType]?.length > 0 && (
@@ -243,6 +248,8 @@ SearchComboBox.propTypes = {
   hasAddOptionBtn: PropTypes.bool,
   onClickAddOption: PropTypes.func,
   addOptionLabel: PropTypes.string,
+  exclude: PropTypes.arrayOf(PropTypes.string),
+
 };
 
 SearchComboBox.defaultProps = {
@@ -250,6 +257,7 @@ SearchComboBox.defaultProps = {
   hasAddOptionBtn: false,
   onClickAddOption: () => {},
   addOptionLabel: undefined,
+  exclude: undefined,
 };
 
 export default SearchComboBox;

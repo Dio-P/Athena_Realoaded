@@ -3,7 +3,7 @@ import styled from '@emotion/styled';
 import PropTypes from 'prop-types';
 import MultiBtnComp from './MultiBtnComp';
 import PopUp from './PopUp';
-import AddChildForm from './popUpComponents/Forms/AddChildForm';
+import AddChildFormWrapper from './popUpComponents/forms/AddChildFormWrapper';
 import { addIcon } from '../helpers/svgIcons';
 import useUpdateEntityById from '../hooks/queries/useUpdateEntityById';
 import useEntityByIdSearch from '../hooks/queries/useEntityByIdSearch';
@@ -69,7 +69,7 @@ const EntityChildrenBox = ({
         </EntityChildrenBoxContainer>
       </EntityChildrenBoxWrapper>
       <PopUp
-        ComponentToDisplay={AddChildForm}
+        ComponentToDisplay={AddChildFormWrapper}
         isPopUpOpen={isAddChildrenFormOpen}
         setIsPopUpOpen={setIsAddChildrenFormOpen}
         onClickFunctions={{
