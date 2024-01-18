@@ -25,6 +25,8 @@ export const colours = {
   secondaryLight: '#fcfaf5',
   primaryDark: '#11223d',
   secondaryDark: '#2b2a28',
+  black: '#000000',
+  grey: '#808080',
 };
 
 export const themeStyle = {
@@ -45,7 +47,9 @@ export const themeStyle = {
       backgroundColour: colours.primaryPink,
     },
     radioBtn: {
-      ofTypeColour: colours.primaryLight,
+      activeTypeColour: colours.black,
+      inactiveTypeColour: colours.grey,
+      ofTypeColour: colours.black,
       backgroundColour: colours.primaryPink,
       active: colours.primaryPink,
       inactive: colours.secondaryPink,
@@ -68,7 +72,8 @@ export const themeStyle = {
       backgroundColour: colours.primaryPink,
     },
     radioBtn: {
-      ofTypeColour: colours.primaryLight,
+      activeTypeColour: colours.black,
+      inactiveTypeColour: colours.grey,
       backgroundColour: colours.primaryPink,
       active: colours.primaryPink,
       inactive: colours.secondaryPink,

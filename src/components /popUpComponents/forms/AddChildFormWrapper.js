@@ -90,16 +90,6 @@ const AddChildFormWrapper = ({ onClickFunctions, values }) => {
           label={leftOption}
           rightLabel={rightOption}
         />
-        {/* <MultiBtnComp
-        type="add"
-        label="New Child"
-        onClickFunction={() => setIsExistingChild(false)}
-        />
-        <MultiBtnComp
-        type="add"
-        label="Existing Child"
-        onClickFunction={() => setIsExistingChild(true)}
-        /> */}
       </ExistingChildOrNotBtnContainer>
       <BodyContainer>
         { isExistingChild

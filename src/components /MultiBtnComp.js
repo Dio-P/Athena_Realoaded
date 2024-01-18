@@ -319,12 +319,14 @@ const MultiBtnComp = ({
     );
   }
   if (type === 'radio') {
+    console.log('returning radio@@@@@');
     return (
       <RadioBtn
         leftLabel={label}
         rightLabel={rightLabel}
         value={chosenValue}
         setValue={onClickFunction}
+        theme={theme}
       />
     );
   }

@@ -1,19 +1,28 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import styled from '@emotion/styled';
 import PropTypes from 'prop-types';
 import style from '../../styleVariables';
-import ThemeContext from '../../context/ThemeContext';
-
-const theme = useContext(ThemeContext);
 
 const MainContainer = styled.div`
   display: flex;
-  color: 
+  margin: auto;
 `;
 
-const TwinBtn = styled.div`
+const LeftTwinBtn = styled.div`
   display: flex;
-  background-color: : ${(props) => style.variables.btn.ofTypeRadio[theme][props.active ? 'active' : 'inactive']};
+  background-color: ${(props) => style.variables.btn.ofTypeRadio[props.theme][props.active ? 'active' : 'inactive']};
+  color: ${(props) => style.variables.btn.ofTypeRadio[props.theme][props.active ? 'activeTypeColour' : 'inactiveTypeColour']};
+  box-shadow: ${(props) => style.variables.boxShadow[props.active ? 'large' : 'small'].dark};
+  padding: 10px;
+`;
+
+const RightTwinBtn = styled.div`
+  display: flex;
+  background-color: ${(props) => style.variables.btn.ofTypeRadio[props.theme][props.active ? 'active' : 'inactive']};
+  color: ${(props) => style.variables.btn.ofTypeRadio[props.theme][props.active ? 'activeTypeColour' : 'inactiveTypeColour']};
+  box-shadow: ${(props) => style.variables.boxShadow[props.active ? 'large' : 'small'].dark};
+  // box-shadow: 
+  padding: 10px;
 
 `;
 
@@ -22,28 +31,32 @@ const RadioBtn = ({
   rightLabel,
   value,
   setValue,
+  theme,
 }) => {
   const [userChoseBtn, setUserChoseBtn] = useState({ left: false, right: false });
+  console.log('theme in radio', theme);
   return (
-    <MainContainer role="button" value={value}>
-      <TwinBtn
+    <MainContainer role="button" value={value} theme={theme}>
+      <LeftTwinBtn
         onClick={() => {
           setUserChoseBtn({ left: true, right: false });
           setValue(leftLabel);
         }}
         active={userChoseBtn.left}
+        theme={theme}
       >
         {leftLabel}
-      </TwinBtn>
-      <TwinBtn
+      </LeftTwinBtn>
+      <RightTwinBtn
         onClick={() => {
           setUserChoseBtn({ left: false, right: true });
           setValue(rightLabel);
         }}
         active={userChoseBtn.right}
+        theme={theme}
       >
         {rightLabel}
-      </TwinBtn>
+      </RightTwinBtn>
     </MainContainer>
   );
 };
@@ -55,6 +68,7 @@ RadioBtn.propTypes = {
   rightLabel: PropTypes.string.isRequired,
   value: PropTypes.string,
   setValue: PropTypes.func.isRequired,
+  theme: PropTypes.string.isRequired,
 };
 
 RadioBtn.defaultProps = {
