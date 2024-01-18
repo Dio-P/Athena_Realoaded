@@ -45,35 +45,31 @@ export const GET_ALL_OF_TYPE = gql`
   }`;
 
 const useGetAllOfType = (ofType, queryString) => {
-  const [advanceQuery, { loading: advanceLoading, error: advanceError, data: advanceData }] = useLazyQuery(
+  const [query,
+    {
+      loading, error, data, refetch,
+    }] = useLazyQuery(
     GET_ALL_OF_TYPE,
   );
-
-  const [generalQuery, {
-    loading: generalLoading, error: generalError, data: generalData, refetch: generalRefetch,
-  }] = useLazyQuery(
-    FILTER_ENTITY_BY_QUERYSTRING_QUERY,
-  );
-
   useEffect(() => {
     console.log('inside the query useEffect');
     if (ofType && !(ofType === 'entity')) {
-      advanceQuery({
+      query({
         variables: { ofType },
       });
     }
   }, [ofType]);
 
   useEffect(() => {
-    if (advanceError || generalData) {
-      console.error(advanceError || generalData);
-    } if (advanceLoading || generalLoading) {
+    if (error) {
+      console.error(error);
+    } if (loading) {
       console.log('loading');
     }
-  }, [advanceError, generalData, advanceLoading]);
+  }, [error, loading]);
 
   const queryFilteredGeneralOptions = () => {
-    if (!generalData) {
+    if (!data) {
       return query({
         variables: { queryString },
       });
@@ -104,16 +100,17 @@ const useGetAllOfType = (ofType, queryString) => {
       }
       switch (ofType) {
         case 'entity': return queryFilteredGeneralOptions();
-        default: return 
+        default:
       }
-
     }
-
+    return undefined;
   };
 
   const filteredResults = useMemo(() => filterAdvanceOptions(), [queryString]);
 
-  return [filteredResults];
+  return [filteredResults, getRightOptions];
 };
 
 export default useGetAllOfType;
+// I am not really sure if this is working
+// had made changes and then fixed without testing.

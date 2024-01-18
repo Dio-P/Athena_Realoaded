@@ -1,12 +1,23 @@
 import React, { useState } from 'react';
+import styled from '@emotion/styled';
 import PropTypes from 'prop-types';
 import DropDown from '../../DropDown';
 import SearchComboBox from '../../SearchComboBox';
 import NewChildForm from './NewChildForm';
+import MultiBtnComp from '../../MultiBtnComp';
 
+const BodyContainer = styled.div`
+  display: flex;
+  border-color: red solid;
+  flex-direction: column;
+`;
+const ExistingChildOrNotBtnContainer = styled.div`
+  display: flex;
+
+`;
 const AddChildFormWrapper = ({ onClickFunctions, values }) => {
   const [one] = useState('This is the AddChildFormWrapper');
-  const [isExistingChild] = useState(false);
+  const [isExistingChild, setIsExistingChild] = useState(false);
   // {
   //   id: "5",
   //   name: "Authoring",
@@ -58,13 +69,27 @@ const AddChildFormWrapper = ({ onClickFunctions, values }) => {
           withoutValue: 'Please choose a parent',
         }}
       />
-      { isExistingChild
-        ? (
-          <SearchComboBox
-            ofType="entity"
+      <BodyContainer>
+        <ExistingChildOrNotBtnContainer>
+          <MultiBtnComp
+            type="add"
+            label="New Child"
+            onClickFunction={() => setIsExistingChild(false)}
           />
-        )
-        : <NewChildForm />}
+          <MultiBtnComp
+            type="add"
+            label="Existing Child"
+            onClickFunction={() => setIsExistingChild(true)}
+          />
+        </ExistingChildOrNotBtnContainer>
+        { isExistingChild
+          ? (
+            <SearchComboBox
+              ofType="entity"
+            />
+          )
+          : <NewChildForm />}
+      </BodyContainer>
       <button
         type="button"
         onClick={() => onClickFunctions.saveNewChildren()}

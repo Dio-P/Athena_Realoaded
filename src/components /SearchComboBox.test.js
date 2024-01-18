@@ -123,3 +123,5 @@ describe('SearchComboBox', () => {
     });
   });
 });
+
+// add filter function testing
