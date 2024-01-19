@@ -12,18 +12,19 @@ const useCreateNewUnit = () => {
     newLink: 'Invalid Link',
   };
 
-  const INIT_NEW_ENTITY_TO_BE = {
+  const [newEntityToBe, setNewEntityToBe] = useState(undefined);
+  const [mainLinks, setMainLinks] = useState([]);
+  const [newLink, setNewLink] = useState('');
+  const [errors] = useState(ERRORS);
+
+  const newEntityConstructor = {
     id: uuidv4(),
     name: '',
     type: '',
     leader: '',
-    mainLinks: [],
+    mainLinks,
     briefDescription: 'Content Publishing',
   };
-  const [newEntityToBe, setNewEntityToBe] = useState(INIT_NEW_ENTITY_TO_BE);
-  const [mainLinks, setMainLinks] = useState('');
-  const [newLink, setNewLink] = useState('');
-  const [errors] = useState(ERRORS);
 
   const addNewLink = () => {
     const newLinkIsValid = validateLink(newLink);
