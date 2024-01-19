@@ -30,44 +30,7 @@ const AddChildFormWrapper = ({ onClickFunctions, values }) => {
       setIsExistingChild(false);
     }
   }, [radioValue]);
-  // {
-  //   id: "5",
-  //   name: "Authoring",
-  //   type: "subTeam", //or group
-  //   leader: "Matt Greenham",
-  //   mainLinks: ["www.authoringSlack.Chanel.co.uk"],
-  //   briefDescription: "Content Publishing",
-  //   teamsResponsible: undefined,
-  //   properties: {
-  //     docs: ["2"],
-  //     tags: [],
-  //     technologies: [],
-  //   },
-  //   children: ["6", "7"],
-  //   connections: {
-  //     audienceFacing: false,
-  //     receivesDataFrom: undefined,
-  //     givesDataTo: undefined,
-  //   },
-  //   interactions: {
-  //     isLinkUpToDate: true,
-  //     comments: [
-  //       {
-  //         timeStamp: "some date and time",
-  //         userId: "some user Id or name",
-  //         text: "some text"
-  //       }
-  //     ],
-  //     requestedActions: [
-  //       {
-  //         timeStamp: "some date and time",
-  //         typeOfAction: "some action type",
-  //         description: "some coments",
-  //         requestingUserId: "some user Id or name"
-  //       }
-  //     ]
-  //   },
-  // },
+
   return (
     <>
       {one}
@@ -96,7 +59,11 @@ const AddChildFormWrapper = ({ onClickFunctions, values }) => {
               ofType="entity"
             />
           )
-          : <NewChildForm />}
+          : (
+            <NewChildForm
+              onClickFunctions={onClickFunctions}
+            />
+          )}
       </BodyContainer>
       <button
         type="button"
