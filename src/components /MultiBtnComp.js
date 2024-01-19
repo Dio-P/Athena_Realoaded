@@ -295,7 +295,6 @@ const DropDownButton = ({
 
 const MultiBtnComp = ({
   label,
-  rightLabel,
   clicked,
   type,
   icon,
@@ -322,8 +321,7 @@ const MultiBtnComp = ({
     console.log('returning radio@@@@@');
     return (
       <RadioBtn
-        leftLabel={label}
-        rightLabel={rightLabel}
+        label={label}
         value={chosenValue}
         setValue={onClickFunction}
         theme={theme}
@@ -477,8 +475,7 @@ DropDownButton.defaultProps = {
 };
 
 MultiBtnComp.propTypes = {
-  label: PropTypes.string,
-  rightLabel: PropTypes.string,
+  label: PropTypes.oneOfType([PropTypes.string, PropTypes.arrayOf(PropTypes.string)]),
   clicked: PropTypes.bool,
   type: PropTypes.string,
   icon: PropTypes.instanceOf(Object),
@@ -492,7 +489,6 @@ MultiBtnComp.propTypes = {
 };
 MultiBtnComp.defaultProps = {
   label: '...',
-  rightLabel: undefined,
   clicked: false,
   type: '', // ??
   icon: undefined,

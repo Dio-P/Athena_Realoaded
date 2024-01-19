@@ -20,14 +20,13 @@ const AddChildFormWrapper = ({ onClickFunctions, values }) => {
   const [isExistingChild, setIsExistingChild] = useState(false);
   const [radioValue, setRadioValue] = useState('');
 
-  const leftOption = 'New Child';
-  const rightOption = 'Existing Child';
+  const radioLabels = ['New Child', 'Existing Child'];
 
   useEffect(() => {
-    if (radioValue === leftOption) {
+    if (radioValue === 'Existing Child') {
       setIsExistingChild(true);
     }
-    if (radioValue === rightOption) {
+    if (radioValue === 'New Child') {
       setIsExistingChild(false);
     }
   }, [radioValue]);
@@ -87,8 +86,7 @@ const AddChildFormWrapper = ({ onClickFunctions, values }) => {
           type="radio"
           chosenValue={radioValue}
           onClickFunction={setRadioValue}
-          label={leftOption}
-          rightLabel={rightOption}
+          label={radioLabels}
         />
       </ExistingChildOrNotBtnContainer>
       <BodyContainer>
