@@ -11,48 +11,16 @@ const InputBtnContainer = styled.div`
 `;
 const CustomInput = styled.input`
 `;
-// {
-//
-//   teamsResponsible: undefined,
-//   properties: {
-//     docs: ["2"],
-//     tags: [],
-//     technologies: [],
-//   },
-//   children: ["6", "7"],
-//   connections: {
-//     audienceFacing: false,
-//     receivesDataFrom: undefined,
-//     givesDataTo: undefined,
-//   },
-//   interactions: {
-//     isLinkUpToDate: true,
-//     comments: [
-//       {
-//         timeStamp: "some date and time",
-//         userId: "some user Id or name",
-//         text: "some text"
-//       }
-//     ],
-//     requestedActions: [
-//       {
-//         timeStamp: "some date and time",
-//         typeOfAction: "some action type",
-//         description: "some coments",
-//         requestingUserId: "some user Id or name"
-//       }
-//     ]
-//   },
-// },
+
 const NewChildForm = () => {
   const {
     errors,
-    setNewLink,
     addNewLink,
   } = useCreateNewUnit();
 
   const [newEntityToBeAddedAsChild, setNewEntityToBeAddedAsChild] = useState();
-
+  const [linkInputState, setLinkInputState] = useState('');
+  const [linkError, setLinkError] = useState('');
   // I need in the function to create first a new entity
   // To return it's Id
   // and send this back to EntityChildrenBox using the passed down
@@ -63,19 +31,26 @@ const NewChildForm = () => {
         <>
           <CustomInput
             type="text"
-            value={newEntityToBeAddedAsChild.mainLinks}
-            onChange={(e) => setNewLink(e.target.value)}
-            onClick={() => setNewEntityToBeAddedAsChild({
-              ...newEntityToBeAddedAsChild,
-              mainLinks: [],
-            })}
+            value={linkInputState}
+            onChange={(e) => setLinkInputState(e.target.value)}
+            // onClick={() => setNewEntityToBeAddedAsChild({
+            //   ...newEntityToBeAddedAsChild,
+            //   mainLinks: [],
+            // })}
           />
-          {errors.newLink && <WarningElement info={errors.newLink} />}
+          {linkError && <WarningElement info="Please provide a valid email address" />}
         </>
         <MultiBtnComp
           type="add"
           label="add a link" // || "add another link"
-          onClickFunction={addNewLink}
+          onClickFunction={() => {
+            const wasSuccessfullyAdded = addNewLink(linkInputState);
+            if (wasSuccessfullyAdded) {
+              setLinkInputState('');
+            } else {
+              setLinkError(true);
+            }
+          }}
         />
       </InputBtnContainer>
       <CustomInput
