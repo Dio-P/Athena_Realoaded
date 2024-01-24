@@ -1,15 +1,10 @@
 import { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
-const validateLink = (link) => {
-  const LINK_REGEX = /^https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)$/;
-  const isValid = LINK_REGEX.test(link);
-  return isValid;
-};
-
 const useCreateNewUnit = ({
   name,
   type,
+  newLink,
   
 }) => {
   const ERRORS = {
@@ -70,18 +65,6 @@ const useCreateNewUnit = ({
     //   },
   };
 
-  const addNewLink = (newLink) => {
-    const newLinkIsValid = validateLink(newLink);
-    if (newLinkIsValid) {
-      setMainLinks([...mainLinks, newLink]);
-      return true;
-    } else if (!newLinkIsValid) {
-      // set new error to display
-      console.log('link not valid');
-      return false;
-    }
-  };
-
   const addNewTeamResponsible = (newLink) => {
     const newLinkIsValid = validateLink(newLink);
     if (newLinkIsValid) {
@@ -89,6 +72,10 @@ const useCreateNewUnit = ({
       setNewLink('');
     }
   };
+
+  const addNewLink = (newLink) => {
+    setMainLinks([...mainLinks, newLink]) 
+  }
 
   return {
     errors,
