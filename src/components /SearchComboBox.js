@@ -162,7 +162,7 @@ const SearchComboBox = ({
 
       {shouldDisplayChosenValues && chosenValues.length > 0(
         <ChoicesWrapper>
-          {chosenValues[ofType].map((singleValue) => (
+          {chosenValues.map((singleValue) => (
             <ChosenEntity
               key={singleValue}
               value={singleValue}

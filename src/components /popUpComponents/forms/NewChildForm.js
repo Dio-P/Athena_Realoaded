@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styled from '@emotion/styled';
 import useCreateNewUnit from '../../../hooks/useCreateNewUnit';
 import MultiBtnComp from '../../MultiBtnComp';
+import SearchComboBox from '../../SearchComboBox';
 import { WarningElement } from '../../specialElements';
 import { linkIsValid } from '../../../helpers/validation';
 import { errorsLink } from '../../../constants';
@@ -50,7 +51,6 @@ const NewChildForm = () => {
     // empty the input
     setLinkOnInput('');
     // display the existing link as btn with x underneath
-    
   };
 
   // name,
@@ -72,11 +72,12 @@ const NewChildForm = () => {
         value={nameOnInput}
         onChange={(e) => setNameOnInput(e.target.value)}
       />
-      <CustomInput // this should probably be combobox with additional option to add new type
+      <SearchComboBox // this should probably be combobox with additional option to add new type
         type="text"
-        required
+        required // will this work without setting a prop ?
         value={typeOnInput}
-        onChange={(e) => setTypeOnInput(e.target.value)}
+        onClickFunction={setTypeOnInput}
+        // onChange={(e) => setTypeOnInput(e.target.value)}
       />
       <InputBtnContainer>
         <>
@@ -96,15 +97,17 @@ const NewChildForm = () => {
           onClickFunction={() => handleAddingExtraLink(linkOnInput)}
         />
       </InputBtnContainer>
-      <CustomInput // this should probably be combobox with additional option to add new type
+      <SearchComboBox // this should probably be combobox with additional option to add new type
         type="text"
         value={teamsResponsibleOnInput}
-        onChange={(e) => setTeamsResponsibleOnInput(e.target.value)}
+        onClickFunction={setTeamsResponsibleOnInput}
+        // onChange={(e) => setTeamsResponsibleOnInput(e.target.value)}
       />
-      <CustomInput // this should probably be combobox with additional option to add new type
+      <SearchComboBox // this should probably be combobox with additional option to add new type
         type="text"
         value={leaderOnInput}
-        onChange={(e) => setLeaderOnInput(e.target.value)}
+        onClickFunction={setLeaderOnInput}
+        // onChange={(e) => setLeaderOnInput(e.target.value)}
       />
       {/* <CustomInput
         type="text"
@@ -119,7 +122,8 @@ const NewChildForm = () => {
       <CustomInput // this should probably be combobox with additional option to add new type ????
         type="text"
         value={docsOnInput}
-        onChange={(e) => setDocsOnInput(e.target.value)}
+        onClickFunction={setDocsOnInput}
+        // onChange={(e) => setDocsOnInput(e.target.value)}
       />
       <CustomInput
         type="text"
