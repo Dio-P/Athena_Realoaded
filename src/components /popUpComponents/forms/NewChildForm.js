@@ -19,6 +19,7 @@ const NewChildForm = () => {
     addNewLink,
   } = useCreateNewUnit();
 
+  const [nameOnInput, setNameOnInput] = useState('');
   const [linkOnInput, setLinkOnInput] = useState('');
   const [linkError, setLinkError] = useState('');
   // I need in the function to create first a new entity
@@ -54,8 +55,8 @@ const NewChildForm = () => {
     <CustomForm>
       <CustomInput
         type="text"
-        value={}
-        // onClick={() => }
+        value={nameOnInput}
+        onChange={(e) => setNameOnInput(e.target.value)}
       />
       <InputBtnContainer>
         <>
