@@ -14,6 +14,7 @@ const DropDown = ({
   freshlyAddedValue,
   onClickOption,
   title,
+  shouldDisplayChosenValues,
 }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
@@ -38,6 +39,7 @@ const DropDown = ({
           ofType="entity"
           onClickOption={onClickAndClose}
           chosenValues={chosenValue}
+          shouldDisplayChosenValues={shouldDisplayChosenValues}
         />
         )}
     </DropDownContainer>
@@ -49,6 +51,7 @@ DropDown.propTypes = {
   freshlyAddedValue: PropTypes.string,
   onClickOption: PropTypes.func,
   title: PropTypes.objectOf(PropTypes.string),
+  shouldDisplayChosenValues: PropTypes.bool,
 };
 
 DropDown.defaultProps = {
@@ -59,6 +62,7 @@ DropDown.defaultProps = {
     withValue: '',
     withoutValue: '',
   },
+  shouldDisplayChosenValues: false,
 };
 
 export default DropDown;

@@ -6,10 +6,7 @@ import style, { colours } from '../styleVariables';
 import { deleteIcon } from '../helpers/svgIcons';
 import { SearchInput } from './specialElements';
 import capitaliseFirstLetters from '../helpers/capitaliseFirstLetters';
-// import useGetAllOfType from '../hooks/queries/useGetAllOfType';
-// import useFilterEntityByQueryString from '../hooks/queries/useFilterEntityByQueryString';
 import useComboboxQueryManager from '../hooks/queries/useComboboxQueryManager';
-import useSearchComboBoxHelper from '../hooks/useSearchComboBoxHelper';
 
 const SearchBarContainer = styled.div`
   display: flex;
@@ -127,38 +124,15 @@ const SearchComboBox = ({
   onClickOption,
   hasAddOptionBtn,
   onClickAddOption,
+  onDeletingChoice,
   addOptionLabel,
   exclude,
+  shouldDisplayChosenValues,
 }) => {
   const [queryString, setQueryString] = useState('');
-  // const [allOptions, setAllOptions] = useState(undefined);
 
   const [allOptions] = useComboboxQueryManager(ofType, queryString);
-  // const [allOptionsOfType] = useGetAllOfType(ofType, queryString);
-  // const { returnedEntities } = useFilterEntityByQueryString(ofType, queryString);
-  const [createUpdatePayload] = useSearchComboBoxHelper(chosenValues);
 
-  // useEffect(() => {
-  //   if (allOptionsOfType?.length) {
-  //     setAllOptions(allOptionsOfType);
-  //   } if (returnedEntities?.length) {
-  //     setAllOptions(returnedEntities);
-  //   }
-  // }, [allOptionsOfType, returnedEntities]);
-  // const allOptions = returnedEntities || allOptionsOfType;
-  const removeChoice = (choiceToRemove) => {
-    const { [ofType]: ofThisType, ...typesWithoutThis } = chosenValues;
-
-    const updateChoicesInField = () => ofThisType.filter(
-      (choice) => choice !== choiceToRemove,
-    );
-
-    const updatedFields = (ofThisType.length === 1)
-      ? { ...typesWithoutThis }
-      : { ...typesWithoutThis, [ofType]: updateChoicesInField() };
-
-    onClickOption(updatedFields);
-  };
   return (
     <SearchBarContainer aria-label={`search for ${ofType}`}>
 
@@ -179,26 +153,24 @@ const SearchComboBox = ({
             .map((option) => (
               <DropdownOption
                 key={option.id || option}
-                onClickOption={() => onClickOption(
-                  createUpdatePayload(ofType, chosenValues, option),
-                )}
+                onClickOption={() => onClickOption(option, ofType)}
                 ofType={ofType}
                 label={option.name || option}
               />
             ))}
       </OptionsWrapper>
 
-      {!(ofType === 'entity') && chosenValues[ofType]?.length > 0 && (
+      {shouldDisplayChosenValues && chosenValues.length > 0(
         <ChoicesWrapper>
           {chosenValues[ofType].map((singleValue) => (
             <ChosenEntity
               key={singleValue}
               value={singleValue}
-              onClickRemove={() => removeChoice(singleValue)}
+              onClickRemove={() => onDeletingChoice(singleValue, ofType)}
               ofType={ofType}
             />
           ))}
-        </ChoicesWrapper>
+        </ChoicesWrapper>,
       )}
       {hasAddOptionBtn
         && (
@@ -233,31 +205,24 @@ ChosenEntity.propTypes = {
 
 SearchComboBox.propTypes = {
   ofType: PropTypes.string.isRequired,
-  chosenValues: PropTypes.shape({
-    id: PropTypes.string,
-    name: PropTypes.arrayOf(PropTypes.string),
-    type: PropTypes.arrayOf(PropTypes.string),
-    mainLinks: PropTypes.arrayOf(PropTypes.string),
-    briefDescription: PropTypes.string,
-    teamsResponsible: PropTypes.arrayOf(PropTypes.string),
-    properties: PropTypes.shape({
-      tags: PropTypes.arrayOf(PropTypes.string),
-    }),
-  }),
+  chosenValues: PropTypes.arrayOf(PropTypes.string),
   onClickOption: PropTypes.func.isRequired,
   hasAddOptionBtn: PropTypes.bool,
   onClickAddOption: PropTypes.func,
   addOptionLabel: PropTypes.string,
   exclude: PropTypes.arrayOf(PropTypes.string),
-
+  shouldDisplayChosenValues: PropTypes.bool,
+  onDeletingChoice: PropTypes.func,
 };
 
 SearchComboBox.defaultProps = {
-  chosenValues: {},
+  chosenValues: [],
   hasAddOptionBtn: false,
   onClickAddOption: () => {},
   addOptionLabel: undefined,
   exclude: undefined,
+  shouldDisplayChosenValues: false,
+  onDeletingChoice: () => {},
 };
 
 export default SearchComboBox;

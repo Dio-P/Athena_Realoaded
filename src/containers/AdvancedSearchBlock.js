@@ -3,6 +3,7 @@ import styled from '@emotion/styled';
 import PropTypes from 'prop-types';
 import SearchComboBox from '../components /SearchComboBox';
 import { refreshIcon } from '../helpers/svgIcons';
+import useSearchComboBoxHelper from '../hooks/useSearchComboBoxHelper';
 // import useCustomSearchQuery from '../hooks/queries/useCustomSearch';
 
 const AdvancedSearchBlockContainer = styled.div`
@@ -46,8 +47,28 @@ const AdvancedSearchBlock = ({
   setAdvanceQueryParameters,
   onClickSearch,
 }) => {
+  const [createUpdatePayload] = useSearchComboBoxHelper();
+
   const onClickRefresh = () => {
     setAdvanceQueryParameters('');
+  };
+
+  const handleOnClickOption = (option, ofType) => {
+    setAdvanceQueryParameters(createUpdatePayload(ofType, advanceQueryParameters, option));
+  };
+
+  const handleDeleteChoice = (choiceToRemove, ofType) => {
+    const { [ofType]: ofThisType, ...typesWithoutThis } = advanceQueryParameters;
+
+    const updateChoicesInField = () => ofThisType.filter(
+      (choice) => choice !== choiceToRemove,
+    );
+
+    const updatedFields = (ofThisType.length === 1)
+      ? { ...typesWithoutThis }
+      : { ...typesWithoutThis, [ofType]: updateChoicesInField() };
+
+    setAdvanceQueryParameters(updatedFields);
   };
 
   return (
@@ -62,38 +83,50 @@ const AdvancedSearchBlock = ({
         <ComboBoxContainers>
           <SearchComboBox
             ofType="tags"
-            chosenValues={advanceQueryParameters}
-            onClickOption={setAdvanceQueryParameters}
+            chosenValues={advanceQueryParameters.tags}
+            onClickOption={handleOnClickOption}
+            onDeletingChoice={handleDeleteChoice}
+            shouldDisplayChosenValues
           />
 
           <SearchComboBox
             ofType="name"
-            chosenValues={advanceQueryParameters}
-            onClickOption={setAdvanceQueryParameters}
+            chosenValues={advanceQueryParameters.name}
+            onClickOption={handleOnClickOption}
+            onDeletingChoice={handleDeleteChoice}
+            shouldDisplayChosenValues
           />
 
           <SearchComboBox
             ofType="type"
-            chosenValues={advanceQueryParameters}
-            onClickOption={setAdvanceQueryParameters}
+            chosenValues={advanceQueryParameters.type}
+            onClickOption={handleOnClickOption}
+            onDeletingChoice={handleDeleteChoice}
+            shouldDisplayChosenValues
           />
 
           <SearchComboBox
             ofType="mainLinks"
-            chosenValues={advanceQueryParameters}
-            onClickOption={setAdvanceQueryParameters}
+            chosenValues={advanceQueryParameters.mainLinks}
+            onClickOption={handleOnClickOption}
+            onDeletingChoice={handleDeleteChoice}
+            shouldDisplayChosenValues
           />
 
           <SearchComboBox
             ofType="briefDescription"
-            chosenValues={advanceQueryParameters}
-            onClickOption={setAdvanceQueryParameters}
+            chosenValues={advanceQueryParameters.briefDescription}
+            onClickOption={handleOnClickOption}
+            onDeletingChoice={handleDeleteChoice}
+            shouldDisplayChosenValues
           />
 
           <SearchComboBox
             ofType="leader"
-            chosenValues={advanceQueryParameters}
-            onClickOption={setAdvanceQueryParameters}
+            chosenValues={advanceQueryParameters.leader}
+            onClickOption={handleOnClickOption}
+            onDeletingChoice={handleDeleteChoice}
+            shouldDisplayChosenValues
           />
 
           <SearchBtn onClick={onClickSearch} aria-label="Search" />

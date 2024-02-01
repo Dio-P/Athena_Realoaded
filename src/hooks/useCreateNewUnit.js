@@ -5,26 +5,17 @@ const useCreateNewUnit = ({
   name,
   type,
   newLink,
-  
+  teamsResponsible,
+  leader,
+  mainLinks,
+  briefDescription,
+  docs,
+  tags,
+  technologies
 }) => {
   const ERRORS = {
     newLink: 'Invalid Link',
   };
-
-  const [newEntityToBe, setNewEntityToBe] = useState(undefined);
-
-  const [name, setName] = useState('');
-  const [type, setType] = useState('');
-  const [teamsResponsible, setTeamsResponsible] = useState(['']);
-  const [leader, setLeader] = useState('');
-  const [mainLinks, setMainLinks] = useState([]);
-  const [briefDescription, setBriefDescription] = useState('');
-
-  const [docs, setDocs] = useState([]);
-  const [tags, setTags] = useState([]);
-  const [technologies, setTechnologies] = useState([]);
-
-  const [errors] = useState(ERRORS);
 
   const newEntityConstructor = {
     id: uuidv4(),
@@ -64,13 +55,12 @@ const useCreateNewUnit = ({
     //     ]
     //   },
   };
+  const [newEntityToBe, setNewEntityToBe] = useState(newEntityConstructor);
 
-  const addNewTeamResponsible = (newLink) => {
-    const newLinkIsValid = validateLink(newLink);
-    if (newLinkIsValid) {
-      setMainLinks([...mainLinks, newLink]);
-      setNewLink('');
-    }
+  // const [errors] = useState(ERRORS);
+
+  const addNewTeamResponsible = (newTeam) => {
+    set
   };
 
   const addNewLink = (newLink) => {
@@ -78,8 +68,9 @@ const useCreateNewUnit = ({
   }
 
   return {
-    errors,
+    // errors,
     addNewLink,
+    addNewTeamResponsible,
   };
 };
 
