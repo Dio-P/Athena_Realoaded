@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styled from '@emotion/styled';
-import useCreateNewUnit from '../../../hooks/useCreateNewUnit';
+// import useCreateNewUnit from '../../../hooks/useCreateNewUnit';
 import MultiBtnComp from '../../MultiBtnComp';
 import SearchComboBox from '../../SearchComboBox';
 import { WarningElement } from '../../specialElements';
@@ -16,9 +16,9 @@ const CustomInput = styled.input`
 `;
 
 const NewChildForm = () => {
-  const {
-    addNewLink,
-  } = useCreateNewUnit();
+  // const {
+  //   addNewLink,
+  // } = useCreateNewUnit();
 
   const [mainLinks, setMainLinks] = useState([]);
 
@@ -72,7 +72,9 @@ const NewChildForm = () => {
         value={nameOnInput}
         onChange={(e) => setNameOnInput(e.target.value)}
       />
-      <SearchComboBox // this should probably be combobox with additional option to add new type
+      <SearchComboBox
+      // this should probably be comboentityAttributesentityAttributesbox
+      // with additional option to add new type
         type="text"
         required // will this work without setting a prop ?
         value={typeOnInput}

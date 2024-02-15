@@ -7,7 +7,11 @@ export const SEARCH_CHILDREN_BY_ID_QUERY = gql`
     getChildrenById(ids: $ids) {
       id
       name
-      type
+      type {
+        id
+        title
+        description
+      }
       mainLinks
       briefDescription
       teamsResponsible

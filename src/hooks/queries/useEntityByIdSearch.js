@@ -7,7 +7,11 @@ export const SEARCH_ENTITY_BY_ID_QUERY = gql`
     getEntityById(id: $id) {
       id
       name
-      type
+      type {
+        id
+        title
+        description
+      }
       mainLinks
       briefDescription
       teamsResponsible

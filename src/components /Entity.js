@@ -86,7 +86,11 @@ Entity.propTypes = {
   entity: PropTypes.shape({
     id: PropTypes.string,
     name: PropTypes.string,
-    type: PropTypes.string,
+    type: PropTypes.shape({
+      id: PropTypes.string,
+      title: PropTypes.string,
+      describe: PropTypes.string,
+    }),
     leader: PropTypes.string,
     mainLinks: PropTypes.arrayOf(PropTypes.string),
     briefDescription: PropTypes.string,
