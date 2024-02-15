@@ -17,8 +17,16 @@ export const SEARCH_CHILDREN_BY_ID_QUERY = gql`
       teamsResponsible
       properties {
         docs
-        tags
-        technologies
+        tags {
+          id
+          title
+          description
+        }
+        technologies {
+          id
+          title
+          description
+        }
       }
       children
       connections {

@@ -76,6 +76,7 @@ const NewChildForm = () => {
       // this should probably be comboentityAttributesentityAttributesbox
       // with additional option to add new type
         type="text"
+        ofType="type"
         required // will this work without setting a prop ?
         value={typeOnInput}
         onClickFunction={setTypeOnInput}

@@ -1,12 +1,14 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from '@emotion/styled';
-import PropTypes from 'prop-types';
+import PropTypes, {
+  arrayOf, oneOf, string, bool, func,
+} from 'prop-types';
 
 import style, { colours } from '../styleVariables';
 import { deleteIcon } from '../helpers/svgIcons';
 import { SearchInput } from './specialElements';
 import capitaliseFirstLetters from '../helpers/capitaliseFirstLetters';
-import useComboboxQueryManager from '../hooks/queries/useComboboxQueryManager';
+// import useComboboxQueryManager from '../hooks/queries/useComboboxQueryManager';
 
 const SearchBarContainer = styled.div`
   display: flex;
@@ -120,6 +122,7 @@ const ChosenEntity = ({
 
 const SearchComboBox = ({
   ofType,
+  options,
   chosenValues,
   onClickOption,
   hasAddOptionBtn,
@@ -128,25 +131,23 @@ const SearchComboBox = ({
   addOptionLabel,
   exclude,
   shouldDisplayChosenValues,
-}) => {
-  const [queryString, setQueryString] = useState('');
+  queryString,
+  setQueryString,
+}) => (
+  <SearchBarContainer aria-label={`search for ${ofType}`}>
 
-  const [allOptions] = useComboboxQueryManager(ofType, queryString);
+    <SearchInput
+      type="text"
+      value={queryString}
+      ofType={ofType}
+      name="dropDownSearch"
+      placeholder={`${ofType}s`}
+      onChange={(e) => setQueryString(e.target.value)}
+    />
 
-  return (
-    <SearchBarContainer aria-label={`search for ${ofType}`}>
-
-      <SearchInput
-        type="text"
-        ofType={ofType}
-        name="dropDownSearch"
-        placeholder={`${ofType}s`}
-        onChange={(e) => setQueryString(e.target.value)}
-      />
-
-      <OptionsWrapper>
-        {allOptions?.length > 0
-          && allOptions
+    <OptionsWrapper>
+      {options?.length > 0
+          && options
             .filter((option) => (
               exclude && !(exclude.includes(option))
             ))
@@ -158,21 +159,21 @@ const SearchComboBox = ({
                 label={option.name || option}
               />
             ))}
-      </OptionsWrapper>
+    </OptionsWrapper>
 
-      {shouldDisplayChosenValues && chosenValues.length > 0(
-        <ChoicesWrapper>
-          {chosenValues.map((singleValue) => (
-            <ChosenEntity
-              key={singleValue}
-              value={singleValue}
-              onClickRemove={() => onDeletingChoice(singleValue, ofType)}
-              ofType={ofType}
-            />
-          ))}
-        </ChoicesWrapper>,
-      )}
-      {hasAddOptionBtn
+    {shouldDisplayChosenValues && chosenValues.length > 0(
+      <ChoicesWrapper>
+        {chosenValues.map((singleValue) => (
+          <ChosenEntity
+            key={singleValue}
+            value={singleValue}
+            onClickRemove={() => onDeletingChoice(singleValue, ofType)}
+            ofType={ofType}
+          />
+        ))}
+      </ChoicesWrapper>,
+    )}
+    {hasAddOptionBtn
         && (
         <AddOptionBtnWrapper>
           <DropdownOption
@@ -182,15 +183,13 @@ const SearchComboBox = ({
           />
         </AddOptionBtnWrapper>
         )}
-    </SearchBarContainer>
-  );
-};
-
+  </SearchBarContainer>
+);
 DropdownOption.propTypes = {
-  onClickOption: PropTypes.func.isRequired,
-  label: PropTypes.string.isRequired,
-  isAddFolderBtn: PropTypes.bool,
-  ofType: PropTypes.string.isRequired,
+  onClickOption: func.isRequired,
+  label: string.isRequired,
+  isAddFolderBtn: bool,
+  ofType: string.isRequired,
 };
 
 DropdownOption.defaultProps = {
@@ -198,31 +197,39 @@ DropdownOption.defaultProps = {
 };
 
 ChosenEntity.propTypes = {
-  value: PropTypes.string.isRequired,
-  onClickRemove: PropTypes.func.isRequired,
-  ofType: PropTypes.string.isRequired,
+  value: string.isRequired,
+  onClickRemove: func.isRequired,
+  ofType: string.isRequired,
 };
 
 SearchComboBox.propTypes = {
-  ofType: PropTypes.string.isRequired,
-  chosenValues: PropTypes.arrayOf(PropTypes.string),
-  onClickOption: PropTypes.func.isRequired,
-  hasAddOptionBtn: PropTypes.bool,
-  onClickAddOption: PropTypes.func,
-  addOptionLabel: PropTypes.string,
-  exclude: PropTypes.arrayOf(PropTypes.string),
-  shouldDisplayChosenValues: PropTypes.bool,
-  onDeletingChoice: PropTypes.func,
+  ofType: string.isRequired,
+  options: oneOf(arrayOf(string) || arrayOf(PropTypes.objectOf(string))),
+  chosenValues: arrayOf(string),
+  onClickOption: func.isRequired,
+  hasAddOptionBtn: bool,
+  onClickAddOption: func,
+  addOptionLabel: string,
+  exclude: arrayOf(string),
+  shouldDisplayChosenValues: bool,
+  onDeletingChoice: func,
+  queryString: string,
+  setQueryString: func.isRequired,
 };
 
 SearchComboBox.defaultProps = {
   chosenValues: [],
+  options: {},
   hasAddOptionBtn: false,
   onClickAddOption: () => {},
   addOptionLabel: undefined,
   exclude: undefined,
   shouldDisplayChosenValues: false,
   onDeletingChoice: () => {},
+  queryString: '',
 };
 
 export default SearchComboBox;
+
+// const [queryString, setQueryString] = useState('');
+// const [allOptions] = useComboboxQueryManager(ofType, queryString);
