@@ -115,7 +115,7 @@ const AdvancedSearchBlock = ({
             onDeletingChoice={handleDeleteChoice}
             shouldDisplayChosenValues
             queryString={nameQueryString}
-            setQueryString={setNameQueryString}
+            onChange={setNameQueryString}
           />
 
           <SearchComboBox
@@ -126,7 +126,7 @@ const AdvancedSearchBlock = ({
             onDeletingChoice={handleDeleteChoice}
             shouldDisplayChosenValues
             queryString={mainLinksQueryString}
-            setQueryString={setMainLinksQueryString}
+            onChange={setMainLinksQueryString}
           />
 
           <SearchComboBox
@@ -137,7 +137,7 @@ const AdvancedSearchBlock = ({
             onDeletingChoice={handleDeleteChoice}
             shouldDisplayChosenValues
             queryString={briefDescriptionQueryString}
-            setQueryString={setBriefDescriptionQueryString}
+            onChange={setBriefDescriptionQueryString}
           />
 
           <SearchComboBox
@@ -148,7 +148,7 @@ const AdvancedSearchBlock = ({
             onDeletingChoice={handleDeleteChoice}
             shouldDisplayChosenValues
             queryString={leaderQueryString}
-            setQueryString={setLeaderQueryString}
+            onChange={setLeaderQueryString}
           />
 
           <SearchBtn onClick={onClickSearch} aria-label="Search" />

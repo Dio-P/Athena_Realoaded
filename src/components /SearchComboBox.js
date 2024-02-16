@@ -2,10 +2,11 @@ import React from 'react';
 import styled from '@emotion/styled';
 import PropTypes, {
   arrayOf, oneOf, string, bool, func,
+  shape,
 } from 'prop-types';
 
 import style, { colours } from '../styleVariables';
-import { deleteIcon } from '../helpers/svgIcons';
+import { deleteIcon, infoIcon } from '../helpers/svgIcons';
 import { SearchInput } from './specialElements';
 import capitaliseFirstLetters from '../helpers/capitaliseFirstLetters';
 // import useComboboxQueryManager from '../hooks/queries/useComboboxQueryManager';
@@ -82,22 +83,34 @@ margin-top: '4px';
 }
 cursor: pointer;
 `;
+const DescriptionBtn = styled.div`
+  display: flex;
+  height: 100%;
+  width: 25px;
+  margin: 1px 2px 1px 2px;
+`;
 
 const DropdownOption = ({
   onClickOption,
-  label,
+  option,
   isAddFolderBtn,
-  ofType,
-}) => (
-  <SingleDropDownElementWrapper
-    role="button"
-    aria-label={`add ${ofType} ${label} to query`} // is this a good aria-label?
-    onClick={onClickOption}
-    isAddFolderBtn={isAddFolderBtn}
-  >
-    <DropDownLabel>{capitaliseFirstLetters(label)}</DropDownLabel>
-  </SingleDropDownElementWrapper>
-);
+  ariaLabel,
+}) => {
+  const label = option.name || option.title || option;
+  console.log('option', option);
+  return (
+    // `add ${ofType} ${label} to query`
+    <SingleDropDownElementWrapper
+      role="button"
+      aria-label={ariaLabel} // is this a good aria-label?
+      onClick={onClickOption}
+      isAddFolderBtn={isAddFolderBtn}
+    >
+      <DropDownLabel>{capitaliseFirstLetters(label)}</DropDownLabel>
+      <DescriptionBtn onClick={() => console.log('description btn clicked')}>{infoIcon}</DescriptionBtn>
+    </SingleDropDownElementWrapper>
+  );
+};
 
 const ChosenEntity = ({
   // rename value?
@@ -132,48 +145,52 @@ const SearchComboBox = ({
   exclude,
   shouldDisplayChosenValues,
   queryString,
-  setQueryString,
-}) => (
-  <SearchBarContainer aria-label={`search for ${ofType}`}>
+  onChange,
+  optionsAriaLabel,
+}) => {
+  console.log('options******', options);
+  return (
+    <SearchBarContainer aria-label={`search for ${ofType}`}>
 
-    <SearchInput
-      type="text"
-      value={queryString}
-      ofType={ofType}
-      name="dropDownSearch"
-      placeholder={`${ofType}s`}
-      onChange={(e) => setQueryString(e.target.value)}
-    />
+      <SearchInput
+        type="text"
+        value={queryString}
+        ofType={ofType}
+        name="dropDownSearch"
+        placeholder={`${ofType}s`}
+        onChange={(e) => onChange(e.target.value)}
+      />
 
-    <OptionsWrapper>
-      {options?.length > 0
+      <OptionsWrapper>
+        {options?.length > 0
           && options
             .filter((option) => (
               exclude && !(exclude.includes(option))
-            ))
+            )) // no clue what this is any more
             .map((option) => (
               <DropdownOption
                 key={option.id || option}
+                option={option}
                 onClickOption={() => onClickOption(option, ofType)}
                 ofType={ofType}
-                label={option.name || option}
+                ariaLabel={optionsAriaLabel}
               />
             ))}
-    </OptionsWrapper>
+      </OptionsWrapper>
 
-    {shouldDisplayChosenValues && chosenValues.length > 0(
-      <ChoicesWrapper>
-        {chosenValues.map((singleValue) => (
-          <ChosenEntity
-            key={singleValue}
-            value={singleValue}
-            onClickRemove={() => onDeletingChoice(singleValue, ofType)}
-            ofType={ofType}
-          />
-        ))}
-      </ChoicesWrapper>,
-    )}
-    {hasAddOptionBtn
+      {shouldDisplayChosenValues && chosenValues.length > 0(
+        <ChoicesWrapper>
+          {chosenValues.map((singleValue) => (
+            <ChosenEntity
+              key={singleValue}
+              value={singleValue}
+              onClickRemove={() => onDeletingChoice(singleValue, ofType)}
+              ofType={ofType}
+            />
+          ))}
+        </ChoicesWrapper>,
+      )}
+      {hasAddOptionBtn
         && (
         <AddOptionBtnWrapper>
           <DropdownOption
@@ -183,17 +200,23 @@ const SearchComboBox = ({
           />
         </AddOptionBtnWrapper>
         )}
-  </SearchBarContainer>
-);
+    </SearchBarContainer>
+  );
+};
 DropdownOption.propTypes = {
   onClickOption: func.isRequired,
-  label: string.isRequired,
   isAddFolderBtn: bool,
-  ofType: string.isRequired,
+  option: oneOf(string || shape({
+    id: string,
+    title: string,
+    description: string,
+  })).isRequired,
+  ariaLabel: string,
 };
 
 DropdownOption.defaultProps = {
   isAddFolderBtn: false,
+  ariaLabel: '',
 };
 
 ChosenEntity.propTypes = {
@@ -214,7 +237,8 @@ SearchComboBox.propTypes = {
   shouldDisplayChosenValues: bool,
   onDeletingChoice: func,
   queryString: string,
-  setQueryString: func.isRequired,
+  onChange: func.isRequired,
+  optionsAriaLabel: string,
 };
 
 SearchComboBox.defaultProps = {
@@ -227,9 +251,10 @@ SearchComboBox.defaultProps = {
   shouldDisplayChosenValues: false,
   onDeletingChoice: () => {},
   queryString: '',
+  optionsAriaLabel: '',
 };
 
 export default SearchComboBox;
 
-// const [queryString, setQueryString] = useState('');
+// const [queryString, onChange] = useState('');
 // const [allOptions] = useComboboxQueryManager(ofType, queryString);

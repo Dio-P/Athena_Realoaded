@@ -107,8 +107,17 @@ export const addIcon = (
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 32 32"
     aria-label="add icon"
-    className="css-1n8p6mz"
   >
     <path d="M29.6 13.4H18.7v-11h-5.4v11H2.4v5.3h10.9v11h5.4v-11h10.9v-5.3z" />
+  </svg>
+);
+
+export const infoIcon = (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 32 32"
+    aria-label="info icon"
+  >
+    <path d="M16 31c8.5 0 15-6.5 15-15S24.5 1 16 1 1 7.5 1 16s6.5 15 15 15zm-2.2-5.5V12.7h4.4v12.9h-4.4zM16 10c-1.7 0-2.7-.9-2.7-2.4s1-2.4 2.7-2.4 2.7.9 2.7 2.4-1 2.4-2.7 2.4z" />
   </svg>
 );

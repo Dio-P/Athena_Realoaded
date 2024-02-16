@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styled from '@emotion/styled';
+import useGetAllTypes from '../../../hooks/queries/useGetAllTypes';
 // import useCreateNewUnit from '../../../hooks/useCreateNewUnit';
 import MultiBtnComp from '../../MultiBtnComp';
 import SearchComboBox from '../../SearchComboBox';
@@ -19,6 +20,8 @@ const NewChildForm = () => {
   // const {
   //   addNewLink,
   // } = useCreateNewUnit();
+
+  const [typesToRender, filterTypes] = useGetAllTypes();
 
   const [mainLinks, setMainLinks] = useState([]);
 
@@ -63,7 +66,7 @@ const NewChildForm = () => {
   //     tags,
   //     technologies,
   //   },
-
+  console.log('typesToRender 1 *********', typesToRender);
   return (
     <CustomForm>
       <CustomInput
@@ -77,9 +80,10 @@ const NewChildForm = () => {
       // with additional option to add new type
         type="text"
         ofType="type"
-        required // will this work without setting a prop ?
         value={typeOnInput}
         onClickFunction={setTypeOnInput}
+        options={typesToRender}
+        onChange={filterTypes}
         // onChange={(e) => setTypeOnInput(e.target.value)}
       />
       <InputBtnContainer>
