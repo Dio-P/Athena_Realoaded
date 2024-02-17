@@ -80,8 +80,8 @@ const NewChildForm = () => {
       // with additional option to add new type
         type="text"
         ofType="type"
-        value={typeOnInput}
-        onClickFunction={setTypeOnInput}
+        value={typeOnInput?.title}
+        onClickOption={setTypeOnInput}
         options={typesToRender}
         onChange={filterTypes}
         // onChange={(e) => setTypeOnInput(e.target.value)}
@@ -106,14 +106,16 @@ const NewChildForm = () => {
       </InputBtnContainer>
       <SearchComboBox // this should probably be combobox with additional option to add new type
         type="text"
+        options={['test']}
         value={teamsResponsibleOnInput}
-        onClickFunction={setTeamsResponsibleOnInput}
+        onClickOption={setTeamsResponsibleOnInput}
         // onChange={(e) => setTeamsResponsibleOnInput(e.target.value)}
       />
       <SearchComboBox // this should probably be combobox with additional option to add new type
         type="text"
+        options={['test']}
         value={leaderOnInput}
-        onClickFunction={setLeaderOnInput}
+        onClickOption={setLeaderOnInput}
         // onChange={(e) => setLeaderOnInput(e.target.value)}
       />
       {/* <CustomInput

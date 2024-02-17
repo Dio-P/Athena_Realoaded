@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from '@emotion/styled';
 import PropTypes, {
   arrayOf, oneOf, string, bool, func,
@@ -142,13 +142,14 @@ const SearchComboBox = ({
   onClickAddOption,
   onDeletingChoice,
   addOptionLabel,
-  exclude,
+  // exclude,
   shouldDisplayChosenValues,
-  queryString,
+  // queryString,
   onChange,
   optionsAriaLabel,
 }) => {
   console.log('options******', options);
+  const [queryString, setQueryString] = useState('');
   return (
     <SearchBarContainer aria-label={`search for ${ofType}`}>
 
@@ -158,24 +159,27 @@ const SearchComboBox = ({
         ofType={ofType}
         name="dropDownSearch"
         placeholder={`${ofType}s`}
-        onChange={(e) => onChange(e.target.value)}
+        onChange={(e) => {
+          setQueryString(e.target.value);
+          onChange(e.target.value);
+        }}
       />
 
       <OptionsWrapper>
-        {options?.length > 0
-          && options
+        {/* && options
             .filter((option) => (
               exclude && !(exclude.includes(option))
-            )) // no clue what this is any more
-            .map((option) => (
-              <DropdownOption
-                key={option.id || option}
-                option={option}
-                onClickOption={() => onClickOption(option, ofType)}
-                ofType={ofType}
-                ariaLabel={optionsAriaLabel}
-              />
-            ))}
+            )) // no clue what this is any more */}
+        {options?.length > 0
+          && options.map((option) => (
+            <DropdownOption
+              key={option.id || option}
+              option={option}
+              onClickOption={() => onClickOption(option, ofType)}
+              ofType={ofType}
+              ariaLabel={optionsAriaLabel}
+            />
+          ))}
       </OptionsWrapper>
 
       {shouldDisplayChosenValues && chosenValues.length > 0(
@@ -233,24 +237,24 @@ SearchComboBox.propTypes = {
   hasAddOptionBtn: bool,
   onClickAddOption: func,
   addOptionLabel: string,
-  exclude: arrayOf(string),
+  // exclude: arrayOf(string),
   shouldDisplayChosenValues: bool,
   onDeletingChoice: func,
-  queryString: string,
+  // queryString: string,
   onChange: func.isRequired,
   optionsAriaLabel: string,
 };
 
 SearchComboBox.defaultProps = {
   chosenValues: [],
-  options: {},
+  options: [],
   hasAddOptionBtn: false,
   onClickAddOption: () => {},
   addOptionLabel: undefined,
-  exclude: undefined,
+  // exclude: undefined,
   shouldDisplayChosenValues: false,
   onDeletingChoice: () => {},
-  queryString: '',
+  // queryString: '',
   optionsAriaLabel: '',
 };
 
