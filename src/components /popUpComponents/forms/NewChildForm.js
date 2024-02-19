@@ -10,10 +10,19 @@ import { errorsLink } from '../../../constants';
 
 const CustomForm = styled.form`
 `;
+
 const InputBtnContainer = styled.div`
   display: flex;
 `;
+
 const CustomInput = styled.input`
+`;
+
+const CtaBtnsContainer = styled.div`
+  display: flex;
+`;
+
+const CtaBtn = styled.button`
 `;
 
 const NewChildForm = () => {
@@ -66,7 +75,32 @@ const NewChildForm = () => {
   //     tags,
   //     technologies,
   //   },
-  console.log('typesToRender 1 *********', typesToRender);
+  const handleAddNewUnit = () => {
+    const allRequiredFields = {
+      nameOnInput, // string
+      mainLinks, // array
+      typeOnInput, // object
+      teamsResponsibleOnInput, // array
+      briefDescriptionOnInput, // string
+      docsOnInput, // array
+    };
+    const allRequiredFieldsKeys = Object.keys(allRequiredFields);
+    const missingRequiredFields = allRequiredFieldsKeys.filter(
+      (fieldKey) => !allRequiredFields[fieldKey]
+        || allRequiredFields[fieldKey].length === 0
+        || Object.keys(allRequiredFields[fieldKey]).length === 0,
+      // will this break it if it is not an object ?
+    );
+    if (missingRequiredFields.length > 0) {
+      const missingRequiredFieldsString = missingRequiredFields.join(', ');
+      console.log(missingRequiredFieldsString);
+      // logic to announce missing fields here
+    } else {
+      console.log('good to add');
+      // logic to add the new unit
+      // delete the log above
+    }
+  };
   return (
     <CustomForm>
       <CustomInput
@@ -80,7 +114,7 @@ const NewChildForm = () => {
       // with additional option to add new type
         type="text"
         ofType="type"
-        value={typeOnInput?.title}
+        // value={typeOnInput?.title}
         onClickOption={setTypeOnInput}
         options={typesToRender}
         onChange={filterTypes}
@@ -146,6 +180,10 @@ const NewChildForm = () => {
         // this should probably be combobox with additional option to add new type
         onChange={(e) => setTechnologiesOnInput(e.target.value)}
       />
+      <CtaBtnsContainer>
+        <CtaBtn>Cancel</CtaBtn>
+        <CtaBtn onClick={handleAddNewUnit}>Add</CtaBtn>
+      </CtaBtnsContainer>
     </CustomForm>
   );
 };
