@@ -43,6 +43,7 @@ const AddChildFormWrapper = ({ onClickFunctions, values }) => {
           withValue: 'Parent: ',
           withoutValue: 'Please choose a parent',
         }}
+        ofType="entity"
       />
       <ExistingChildOrNotBtnContainer>
         <MultiBtnComp
