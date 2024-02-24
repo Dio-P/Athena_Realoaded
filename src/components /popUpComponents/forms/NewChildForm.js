@@ -121,17 +121,6 @@ const NewChildForm = () => {
         onChange={filterTypes}
         ofType="type"
       />
-      {/* <SearchComboBox
-      // this should probably be comboentityAttributesentityAttributesbox
-      // with additional option to add new type
-        type="text"
-        ofType="type"
-        // value={typeOnInput?.title}
-        onClickOption={setTypeOnInput}
-        options={typesToRender}
-        onChange={filterTypes}
-        // onChange={(e) => setTypeOnInput(e.target.value)}
-      /> */}
       <InputBtnContainer>
         <>
           <CustomInput
