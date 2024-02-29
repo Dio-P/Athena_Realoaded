@@ -30,8 +30,6 @@ const NewChildForm = () => {
   //   addNewLink,
   // } = useCreateNewUnit();
 
-  const [typesToRender, filterTypes] = useGetAllTypes();
-
   const [mainLinks, setMainLinks] = useState([]);
 
   const [nameOnInput, setNameOnInput] = useState('');
@@ -50,6 +48,29 @@ const NewChildForm = () => {
   // To return it's Id
   // and send this back to EntityChildrenBox using the passed down
   // animation-timing-function: onClickFunctions.
+
+  const requiredFields = {
+    nameOnInput, // string
+    mainLinks, // array
+    typeOnInput, // object
+    teamsResponsibleOnInput, // array
+    briefDescriptionOnInput, // string
+    docsOnInput, // array
+  };
+
+  const optionalFields = {
+    leaderOnInput,
+    tagsOnInput,
+    technologiesOnInput,
+  };
+  console.log('optionalFields', optionalFields);
+  console.log('requiredFields', requiredFields);
+
+  const [typesToRender, filterTypes] = useGetAllTypes();
+  // do the above arguments need to be in an object ?
+  // since the validation would be better to happen here, should I create a new function
+  //  on the useGetAllTypes to call the api put?
+  console.log('typesToRender', typesToRender);
 
   useEffect(() => {
     if (linkOnInput && !linkIsValid(linkOnInput)) {
@@ -75,22 +96,16 @@ const NewChildForm = () => {
   //     tags,
   //     technologies,
   //   },
+
+  const findMissingField = (fieldKey) => !requiredFields[fieldKey]
+        || requiredFields[fieldKey].length === 0
+        || Object.keys(requiredFields[fieldKey]).length === 0;
+  // can I call the above as a closure ?
+
   const handleAddNewUnit = () => {
-    const allRequiredFields = {
-      nameOnInput, // string
-      mainLinks, // array
-      typeOnInput, // object
-      teamsResponsibleOnInput, // array
-      briefDescriptionOnInput, // string
-      docsOnInput, // array
-    };
-    const allRequiredFieldsKeys = Object.keys(allRequiredFields);
-    const missingRequiredFields = allRequiredFieldsKeys.filter(
-      (fieldKey) => !allRequiredFields[fieldKey]
-        || allRequiredFields[fieldKey].length === 0
-        || Object.keys(allRequiredFields[fieldKey]).length === 0,
-      // will this break it if it is not an object ?
-    );
+    const allRequiredFieldsKeys = Object.keys(requiredFields);
+    const missingRequiredFields = allRequiredFieldsKeys.filter(findMissingField);
+    // will this break it if it is not an object ?
     if (missingRequiredFields.length > 0) {
       const missingRequiredFieldsString = missingRequiredFields.join(', ');
       console.log(missingRequiredFieldsString);
@@ -106,7 +121,6 @@ const NewChildForm = () => {
       <CustomInput
         type="text"
         required
-        value={nameOnInput}
         onChange={(e) => setNameOnInput(e.target.value)}
       />
       <SearchComboBox
@@ -114,7 +128,6 @@ const NewChildForm = () => {
       // with additional option to add new type
         type="text"
         ofType="type"
-        // value={typeOnInput?.title}
         onClickOption={setTypeOnInput}
         options={typesToRender}
         onChange={filterTypes}
@@ -141,14 +154,12 @@ const NewChildForm = () => {
       <SearchComboBox // this should probably be combobox with additional option to add new type
         type="text"
         options={['test']}
-        value={teamsResponsibleOnInput}
         onClickOption={setTeamsResponsibleOnInput}
         // onChange={(e) => setTeamsResponsibleOnInput(e.target.value)}
       />
       <SearchComboBox // this should probably be combobox with additional option to add new type
         type="text"
         options={['test']}
-        value={leaderOnInput}
         onClickOption={setLeaderOnInput}
         // onChange={(e) => setLeaderOnInput(e.target.value)}
       />

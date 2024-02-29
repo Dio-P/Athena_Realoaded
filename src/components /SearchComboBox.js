@@ -144,23 +144,23 @@ const SearchComboBox = ({
   addOptionLabel,
   // exclude,
   shouldDisplayChosenValues,
-  // queryString,
+  // userInput,
   onChange,
   optionsAriaLabel,
 }) => {
   console.log('options******', options);
-  const [queryString, setQueryString] = useState('');
+  const [userInput, setUserInput] = useState('');
   return (
     <SearchBarContainer aria-label={`search for ${ofType}`}>
 
       <SearchInput
         type="text"
-        value={queryString}
+        value={userInput}
         ofType={ofType}
         name="dropDownSearch"
         placeholder={`${ofType}s`}
         onChange={(e) => {
-          setQueryString(e.target.value);
+          setUserInput(e.target.value);
           onChange(e.target.value);
         }}
       />
@@ -240,7 +240,7 @@ SearchComboBox.propTypes = {
   // exclude: arrayOf(string),
   shouldDisplayChosenValues: bool,
   onDeletingChoice: func,
-  // queryString: string,
+  // userInput: string,
   onChange: func.isRequired,
   optionsAriaLabel: string,
 };
@@ -254,11 +254,11 @@ SearchComboBox.defaultProps = {
   // exclude: undefined,
   shouldDisplayChosenValues: false,
   onDeletingChoice: () => {},
-  // queryString: '',
+  // userInput: '',
   optionsAriaLabel: '',
 };
 
 export default SearchComboBox;
 
-// const [queryString, onChange] = useState('');
-// const [allOptions] = useComboboxQueryManager(ofType, queryString);
+// const [userInput, onChange] = useState('');
+// const [allOptions] = useComboboxQueryManager(ofType, userInput);
