@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styled from '@emotion/styled';
 import useGetAllTypes from '../../../hooks/queries/useGetAllTypes';
+import useGetAllTechnologies from '../../../hooks/queries/useGetAllTechnologies';
 // import useCreateNewUnit from '../../../hooks/useCreateNewUnit';
 import MultiBtnComp from '../../MultiBtnComp';
 import SearchComboBox from '../../SearchComboBox';
@@ -73,6 +74,7 @@ const NewChildForm = () => {
   console.log('requiredFields', requiredFields);
 
   const [typesToRender, filterTypes] = useGetAllTypes();
+  const [technologiesToRender, filterTechnologies] = useGetAllTechnologies();
   // do the above arguments need to be in an object ?
   // since the validation would be better to happen here, should I create a new function
   //  on the useGetAllTypes to call the api put?
@@ -191,6 +193,7 @@ const NewChildForm = () => {
           onChange={(e) => setBriefDescriptionOnInput(e.target.value)}
         />
       </GenericInputWrapper>
+
       <CustomInput // this should probably be combobox with additional option to add new type ????
         type="text"
         value={docsOnInput}
@@ -203,7 +206,7 @@ const NewChildForm = () => {
           onClickOption={setTagsOnInput}
           chosenValue={tagsOnInput}
           title={{
-            withValue: undefined,
+            withValue: '',
             withoutValue: 'Please choose a type',
           }}
           options={typesToRender}
@@ -220,13 +223,17 @@ const NewChildForm = () => {
 
       <GenericInputWrapper>
         Technologies:
-        <CustomInput
-          type="text"
-          value={technologiesOnInput}
-          // this should probably be combobox with additional option to add new type
-          onChange={(e) => setTechnologiesOnInput(e.target.value)}
+        <DropDown
+          onClickOption={setTechnologiesOnInput}
+          chosenValue={technologiesOnInput}
+          title={{
+            withValue: '',
+            withoutValue: 'Please choose a technology',
+          }}
+          options={technologiesToRender}
+          onChange={filterTechnologies}
+          ofType="technology"
         />
-
       </GenericInputWrapper>
       <CtaBtnsContainer>
         <CtaBtn>Cancel</CtaBtn>
