@@ -185,6 +185,18 @@ const TagBtn = {
 //   </label>
 // );
 
+const findTitleDisplay = (value, title) => {
+  if (typeof value !== 'string' && value?.length > 0) {
+    const allValuesString = value.map((singleValue) => (
+      capitaliseFirstLetters(singleValue)
+    )).join(', ');
+    return `${title.withValue} ${allValuesString}`;
+  } if (value && value?.length > 0) {
+    return capitaliseFirstLetters(value);
+  }
+  return title.withoutValue;
+};
+
 const TagButton = ({
   label,
   onClickFunction,
@@ -278,9 +290,7 @@ const DropDownButton = ({
   title,
 }) => {
   const value = freshlyAddedValue?.name || chosenValue;
-  const dropDownButtonTitle = (freshlyAddedValue || chosenValue)
-    ? `${title.withValue}${capitaliseFirstLetters(value)}`
-    : title.withoutValue;
+  const dropDownButtonTitle = findTitleDisplay(value, title);
   return (
     <dropDownButton.ContainerWrapper aria-label={aria || `${type} button`}>
       <dropDownButton.Container onClick={onClickFunction}>

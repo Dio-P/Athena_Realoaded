@@ -26,6 +26,11 @@ const CtaBtnsContainer = styled.div`
 const CtaBtn = styled.button`
 `;
 
+const GenericInputWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
 const NewChildForm = () => {
   // const {
   //   addNewLink,
@@ -124,17 +129,23 @@ const NewChildForm = () => {
         required
         onChange={(e) => setNameOnInput(e.target.value)}
       />
-      <DropDown
-        onClickOption={setTypeOnInput}
-        chosenValue={typeOnInput?.title}
-        title={{
-          withValue: 'Type: ',
-          withoutValue: 'Please choose a type',
-        }}
-        options={typesToRender}
-        onChange={filterTypes}
-        ofType="type"
-      />
+      <GenericInputWrapper>
+        Type:
+        {/* <label htmlFor="typeInput"> Type: </label> */}
+        <DropDown
+          id="typeInput"
+          role="combobox"
+          onClickOption={setTypeOnInput}
+          chosenValue={typeOnInput?.title}
+          title={{
+            withValue: undefined,
+            withoutValue: 'Please choose a type',
+          }}
+          options={typesToRender}
+          onChange={filterTypes}
+          ofType="type"
+        />
+      </GenericInputWrapper>
       <InputBtnContainer>
         <>
           <CustomInput
@@ -170,29 +181,53 @@ const NewChildForm = () => {
         value={mainLinksOnInput}
         onChange={(e) => setMainLinksOnInput(e.target.value)}
       /> */}
-      <CustomInput
-        type="text"
-        value={briefDescriptionOnInput}
-        onChange={(e) => setBriefDescriptionOnInput(e.target.value)}
-      />
+      <GenericInputWrapper>
+        Description :
+        {/* <label htmlFor='descriptionInput'>Description: </label> */}
+        <CustomInput
+          id="descriptionInput"
+          type="text"
+          value={briefDescriptionOnInput}
+          onChange={(e) => setBriefDescriptionOnInput(e.target.value)}
+        />
+      </GenericInputWrapper>
       <CustomInput // this should probably be combobox with additional option to add new type ????
         type="text"
         value={docsOnInput}
         onClickFunction={setDocsOnInput}
         // onChange={(e) => setDocsOnInput(e.target.value)}
       />
-      <CustomInput
-        type="text"
-        value={tagsOnInput}
-        // this should probably be combobox with additional option to add new type
-        onChange={(e) => setTagsOnInput(e.target.value)}
-      />
-      <CustomInput
-        type="text"
-        value={technologiesOnInput}
-        // this should probably be combobox with additional option to add new type
-        onChange={(e) => setTechnologiesOnInput(e.target.value)}
-      />
+      <GenericInputWrapper>
+        Tags:
+        <DropDown
+          onClickOption={setTagsOnInput}
+          chosenValue={tagsOnInput}
+          title={{
+            withValue: undefined,
+            withoutValue: 'Please choose a type',
+          }}
+          options={typesToRender}
+          onChange={filterTypes}
+          ofType="type"
+        />
+        {/* <CustomInput
+          type="text"
+          value={tagsOnInput}
+          // this should probably be combobox with additional option to add new type
+          onChange={(e) => setTagsOnInput(e.target.value)}
+        /> */}
+      </GenericInputWrapper>
+
+      <GenericInputWrapper>
+        Technologies:
+        <CustomInput
+          type="text"
+          value={technologiesOnInput}
+          // this should probably be combobox with additional option to add new type
+          onChange={(e) => setTechnologiesOnInput(e.target.value)}
+        />
+
+      </GenericInputWrapper>
       <CtaBtnsContainer>
         <CtaBtn>Cancel</CtaBtn>
         <CtaBtn onClick={handleAddNewUnit}>Add</CtaBtn>
