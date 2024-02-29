@@ -1,6 +1,12 @@
 import React, { useState } from 'react';
 import styled from '@emotion/styled';
-import PropTypes from 'prop-types';
+import {
+  arrayOf,
+  bool,
+  func,
+  shape,
+  string,
+} from 'prop-types';
 import MultiBtnComp from './MultiBtnComp';
 import SearchComboBox from './SearchComboBox';
 
@@ -15,6 +21,9 @@ const DropDown = ({
   onClickOption,
   title,
   shouldDisplayChosenValues,
+  ofType,
+  options,
+  onChange,
 }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
@@ -36,10 +45,12 @@ const DropDown = ({
       {isDropdownOpen
         && (
         <SearchComboBox
-          ofType="entity"
+          ofType={ofType}
           onClickOption={onClickAndClose}
           chosenValues={chosenValue}
           shouldDisplayChosenValues={shouldDisplayChosenValues}
+          options={options}
+          onChange={onChange}
         />
         )}
     </DropDownContainer>
@@ -47,11 +58,17 @@ const DropDown = ({
 };
 
 DropDown.propTypes = {
-  chosenValue: PropTypes.string,
-  freshlyAddedValue: PropTypes.string,
-  onClickOption: PropTypes.func,
-  title: PropTypes.objectOf(PropTypes.string),
-  shouldDisplayChosenValues: PropTypes.bool,
+  chosenValue: string,
+  freshlyAddedValue: string,
+  onClickOption: func,
+  title: shape({
+    withValue: string,
+    withoutValue: string,
+  }),
+  shouldDisplayChosenValues: bool,
+  ofType: string.isRequired,
+  options: arrayOf(string),
+  onChange: func.isRequired,
 };
 
 DropDown.defaultProps = {
@@ -63,6 +80,7 @@ DropDown.defaultProps = {
     withoutValue: '',
   },
   shouldDisplayChosenValues: false,
+  options: [],
 };
 
 export default DropDown;

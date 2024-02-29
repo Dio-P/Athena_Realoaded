@@ -4,6 +4,7 @@ import useGetAllTypes from '../../../hooks/queries/useGetAllTypes';
 // import useCreateNewUnit from '../../../hooks/useCreateNewUnit';
 import MultiBtnComp from '../../MultiBtnComp';
 import SearchComboBox from '../../SearchComboBox';
+import DropDown from '../../DropDown';
 import { WarningElement } from '../../specialElements';
 import { linkIsValid } from '../../../helpers/validation';
 import { errorsLink } from '../../../constants';
@@ -123,15 +124,16 @@ const NewChildForm = () => {
         required
         onChange={(e) => setNameOnInput(e.target.value)}
       />
-      <SearchComboBox
-      // this should probably be comboentityAttributesentityAttributesbox
-      // with additional option to add new type
-        type="text"
-        ofType="type"
+      <DropDown
         onClickOption={setTypeOnInput}
+        chosenValue={typeOnInput?.title}
+        title={{
+          withValue: 'Type: ',
+          withoutValue: 'Please choose a type',
+        }}
         options={typesToRender}
         onChange={filterTypes}
-        // onChange={(e) => setTypeOnInput(e.target.value)}
+        ofType="type"
       />
       <InputBtnContainer>
         <>
