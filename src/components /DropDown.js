@@ -20,16 +20,21 @@ const DropDown = ({
   freshlyAddedValue,
   onClickOption,
   title,
-  shouldDisplayChosenValues,
+  acceptsMultipleValues,
+  onDeletingChoice,
   ofType,
   options,
   onChange,
 }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
-  const onClickAndClose = (optionId) => {
-    onClickOption(optionId);
-    setIsDropdownOpen(false);
+  const handleOnClickOption = (optionId) => {
+    if (!acceptsMultipleValues) {
+      onClickOption(optionId);
+      setIsDropdownOpen(false);
+    } else {
+      onClickOption(optionId);
+    }
   };
 
   return (
@@ -46,9 +51,10 @@ const DropDown = ({
         && (
         <SearchComboBox
           ofType={ofType}
-          onClickOption={onClickAndClose}
+          onClickOption={handleOnClickOption}
           chosenValues={chosenValue}
-          shouldDisplayChosenValues={shouldDisplayChosenValues}
+          acceptsMultipleValues={acceptsMultipleValues}
+          onDeletingChoice={onDeletingChoice}
           options={options}
           onChange={onChange}
         />
@@ -65,10 +71,11 @@ DropDown.propTypes = {
     withValue: string,
     withoutValue: string,
   }),
-  shouldDisplayChosenValues: bool,
+  acceptsMultipleValues: bool,
   ofType: string.isRequired,
   options: arrayOf(string),
   onChange: func.isRequired,
+  onDeletingChoice: func,
 };
 
 DropDown.defaultProps = {
@@ -79,8 +86,9 @@ DropDown.defaultProps = {
     withValue: '',
     withoutValue: '',
   },
-  shouldDisplayChosenValues: false,
+  acceptsMultipleValues: false,
   options: [],
+  onDeletingChoice: () => {},
 };
 
 export default DropDown;

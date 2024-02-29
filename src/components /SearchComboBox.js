@@ -6,7 +6,7 @@ import PropTypes, {
 } from 'prop-types';
 
 import style, { colours } from '../styleVariables';
-import { deleteIcon, infoIcon } from '../helpers/svgIcons';
+import { deleteIcon, infoIcon, tickIcon } from '../helpers/svgIcons';
 import { SearchInput } from './specialElements';
 import capitaliseFirstLetters from '../helpers/capitaliseFirstLetters';
 // import useComboboxQueryManager from '../hooks/queries/useComboboxQueryManager';
@@ -52,9 +52,9 @@ const DropDownLabel = styled.div`
   margin: auto;
 `;
 
-const ChoicesWrapper = styled.div`
-  display: flex;
-`;
+// const ChoicesWrapper = styled.div`
+//   display: flex;
+// `;
 
 const ChosenEntityWrapper = styled.div`
   display: flex;
@@ -90,11 +90,32 @@ const DescriptionBtn = styled.div`
   margin: 1px 2px 1px 2px;
 `;
 
+const TickBoxWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  height: 70%;
+  max-width: 30px;
+  margin: 8px;
+  border-radius: ${style.variables.borderRadious.secondary};
+  background-color: ${colours.primaryLight};
+  min-width: 30px;
+  max-width: 60px;
+`;
+
+const TickBox = styled.div`
+  // background-color: ${colours.primaryLight};
+  margin: auto;
+  height: 80%;
+  width: 80%;
+`;
+
 const DropdownOption = ({
   onClickOption,
   option,
   isAddFolderBtn,
   ariaLabel,
+  hasBeenClicked,
+  acceptsMultipleValues,
 }) => {
   const label = option.name || option.title || option;
   console.log('option', option);
@@ -106,6 +127,12 @@ const DropdownOption = ({
       onClick={onClickOption}
       isAddFolderBtn={isAddFolderBtn}
     >
+      {acceptsMultipleValues
+      && (
+      <TickBoxWrapper>
+        <TickBox>{hasBeenClicked && tickIcon}</TickBox>
+      </TickBoxWrapper>
+      )}
       <DropDownLabel>{capitaliseFirstLetters(label)}</DropDownLabel>
       <DescriptionBtn onClick={() => console.log('description btn clicked')}>{infoIcon}</DescriptionBtn>
     </SingleDropDownElementWrapper>
@@ -117,8 +144,10 @@ const ChosenEntity = ({
   value,
   onClickRemove,
   ofType,
-}) => (
-  value && value?.length > 0
+}) => {
+  console.log('value', value);
+  return (
+    value && value?.length > 0
   && (
   <ChosenEntityWrapper>
     {capitaliseFirstLetters(value)}
@@ -131,7 +160,8 @@ const ChosenEntity = ({
     </XBoxWrapper>
   </ChosenEntityWrapper>
   )
-);
+  );
+};
 
 const SearchComboBox = ({
   ofType,
@@ -143,13 +173,34 @@ const SearchComboBox = ({
   onDeletingChoice,
   addOptionLabel,
   // exclude,
-  shouldDisplayChosenValues,
+  acceptsMultipleValues,
   // userInput,
   onChange,
   optionsAriaLabel,
 }) => {
-  console.log('options******', options);
   const [userInput, setUserInput] = useState('');
+  const [clickedOptions, setClickedOptions] = useState({});
+
+  const handleClickOption = (option) => {
+    console.log('option****************', option);
+    const clickedOptionTitle = option.title || option;
+    // const allOptionsTitles = options;
+    console.log('chosenValues', chosenValues);
+    const allOptionsTitles = chosenValues.length > 0 ? chosenValues?.map((singleOption) => (
+      singleOption.title
+    )) : [];
+    console.log('clickedOptionTitle', clickedOptionTitle);
+    console.log('allOptionsTitles', allOptionsTitles);
+    console.log('acceptsMultipleValues', acceptsMultipleValues);
+    if (acceptsMultipleValues && allOptionsTitles?.includes(clickedOptionTitle)) {
+      console.log('inside accepts and is included');
+      onDeletingChoice(clickedOptionTitle);
+    } else {
+      console.log('inside does not accept or is not included');
+      onClickOption(option);
+    }
+  };
+
   return (
     <SearchBarContainer aria-label={`search for ${ofType}`}>
 
@@ -175,25 +226,37 @@ const SearchComboBox = ({
             <DropdownOption
               key={option.id || option}
               option={option}
-              onClickOption={() => onClickOption(option, ofType)}
+              onClickOption={() => {
+                handleClickOption(option, ofType);
+                console.log('clicked Option is: ', option);
+                setClickedOptions(
+                  { ...clickedOptions, [option.title]: !clickedOptions[option.title] },
+                );
+              }}
               ofType={ofType}
               ariaLabel={optionsAriaLabel}
+              hasBeenClicked={clickedOptions[option.title]}
+              acceptsMultipleValues={acceptsMultipleValues}
             />
           ))}
       </OptionsWrapper>
 
-      {shouldDisplayChosenValues && chosenValues.length > 0(
+      {/* {
+      acceptsMultipleValues && chosenValues?.length > 0
+        && (
         <ChoicesWrapper>
           {chosenValues.map((singleValue) => (
             <ChosenEntity
               key={singleValue}
-              value={singleValue}
-              onClickRemove={() => onDeletingChoice(singleValue, ofType)}
+              value={singleValue.title || singleValue}
+              onClickRemove={() => onDeletingChoice(singleValue)}
               ofType={ofType}
             />
           ))}
-        </ChoicesWrapper>,
-      )}
+        </ChoicesWrapper>
+        )
+      } */}
+
       {hasAddOptionBtn
         && (
         <AddOptionBtnWrapper>
@@ -216,11 +279,15 @@ DropdownOption.propTypes = {
     description: string,
   })).isRequired,
   ariaLabel: string,
+  hasBeenClicked: bool,
+  acceptsMultipleValues: bool,
 };
 
 DropdownOption.defaultProps = {
   isAddFolderBtn: false,
   ariaLabel: '',
+  hasBeenClicked: false,
+  acceptsMultipleValues: false,
 };
 
 ChosenEntity.propTypes = {
@@ -231,14 +298,22 @@ ChosenEntity.propTypes = {
 
 SearchComboBox.propTypes = {
   ofType: string.isRequired,
-  options: oneOf(arrayOf(string) || arrayOf(PropTypes.objectOf(string))),
-  chosenValues: arrayOf(string),
+  options: oneOf([arrayOf(string), arrayOf(PropTypes.objectOf(string))]),
+  chosenValues: oneOf([
+    arrayOf(string),
+    arrayOf(
+      shape({
+        id: string,
+        title: string,
+        description: string,
+      }),
+    )]),
   onClickOption: func.isRequired,
   hasAddOptionBtn: bool,
   onClickAddOption: func,
   addOptionLabel: string,
   // exclude: arrayOf(string),
-  shouldDisplayChosenValues: bool,
+  acceptsMultipleValues: bool,
   onDeletingChoice: func,
   // userInput: string,
   onChange: func.isRequired,
@@ -252,7 +327,7 @@ SearchComboBox.defaultProps = {
   onClickAddOption: () => {},
   addOptionLabel: undefined,
   // exclude: undefined,
-  shouldDisplayChosenValues: false,
+  acceptsMultipleValues: false,
   onDeletingChoice: () => {},
   // userInput: '',
   optionsAriaLabel: '',

@@ -31,7 +31,6 @@ const EntityChildrenBox = ({
 
   const [newParent, searchEntity] = useEntityByIdSearch();
   useEffect(() => {
-    console.log('newParent****', newParent);
     setParent(newParent);
   }, [newParent]);
 
@@ -41,7 +40,6 @@ const EntityChildrenBox = ({
   };
 
   const saveNewChildren = (newChildren) => {
-    console.log('save new child has been clicked ');
     updateParentWithNewChild();
     triggerUpdateEntityById(parent.id, newChildren);
   };

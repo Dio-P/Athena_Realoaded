@@ -52,7 +52,6 @@ const useGetAllOfType = (ofType, queryString) => {
     GET_ALL_OF_TYPE,
   );
   useEffect(() => {
-    console.log('inside the query useEffect');
     if (ofType && !(ofType === 'entity')) {
       query({
         variables: { ofType },

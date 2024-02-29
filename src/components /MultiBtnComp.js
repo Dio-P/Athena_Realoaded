@@ -185,17 +185,18 @@ const TagBtn = {
 //   </label>
 // );
 
-const findTitleDisplay = (value, title) => {
-  if (typeof value !== 'string' && value?.length > 0) {
-    const allValuesString = value.map((singleValue) => (
-      capitaliseFirstLetters(singleValue)
-    )).join(', ');
-    return `${title.withValue} ${allValuesString}`;
-  } if (value && value?.length > 0) {
-    return capitaliseFirstLetters(value);
-  }
-  return title.withoutValue;
-};
+// const findTitleDisplay = (value, title) => {
+//   console.log('inside findTitleDisplay ', value, title);
+//   if (typeof value !== 'string' && value?.length > 0) {
+//     const allValuesString = value.map((singleValue) => (
+//       capitaliseFirstLetters(singleValue)
+//     )).join(', ');
+//     return `${title.withValue} ${allValuesString}`;
+//   } if (value && value?.length > 0) {
+//     return capitaliseFirstLetters(value);
+//   }
+//   return title.withoutValue;
+// };
 
 const TagButton = ({
   label,
@@ -283,25 +284,19 @@ const MainButton = ({
 const DropDownButton = ({
   onClickFunction,
   isMenuOpen,
-  freshlyAddedValue,
-  chosenValue,
   type,
   aria,
   title,
-}) => {
-  const value = freshlyAddedValue?.name || chosenValue;
-  const dropDownButtonTitle = findTitleDisplay(value, title);
-  return (
-    <dropDownButton.ContainerWrapper aria-label={aria || `${type} button`}>
-      <dropDownButton.Container onClick={onClickFunction}>
-        <div> {dropDownButtonTitle} </div>
-        <dropDownButton.ArrowContainer>
-          {isMenuOpen ? arrowUpIcon : arrowDownIcon}
-        </dropDownButton.ArrowContainer>
-      </dropDownButton.Container>
-    </dropDownButton.ContainerWrapper>
-  );
-};
+}) => (
+  <dropDownButton.ContainerWrapper aria-label={aria || `${type} button`}>
+    <dropDownButton.Container onClick={onClickFunction}>
+      <div> {title} </div>
+      <dropDownButton.ArrowContainer>
+        {isMenuOpen ? arrowUpIcon : arrowDownIcon}
+      </dropDownButton.ArrowContainer>
+    </dropDownButton.Container>
+  </dropDownButton.ContainerWrapper>
+);
 
 const MultiBtnComp = ({
   label,
@@ -468,8 +463,6 @@ MainButton.defaultProps = {
 DropDownButton.propTypes = {
   onClickFunction: PropTypes.func,
   isMenuOpen: PropTypes.bool,
-  freshlyAddedValue: PropTypes.string, // ???
-  chosenValue: PropTypes.string, // ???
   type: PropTypes.string, // ??
   aria: PropTypes.string,
   title: PropTypes.objectOf(PropTypes.string).isRequired,
@@ -478,8 +471,6 @@ DropDownButton.propTypes = {
 DropDownButton.defaultProps = {
   onClickFunction: () => {},
   isMenuOpen: false,
-  freshlyAddedValue: '', // ??
-  chosenValue: '',
   type: '', // ??
   aria: '', // ??
 };

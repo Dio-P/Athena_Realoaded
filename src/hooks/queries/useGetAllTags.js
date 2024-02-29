@@ -19,11 +19,17 @@ const useGetAllTechnologies = () => {
   );
 
   useEffect(() => {
+    console.log('query for all technologies');
     query();
   }, []);
 
   useEffect(() => {
+    console.log('technologiesToRender', technologiesToRender);
+  }, [technologiesToRender]);
+
+  useEffect(() => {
     if (data?.getAllTechnologies) {
+      console.log('data?.getAllTechnologies', data?.getAllTechnologies);
       setTechnologiesToRender(data?.getAllTechnologies);
     }
     if (error) {
@@ -35,6 +41,7 @@ const useGetAllTechnologies = () => {
 
   const filterTechnologies = (queryString) => {
     const allTypesArray = data?.getAllTechnologies;
+    console.log('in filterTechnologies', allTypesArray);
     if (allTypesArray?.length > 0) {
       if (queryString) {
         setTechnologiesToRender(allTypesArray.filter((type) => (
@@ -42,6 +49,7 @@ const useGetAllTechnologies = () => {
           || type.description.includes(queryString)
         )));
       } else {
+        console.log('no querry block', allTypesArray);
         setTechnologiesToRender(allTypesArray);
         // I want if now query string to display
       }

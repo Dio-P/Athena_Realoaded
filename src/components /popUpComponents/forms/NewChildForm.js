@@ -9,6 +9,7 @@ import DropDown from '../../DropDown';
 import { WarningElement } from '../../specialElements';
 import { linkIsValid } from '../../../helpers/validation';
 import { errorsLink } from '../../../constants';
+import capitaliseFirstLetters from '../../../helpers/capitaliseFirstLetters';
 
 const CustomForm = styled.form`
 `;
@@ -32,6 +33,20 @@ const GenericInputWrapper = styled.div`
   flex-direction: column;
 `;
 
+const findTitleDisplay = (value, title) => {
+  if (typeof value !== 'string' && value?.length > 0) {
+    const numberOfChoices = value.length;
+
+    return `${numberOfChoices} selected`;
+  } if (value && value?.length > 0) {
+    return `${title} ${capitaliseFirstLetters(value)}`;
+  }
+  return title;
+  // map((singleValue) => {
+  //   console.log('singleValue', singleValue);
+  //   return capitaliseFirstLetters(singleValue);
+  // }).join(', ');
+};
 const NewChildForm = () => {
   // const {
   //   addNewLink,
@@ -45,6 +60,7 @@ const NewChildForm = () => {
   const [teamsResponsibleOnInput, setTeamsResponsibleOnInput] = useState(['']);
   const [leaderOnInput, setLeaderOnInput] = useState('');
   const [briefDescriptionOnInput, setBriefDescriptionOnInput] = useState('');
+  console.log(leaderOnInput);
 
   const [docsOnInput, setDocsOnInput] = useState([]);
   const [tagsOnInput, setTagsOnInput] = useState([]);
@@ -56,6 +72,10 @@ const NewChildForm = () => {
   // and send this back to EntityChildrenBox using the passed down
   // animation-timing-function: onClickFunctions.
 
+  useEffect(() => {
+    console.log('technologiesOnInput******', technologiesOnInput);
+  }, [technologiesOnInput]);
+
   const requiredFields = {
     nameOnInput, // string
     mainLinks, // array
@@ -65,20 +85,16 @@ const NewChildForm = () => {
     docsOnInput, // array
   };
 
-  const optionalFields = {
-    leaderOnInput,
-    tagsOnInput,
-    technologiesOnInput,
-  };
-  console.log('optionalFields', optionalFields);
-  console.log('requiredFields', requiredFields);
-
+  // const optionalFields = {
+  //   leaderOnInput,
+  //   tagsOnInput,
+  //   technologiesOnInput,
+  // };
   const [typesToRender, filterTypes] = useGetAllTypes();
   const [technologiesToRender, filterTechnologies] = useGetAllTechnologies();
   // do the above arguments need to be in an object ?
   // since the validation would be better to happen here, should I create a new function
   //  on the useGetAllTypes to call the api put?
-  console.log('typesToRender', typesToRender);
 
   useEffect(() => {
     if (linkOnInput && !linkIsValid(linkOnInput)) {
@@ -124,6 +140,19 @@ const NewChildForm = () => {
       // delete the log above
     }
   };
+
+  const handleDeleteChoice = (choiceToRemove, allChoices, setAllChoices) => {
+    console.log('choiceToRemov********e', choiceToRemove);
+    console.log('allChoices******', allChoices);
+    const remainingChoices = allChoices.filter((singleChoice) => (
+      singleChoice.id !== choiceToRemove.id
+      // there is a problem here !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! I need to set this to:
+      // singleChoice.title ?
+    ));
+    console.log('remainingChoices ******', remainingChoices);
+    setAllChoices(remainingChoices.length > 0 ? [...remainingChoices] : []);
+  };
+
   return (
     <CustomForm>
       <CustomInput
@@ -139,10 +168,7 @@ const NewChildForm = () => {
           role="combobox"
           onClickOption={setTypeOnInput}
           chosenValue={typeOnInput?.title}
-          title={{
-            withValue: undefined,
-            withoutValue: 'Please choose a type',
-          }}
+          title={typeOnInput?.title ? findTitleDisplay(typeOnInput?.title, 'type: ') : 'Please choose a type'}
           options={typesToRender}
           onChange={filterTypes}
           ofType="type"
@@ -205,10 +231,7 @@ const NewChildForm = () => {
         <DropDown
           onClickOption={setTagsOnInput}
           chosenValue={tagsOnInput}
-          title={{
-            withValue: '',
-            withoutValue: 'Please choose a type',
-          }}
+          title={tagsOnInput?.length > 0 ? findTitleDisplay(tagsOnInput, 'tags: ') : 'Please choose a tag'}
           options={typesToRender}
           onChange={filterTypes}
           ofType="type"
@@ -223,13 +246,30 @@ const NewChildForm = () => {
 
       <GenericInputWrapper>
         Technologies:
+        {/*
+        what it needs to happen on click isolation:
+        the chosen technology is added to an array
+        an icon with the technology is rendered under the combobox only if it is object-position
+          this also has an x next to it to remove it
+        on the title the user can see all the chosen technologies
+        the difference of this and having a single value is that here
+        if you click again on an option you add it
+        in the other type you overide it
+         */}
         <DropDown
-          onClickOption={setTechnologiesOnInput}
+          onClickOption={
+            (latestTechnologyAdded) => {
+              setTechnologiesOnInput([...technologiesOnInput, latestTechnologyAdded]);
+            }
+          }
           chosenValue={technologiesOnInput}
-          title={{
-            withValue: '',
-            withoutValue: 'Please choose a technology',
-          }}
+          acceptsMultipleValues
+          onDeletingChoice={
+            (choiceToDelete) => (
+              handleDeleteChoice(choiceToDelete, technologiesOnInput, setTechnologiesOnInput)
+            )
+          }
+          title={technologiesOnInput.length > 0 ? `${technologiesOnInput.length} selected` : 'Please choose a technology'}
           options={technologiesToRender}
           onChange={filterTechnologies}
           ofType="technology"

@@ -39,10 +39,7 @@ const AddChildFormWrapper = ({ onClickFunctions, values }) => {
       <DropDown
         onClickOption={onClickFunctions?.setNewParent}
         chosenValue={values.parent}
-        title={{
-          withValue: 'Parent: ',
-          withoutValue: 'Please choose a parent',
-        }}
+        title={values.parent ? `Parent: ${values.parent}` : 'Please choose a parent'}
         ofType="entity"
       />
       <ExistingChildOrNotBtnContainer>

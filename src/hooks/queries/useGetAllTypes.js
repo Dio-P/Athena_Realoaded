@@ -19,17 +19,11 @@ const useGetAllTypes = () => {
   );
 
   useEffect(() => {
-    console.log('query for all links');
     query();
   }, []);
 
   useEffect(() => {
-    console.log('typesToRender', typesToRender);
-  }, [typesToRender]);
-
-  useEffect(() => {
     if (data?.getAllTypes) {
-      console.log('data?.getAllTypes', data?.getAllTypes);
       setTypesToRender(data?.getAllTypes);
     }
     if (error) {
@@ -41,7 +35,6 @@ const useGetAllTypes = () => {
 
   const filterTypes = (queryString) => {
     const allTypesArray = data?.getAllTypes;
-    console.log('in filterTypes', allTypesArray);
     if (allTypesArray?.length > 0) {
       if (queryString) {
         setTypesToRender(allTypesArray.filter((type) => (
@@ -49,7 +42,6 @@ const useGetAllTypes = () => {
           || type.description.includes(queryString)
         )));
       } else {
-        console.log('no querry block', allTypesArray);
         setTypesToRender(allTypesArray);
         // I want if now query string to display
       }

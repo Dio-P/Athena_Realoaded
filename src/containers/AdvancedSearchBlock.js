@@ -95,16 +95,16 @@ const AdvancedSearchBlock = ({
             ofType="tags"
             chosenValues={advanceQueryParameters.tags}
             onClickOption={handleOnClickOption}
-            onDeletingChoice={handleDeleteChoice}
-            shouldDisplayChosenValues
+            onDeletingChoice={(choice) => handleDeleteChoice(choice, 'tags')}
+            acceptsMultipleValues
           />
 
           <SearchComboBox
             ofType="type"
             chosenValues={advanceQueryParameters.type}
             onClickOption={handleOnClickOption}
-            onDeletingChoice={handleDeleteChoice}
-            shouldDisplayChosenValues
+            onDeletingChoice={(choice) => handleDeleteChoice(choice, 'type')}
+            acceptsMultipleValues
           />
 
           <SearchComboBox
@@ -112,8 +112,8 @@ const AdvancedSearchBlock = ({
             options={nameOptions}
             chosenValues={advanceQueryParameters.name}
             onClickOption={handleOnClickOption}
-            onDeletingChoice={handleDeleteChoice}
-            shouldDisplayChosenValues
+            onDeletingChoice={(choice) => handleDeleteChoice(choice, 'name')}
+            acceptsMultipleValues
             queryString={nameQueryString}
             onChange={setNameQueryString}
           />
@@ -123,8 +123,8 @@ const AdvancedSearchBlock = ({
             options={mainLinksOptions}
             chosenValues={advanceQueryParameters.mainLinks}
             onClickOption={handleOnClickOption}
-            onDeletingChoice={handleDeleteChoice}
-            shouldDisplayChosenValues
+            onDeletingChoice={(choice) => handleDeleteChoice(choice, 'mainLinks')}
+            acceptsMultipleValues
             queryString={mainLinksQueryString}
             onChange={setMainLinksQueryString}
           />
@@ -134,8 +134,8 @@ const AdvancedSearchBlock = ({
             options={briefDescriptionOptions}
             chosenValues={advanceQueryParameters.briefDescription}
             onClickOption={handleOnClickOption}
-            onDeletingChoice={handleDeleteChoice}
-            shouldDisplayChosenValues
+            onDeletingChoice={(choice) => handleDeleteChoice(choice, 'briefDescription')}
+            acceptsMultipleValues
             queryString={briefDescriptionQueryString}
             onChange={setBriefDescriptionQueryString}
           />
@@ -145,8 +145,8 @@ const AdvancedSearchBlock = ({
             options={leaderOptions}
             chosenValues={advanceQueryParameters.leader}
             onClickOption={handleOnClickOption}
-            onDeletingChoice={handleDeleteChoice}
-            shouldDisplayChosenValues
+            onDeletingChoice={(choice) => handleDeleteChoice(choice, 'leader')}
+            acceptsMultipleValues
             queryString={leaderQueryString}
             onChange={setLeaderQueryString}
           />
