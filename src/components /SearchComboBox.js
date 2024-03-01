@@ -183,18 +183,18 @@ const SearchComboBox = ({
 
   const handleClickOption = (option) => {
     console.log('option****************', option);
-    const clickedOptionTitle = option.title || option;
-    // const allOptionsTitles = options;
+    const clickedOptionTitleOrId = option.id || option;
+    // const allOptionsIds = options;
     console.log('chosenValues', chosenValues);
-    const allOptionsTitles = chosenValues.length > 0 ? chosenValues?.map((singleOption) => (
-      singleOption.title
+    const allOptionsIds = chosenValues.length > 0 ? chosenValues?.map((singleOption) => (
+      singleOption.id
     )) : [];
-    console.log('clickedOptionTitle', clickedOptionTitle);
-    console.log('allOptionsTitles', allOptionsTitles);
+    console.log('clickedOptionTitle', clickedOptionTitleOrId);
+    console.log('allOptionsIds', allOptionsIds);
     console.log('acceptsMultipleValues', acceptsMultipleValues);
-    if (acceptsMultipleValues && allOptionsTitles?.includes(clickedOptionTitle)) {
+    if (acceptsMultipleValues && allOptionsIds?.includes(clickedOptionTitleOrId)) {
       console.log('inside accepts and is included');
-      onDeletingChoice(clickedOptionTitle);
+      onDeletingChoice(clickedOptionTitleOrId);
     } else {
       console.log('inside does not accept or is not included');
       onClickOption(option);

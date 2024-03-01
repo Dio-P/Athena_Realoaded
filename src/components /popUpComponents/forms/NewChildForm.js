@@ -145,12 +145,12 @@ const NewChildForm = () => {
     console.log('choiceToRemov********e', choiceToRemove);
     console.log('allChoices******', allChoices);
     const remainingChoices = allChoices.filter((singleChoice) => (
-      singleChoice.title !== choiceToRemove
+      (singleChoice.id ? singleChoice.id : singleChoice) !== choiceToRemove
       // there is a problem here !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! I need to set this to:
       // singleChoice.title ?
     ));
     console.log('remainingChoices ******', remainingChoices);
-    setAllChoices(remainingChoices.length > 0 ? [...remainingChoices] : []);
+    setAllChoices([...remainingChoices]);
   };
 
   return (
