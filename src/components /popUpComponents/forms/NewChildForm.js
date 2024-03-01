@@ -145,7 +145,7 @@ const NewChildForm = () => {
     console.log('choiceToRemov********e', choiceToRemove);
     console.log('allChoices******', allChoices);
     const remainingChoices = allChoices.filter((singleChoice) => (
-      singleChoice.id !== choiceToRemove.id
+      singleChoice.title !== choiceToRemove
       // there is a problem here !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! I need to set this to:
       // singleChoice.title ?
     ));
