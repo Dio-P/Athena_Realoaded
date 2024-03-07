@@ -14,10 +14,12 @@ const PopUpWrapper = styled.div`
 
 // the bellow height needs to change when I find a best way to make this iteractive
 const PopUpContainer = styled.div`
+  display: flex;
   z-index: 101;
   position: absolute;
   width: auto;
   height: 90%;
+  height: 100%;
   margin-left: -400px;
   left: 50%;
   margin-bottom: -400px;

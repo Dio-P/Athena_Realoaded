@@ -13,9 +13,17 @@ import { errorsLink } from '../../../constants';
 import capitaliseFirstLetters from '../../../helpers/capitaliseFirstLetters';
 
 const CustomForm = styled.form`
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+
 `;
 
 const InputBtnContainer = styled.div`
+  display: flex;
+`;
+
+const AdditionalFieldsContainer = styled.div`
   display: flex;
 `;
 
@@ -59,15 +67,15 @@ const NewChildForm = () => {
   const [linkOnInput, setLinkOnInput] = useState('');
   const [typeOnInput, setTypeOnInput] = useState('');
   const [teamsResponsibleOnInput, setTeamsResponsibleOnInput] = useState(['']);
-  const [leaderOnInput, setLeaderOnInput] = useState('');
+  // const [leaderOnInput, setLeaderOnInput] = useState('');
   const [briefDescriptionOnInput, setBriefDescriptionOnInput] = useState('');
-  console.log(leaderOnInput);
 
   const [docsOnInput, setDocsOnInput] = useState([]);
   const [tagsOnInput, setTagsOnInput] = useState([]);
   const [technologiesOnInput, setTechnologiesOnInput] = useState([]);
 
   const [linkError, setLinkError] = useState('');
+  const [isAdditionalFieldsBlockExpanded, setIsAdditionalFieldsBlockExpanded] = useState(false);
   // I need in the function to create first a new entity
   // To return it's Id
   // and send this back to EntityChildrenBox using the passed down
@@ -200,12 +208,6 @@ const NewChildForm = () => {
         onClickOption={setTeamsResponsibleOnInput}
         // onChange={(e) => setTeamsResponsibleOnInput(e.target.value)}
       />
-      <SearchComboBox // this should probably be combobox with additional option to add new type
-        type="text"
-        options={['test']}
-        onClickOption={setLeaderOnInput}
-        // onChange={(e) => setLeaderOnInput(e.target.value)}
-      />
       {/* <CustomInput
         type="text"
         value={mainLinksOnInput}
@@ -228,6 +230,21 @@ const NewChildForm = () => {
         onClickFunction={setDocsOnInput}
         // onChange={(e) => setDocsOnInput(e.target.value)}
       />
+
+      <MultiBtnComp
+        onClickFunction={() => setIsAdditionalFieldsBlockExpanded(!isAdditionalFieldsBlockExpanded)}
+        label="Additional fields"
+      />
+      {isAdditionalFieldsBlockExpanded
+    && (
+      //  <SearchComboBox
+    //   // this ideally should be in connection to partner platform,
+    //   // as the very last thing to be build
+    //     type="text"
+    //     options={['test']}
+    //     onClickOption={setLeaderOnInput}
+    //   />
+    <AdditionalFieldsContainer>
 
       <GenericInputWrapper>
         Tags:
@@ -258,16 +275,7 @@ const NewChildForm = () => {
 
       <GenericInputWrapper>
         Technologies:
-        {/*
-        what it needs to happen on click isolation:
-        the chosen technology is added to an array
-        an icon with the technology is rendered under the combobox only if it is object-position
-          this also has an x next to it to remove it
-        on the title the user can see all the chosen technologies
-        the difference of this and having a single value is that here
-        if you click again on an option you add it
-        in the other type you overide it
-         */}
+
         <DropDown
           onClickOption={
             (latestTechnologyAdded) => {
@@ -287,6 +295,9 @@ const NewChildForm = () => {
           ofType="technology"
         />
       </GenericInputWrapper>
+    </AdditionalFieldsContainer>
+    )}
+
       <CtaBtnsContainer>
         <CtaBtn>Cancel</CtaBtn>
         <CtaBtn onClick={handleAddNewUnit}>Add</CtaBtn>
