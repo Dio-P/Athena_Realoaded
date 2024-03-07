@@ -2,35 +2,35 @@ import { useState, useEffect } from 'react';
 import { useLazyQuery } from '@apollo/client';
 import gql from 'graphql-tag';
 
-export const GET_ALL_TECHNOLOGIES = gql`
+export const GET_ALL_TAGS = gql`
   query {
-    getAllTechnologies {
+    getAllTags {
       id,
       title,
       description 
     }
   }`;
 
-const useGetAllTechnologies = () => {
-  const [technologiesToRender, setTechnologiesToRender] = useState('');
+const useGetAllTags = () => {
+  const [tagsToRender, setTagsToRender] = useState('');
 
   const [query, { loading, error, data }] = useLazyQuery(
-    GET_ALL_TECHNOLOGIES,
+    GET_ALL_TAGS,
   );
 
   useEffect(() => {
-    console.log('query for all technologies');
+    console.log('query for all tags');
     query();
   }, []);
 
   useEffect(() => {
-    console.log('technologiesToRender', technologiesToRender);
-  }, [technologiesToRender]);
+    console.log('tagsToRender', tagsToRender);
+  }, [tagsToRender]);
 
   useEffect(() => {
-    if (data?.getAllTechnologies) {
-      console.log('data?.getAllTechnologies', data?.getAllTechnologies);
-      setTechnologiesToRender(data?.getAllTechnologies);
+    if (data?.getAllTags) {
+      console.log('data?.getAllTags', data?.getAllTags);
+      setTagsToRender(data?.getAllTags);
     }
     if (error) {
       console.error(error);
@@ -39,18 +39,18 @@ const useGetAllTechnologies = () => {
     }
   }, [data, error, loading]);
 
-  const filterTechnologies = (queryString) => {
-    const allTypesArray = data?.getAllTechnologies;
-    console.log('in filterTechnologies', allTypesArray);
+  const filterTags = (queryString) => {
+    const allTypesArray = data?.getAllTags;
+    console.log('in filterTags', allTypesArray);
     if (allTypesArray?.length > 0) {
       if (queryString) {
-        setTechnologiesToRender(allTypesArray.filter((type) => (
+        setTagsToRender(allTypesArray.filter((type) => (
           type.title.includes(queryString)
           || type.description.includes(queryString)
         )));
       } else {
         console.log('no querry block', allTypesArray);
-        setTechnologiesToRender(allTypesArray);
+        setTagsToRender(allTypesArray);
         // I want if now query string to display
       }
     } else {
@@ -58,7 +58,7 @@ const useGetAllTechnologies = () => {
     }
   };
 
-  return [technologiesToRender, filterTechnologies];
+  return [tagsToRender, filterTags];
 };
 
-export default useGetAllTechnologies;
+export default useGetAllTags;

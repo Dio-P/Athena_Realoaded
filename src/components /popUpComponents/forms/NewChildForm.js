@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styled from '@emotion/styled';
 import useGetAllTypes from '../../../hooks/queries/useGetAllTypes';
 import useGetAllTechnologies from '../../../hooks/queries/useGetAllTechnologies';
+import useGetAllTags from '../../../hooks/queries/useGetAllTags';
 // import useCreateNewUnit from '../../../hooks/useCreateNewUnit';
 import MultiBtnComp from '../../MultiBtnComp';
 import SearchComboBox from '../../SearchComboBox';
@@ -92,6 +93,7 @@ const NewChildForm = () => {
   // };
   const [typesToRender, filterTypes] = useGetAllTypes();
   const [technologiesToRender, filterTechnologies] = useGetAllTechnologies();
+  const [tagsToRender, filterTags] = useGetAllTags();
   // do the above arguments need to be in an object ?
   // since the validation would be better to happen here, should I create a new function
   //  on the useGetAllTypes to call the api put?
@@ -226,15 +228,25 @@ const NewChildForm = () => {
         onClickFunction={setDocsOnInput}
         // onChange={(e) => setDocsOnInput(e.target.value)}
       />
+
       <GenericInputWrapper>
         Tags:
         <DropDown
-          onClickOption={setTagsOnInput}
+          role="combobox"
+          onClickOption={(latestTagAdded) => {
+            setTagsOnInput([...tagsOnInput, latestTagAdded]);
+          }}
+          onDeletingChoice={
+            (choiceToDelete) => (
+              handleDeleteChoice(choiceToDelete, tagsOnInput, setTagsOnInput)
+            )
+          }
           chosenValue={tagsOnInput}
+          acceptsMultipleValues
           title={tagsOnInput?.length > 0 ? findTitleDisplay(tagsOnInput, 'tags: ') : 'Please choose a tag'}
-          options={typesToRender}
-          onChange={filterTypes}
-          ofType="type"
+          options={tagsToRender}
+          onChange={filterTags}
+          ofType="tags"
         />
         {/* <CustomInput
           type="text"
