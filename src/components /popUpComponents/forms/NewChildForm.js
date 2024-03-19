@@ -5,6 +5,7 @@ import useGetAllTechnologies from '../../../hooks/queries/useGetAllTechnologies'
 import useGetAllTags from '../../../hooks/queries/useGetAllTags';
 // import useCreateNewUnit from '../../../hooks/useCreateNewUnit';
 import MultiBtnComp from '../../MultiBtnComp';
+import TagBtn from '../../buttons/TagBtn';
 import SearchComboBox from '../../SearchComboBox';
 import DropDown from '../../DropDown';
 import { WarningElement } from '../../specialElements';
@@ -107,8 +108,10 @@ const NewChildForm = () => {
   //  on the useGetAllTypes to call the api put?
 
   useEffect(() => {
-    if (linkOnInput && !linkIsValid(linkOnInput)) {
+    if (linkOnInput && linkOnInput.length > 7 && !linkIsValid(linkOnInput)) {
       setLinkError(errorsLink.invalid);
+    } else {
+      setLinkError(undefined);
     }
   }, [linkOnInput]);
 
@@ -163,6 +166,8 @@ const NewChildForm = () => {
     setAllChoices([...remainingChoices]);
   };
 
+  const hasLinksSet = mainLinks.length > 0;
+
   return (
     <CustomForm>
       <CustomInput
@@ -184,24 +189,35 @@ const NewChildForm = () => {
           ofType="type"
         />
       </GenericInputWrapper>
-      <InputBtnContainer>
-        <>
-          <CustomInput
-            type="text"
-            required
-            value={linkOnInput}
-            onChange={(e) => setLinkOnInput(e.target.value)}
+      <GenericInputWrapper>
+        Links
+        <InputBtnContainer>
+          <>
+            <CustomInput
+              type="url"
+              required
+              value={linkOnInput}
+              onChange={(e) => setLinkOnInput(e.target.value)}
+            />
+            {linkError && <WarningElement info={linkError} />}
+          </>
+          <MultiBtnComp
+            type="add"
+            disabled={!linkOnInput || !linkIsValid(linkOnInput)}
+            aria-hidden={!linkOnInput || !linkIsValid(linkOnInput)}
+            label={hasLinksSet ? 'add another link' : 'add link'}
+            onClickFunction={() => handleAddingExtraLink(linkOnInput)}
           />
-          {linkError && <WarningElement info={linkError} />}
-        </>
-        <MultiBtnComp
-          type="add"
-          disabled={!linkOnInput || !linkIsValid(linkOnInput)}
-          aria-hidden={!linkOnInput || !linkIsValid(linkOnInput)}
-          label="add one more link" // || "add another link"
-          onClickFunction={() => handleAddingExtraLink(linkOnInput)}
-        />
-      </InputBtnContainer>
+        </InputBtnContainer>
+        {hasLinksSet > 0
+          && mainLinks.map((link) => (
+            <TagBtn
+              label={link}
+              hasDeleteOption
+              onClickDelete={() => handleDeleteChoice(link, mainLinks, setMainLinks)}
+            />
+          ))}
+      </GenericInputWrapper>
       <SearchComboBox // this should probably be combobox with additional option to add new type
         type="text"
         options={['test']}
