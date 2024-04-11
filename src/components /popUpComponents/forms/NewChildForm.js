@@ -3,6 +3,7 @@ import styled from '@emotion/styled';
 import useGetAllTypes from '../../../hooks/queries/useGetAllTypes';
 import useGetAllTechnologies from '../../../hooks/queries/useGetAllTechnologies';
 import useGetAllTags from '../../../hooks/queries/useGetAllTags';
+import useGetAllTeams from '../../../hooks/queries/useGetAllTeams';
 // import useCreateNewUnit from '../../../hooks/useCreateNewUnit';
 import MultiBtnComp from '../../MultiBtnComp';
 import TagBtn from '../../buttons/TagBtn';
@@ -68,7 +69,7 @@ const NewChildForm = () => {
   const [nameOnInput, setNameOnInput] = useState('');
   const [linkOnInput, setLinkOnInput] = useState('');
   const [typeOnInput, setTypeOnInput] = useState('');
-  const [teamsResponsibleOnInput, setTeamsResponsibleOnInput] = useState(['']);
+  const [teamsResponsibleOnInput, setTeamsResponsibleOnInput] = useState([]);
   // const [leaderOnInput, setLeaderOnInput] = useState('');
   const [briefDescriptionOnInput, setBriefDescriptionOnInput] = useState('');
 
@@ -102,6 +103,7 @@ const NewChildForm = () => {
   //   technologiesOnInput,
   // };
   const [typesToRender, filterTypes] = useGetAllTypes();
+  const [teamsToRender, filterTeams] = useGetAllTeams();
   const [technologiesToRender, filterTechnologies] = useGetAllTechnologies();
   const [tagsToRender, filterTags] = useGetAllTags();
   // do the above arguments need to be in an object ?
@@ -116,7 +118,7 @@ const NewChildForm = () => {
     }
   }, [linkOnInput]);
 
-  const handleAddingExtraLink = (newLink) => {
+  const handleAddLink = (newLink) => {
     // add the existing valid link on the new array
     setMainLinks([...mainLinks, newLink]);
     // empty the input
@@ -171,14 +173,19 @@ const NewChildForm = () => {
 
   return (
     <CustomForm>
-      <CustomInput
-        type="text"
-        required
-        onChange={(e) => setNameOnInput(e.target.value)}
-      />
+
+      <GenericInputWrapper>
+        Name
+        <CustomInput
+          type="text"
+          id="nameInput"
+          required
+          onChange={(e) => setNameOnInput(e.target.value)}
+        />
+      </GenericInputWrapper>
+
       <GenericInputWrapper>
         Type:
-        {/* <label htmlFor="typeInput"> Type: </label> */}
         <DropDown
           id="typeInput"
           role="combobox"
@@ -190,6 +197,7 @@ const NewChildForm = () => {
           ofType="type"
         />
       </GenericInputWrapper>
+
       <GenericInputWrapper>
         Links
         <InputBtnContainer>
@@ -207,7 +215,7 @@ const NewChildForm = () => {
             disabled={!linkOnInput || !linkIsValid(linkOnInput)}
             aria-hidden={!linkOnInput || !linkIsValid(linkOnInput)}
             label={hasLinksSet ? 'add another link' : 'add link'}
-            onClickFunction={() => handleAddingExtraLink(linkOnInput)}
+            onClickFunction={() => handleAddLink(linkOnInput)}
           />
         </InputBtnContainer>
         {hasLinksSet > 0
@@ -219,6 +227,36 @@ const NewChildForm = () => {
             />
           ))}
       </GenericInputWrapper>
+
+      <GenericInputWrapper>
+        Teams Responsible:
+        <DropDown
+          id="teamsResponsibleInput"
+          role="combobox"
+          acceptsMultipleValues
+          onClickOption={
+            (latestTeamAdded) => {
+              console.log('latestTeamAdded', latestTeamAdded);
+              setTeamsResponsibleOnInput([...teamsResponsibleOnInput, latestTeamAdded]);
+            }
+          }
+          onDeletingChoice={
+            (choiceToDelete) => (
+              handleDeleteChoice(
+                choiceToDelete,
+                teamsResponsibleOnInput,
+                setTeamsResponsibleOnInput,
+              )
+            )
+          }
+          chosenValue={teamsResponsibleOnInput}
+          title={teamsResponsibleOnInput?.length > 0 ? `${teamsResponsibleOnInput.length} selected` : 'Please choose a responsible team'}
+          options={teamsToRender}
+          onChange={filterTeams}
+          ofType="type"
+        />
+      </GenericInputWrapper>
+
       <SearchComboBox // this should probably be combobox with additional option to add new type
         type="text"
         options={['test']}
@@ -230,6 +268,7 @@ const NewChildForm = () => {
         value={mainLinksOnInput}
         onChange={(e) => setMainLinksOnInput(e.target.value)}
       /> */}
+
       <GenericInputWrapper>
         Description :
         {/* <label htmlFor='descriptionInput'>Description: </label> */}
@@ -277,7 +316,7 @@ const NewChildForm = () => {
           }
           chosenValue={tagsOnInput}
           acceptsMultipleValues
-          title={tagsOnInput?.length > 0 ? findTitleDisplay(tagsOnInput, 'tags: ') : 'Please choose a tag'}
+          title={tagsOnInput?.length > 0 ? `${tagsOnInput.length} selected` : 'Please choose a tag'}
           options={tagsToRender}
           onChange={filterTags}
           ofType="tags"
