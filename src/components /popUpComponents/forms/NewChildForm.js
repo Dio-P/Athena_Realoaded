@@ -7,7 +7,6 @@ import useGetAllTeams from '../../../hooks/queries/useGetAllTeams';
 // import useCreateNewUnit from '../../../hooks/useCreateNewUnit';
 import MultiBtnComp from '../../MultiBtnComp';
 import TagBtn from '../../buttons/TagBtn';
-import SearchComboBox from '../../SearchComboBox';
 import DropDown from '../../DropDown';
 import { WarningElement } from '../../specialElements';
 import { linkIsValid } from '../../../helpers/validation';
@@ -65,6 +64,7 @@ const NewChildForm = () => {
   // } = useCreateNewUnit();
 
   const [mainLinks, setMainLinks] = useState([]);
+  const [allDocsOfUnit, setAllDocsOfUnit] = useState([]);
 
   const [nameOnInput, setNameOnInput] = useState('');
   const [linkOnInput, setLinkOnInput] = useState('');
@@ -73,11 +73,12 @@ const NewChildForm = () => {
   // const [leaderOnInput, setLeaderOnInput] = useState('');
   const [briefDescriptionOnInput, setBriefDescriptionOnInput] = useState('');
 
-  const [docsOnInput, setDocsOnInput] = useState([]);
+  const [docOnInput, setDocOnInput] = useState('');
   const [tagsOnInput, setTagsOnInput] = useState([]);
   const [technologiesOnInput, setTechnologiesOnInput] = useState([]);
 
   const [linkError, setLinkError] = useState('');
+  const [docError, setDocError] = useState('');
   const [isAdditionalFieldsBlockExpanded, setIsAdditionalFieldsBlockExpanded] = useState(false);
   // I need in the function to create first a new entity
   // To return it's Id
@@ -94,7 +95,7 @@ const NewChildForm = () => {
     typeOnInput, // object
     teamsResponsibleOnInput, // array
     briefDescriptionOnInput, // string
-    docsOnInput, // array
+    docOnInput, // array
   };
 
   // const optionalFields = {
@@ -104,12 +105,14 @@ const NewChildForm = () => {
   // };
   const [typesToRender, filterTypes] = useGetAllTypes();
   const [teamsToRender, filterTeams] = useGetAllTeams();
+  // const [] = useGetAllDocs();
   const [technologiesToRender, filterTechnologies] = useGetAllTechnologies();
   const [tagsToRender, filterTags] = useGetAllTags();
   // do the above arguments need to be in an object ?
   // since the validation would be better to happen here, should I create a new function
   //  on the useGetAllTypes to call the api put?
 
+  // do I want to trigger those in another way ?
   useEffect(() => {
     if (linkOnInput && linkOnInput.length > 7 && !linkIsValid(linkOnInput)) {
       setLinkError(errorsLink.invalid);
@@ -118,24 +121,30 @@ const NewChildForm = () => {
     }
   }, [linkOnInput]);
 
+  useEffect(() => {
+    if (docOnInput && docOnInput.length > 7 && !linkIsValid(docOnInput)) {
+      setDocError(errorsLink.invalid);
+    } else {
+      setDocError(undefined);
+    }
+  }, [docOnInput]);
+
   const handleAddLink = (newLink) => {
     // add the existing valid link on the new array
     setMainLinks([...mainLinks, newLink]);
     // empty the input
     setLinkOnInput('');
     // display the existing link as btn with x underneath
+    console.log('inside handleAddLink!!!!!!!!!!!!!!!!!');
   };
 
-  // name,
-  // type,
-  // teamsResponsible,
-  // leader,
-  // briefDescription,
-  //   properties: {
-  //     docs,
-  //     tags,
-  //     technologies,
-  //   },
+  const handleAddDoc = (newDoc) => {
+    // add the existing valid link on the new array
+    setAllDocsOfUnit([...allDocsOfUnit, newDoc]);
+    // empty the input
+    setDocOnInput('');
+    // display the existing link as btn with x underneath
+  };
 
   const findMissingField = (fieldKey) => !requiredFields[fieldKey]
         || requiredFields[fieldKey].length === 0
@@ -170,6 +179,7 @@ const NewChildForm = () => {
   };
 
   const hasLinksSet = mainLinks.length > 0;
+  const hasDocsSet = allDocsOfUnit.length > 0;
 
   return (
     <CustomForm>
@@ -179,7 +189,7 @@ const NewChildForm = () => {
         <CustomInput
           type="text"
           id="nameInput"
-          required
+          // required
           onChange={(e) => setNameOnInput(e.target.value)}
         />
       </GenericInputWrapper>
@@ -204,21 +214,31 @@ const NewChildForm = () => {
           <>
             <CustomInput
               type="url"
-              required
+              // required
               value={linkOnInput}
               onChange={(e) => setLinkOnInput(e.target.value)}
             />
             {linkError && <WarningElement info={linkError} />}
           </>
-          <MultiBtnComp
+          <button
+            // type="add"
+            type="button"
+            disabled={!linkOnInput || !linkIsValid(linkOnInput)}
+            aria-hidden={!linkOnInput || !linkIsValid(linkOnInput)}
+            label={hasLinksSet ? 'add another link' : 'add link'}
+            onClick={() => handleAddLink(linkOnInput)}
+            // onClickFunction={() => handleAddLink(linkOnInput)}
+          >add link
+          </button>
+          {/* <MultiBtnComp
             type="add"
             disabled={!linkOnInput || !linkIsValid(linkOnInput)}
             aria-hidden={!linkOnInput || !linkIsValid(linkOnInput)}
             label={hasLinksSet ? 'add another link' : 'add link'}
             onClickFunction={() => handleAddLink(linkOnInput)}
-          />
+          /> */}
         </InputBtnContainer>
-        {hasLinksSet > 0
+        {hasLinksSet
           && mainLinks.map((link) => (
             <TagBtn
               label={link}
@@ -229,6 +249,7 @@ const NewChildForm = () => {
       </GenericInputWrapper>
 
       <GenericInputWrapper>
+        {/* will they me able to add a new team from here? */}
         Teams Responsible:
         <DropDown
           id="teamsResponsibleInput"
@@ -257,18 +278,6 @@ const NewChildForm = () => {
         />
       </GenericInputWrapper>
 
-      <SearchComboBox // this should probably be combobox with additional option to add new type
-        type="text"
-        options={['test']}
-        onClickOption={setTeamsResponsibleOnInput}
-        // onChange={(e) => setTeamsResponsibleOnInput(e.target.value)}
-      />
-      {/* <CustomInput
-        type="text"
-        value={mainLinksOnInput}
-        onChange={(e) => setMainLinksOnInput(e.target.value)}
-      /> */}
-
       <GenericInputWrapper>
         Description :
         {/* <label htmlFor='descriptionInput'>Description: </label> */}
@@ -280,12 +289,35 @@ const NewChildForm = () => {
         />
       </GenericInputWrapper>
 
-      <CustomInput // this should probably be combobox with additional option to add new type ????
-        type="text"
-        value={docsOnInput}
-        onClickFunction={setDocsOnInput}
-        // onChange={(e) => setDocsOnInput(e.target.value)}
-      />
+      <GenericInputWrapper>
+        Docs
+        <InputBtnContainer>
+          <>
+            <CustomInput
+              type="url"
+              // required
+              value={docOnInput}
+              onChange={(e) => setDocOnInput(e.target.value)}
+            />
+            {docError && <WarningElement info={docError} />}
+          </>
+          <MultiBtnComp
+            type="add"
+            disabled={!docOnInput || !linkIsValid(docOnInput)}
+            aria-hidden={!docOnInput || !linkIsValid(docOnInput)}
+            label={hasDocsSet ? 'add another doc link' : 'add a doc link'}
+            onClickFunction={() => handleAddDoc(docOnInput)}
+          />
+        </InputBtnContainer>
+        {hasDocsSet
+          && allDocsOfUnit.map((doc) => (
+            <TagBtn
+              label={doc.label}
+              hasDeleteOption
+              onClickDelete={() => handleDeleteChoice(doc, allDocsOfUnit, setAllDocsOfUnit)}
+            />
+          ))}
+      </GenericInputWrapper>
 
       <MultiBtnComp
         onClickFunction={() => setIsAdditionalFieldsBlockExpanded(!isAdditionalFieldsBlockExpanded)}
@@ -293,13 +325,6 @@ const NewChildForm = () => {
       />
       {isAdditionalFieldsBlockExpanded
     && (
-      //  <SearchComboBox
-    //   // this ideally should be in connection to partner platform,
-    //   // as the very last thing to be build
-    //     type="text"
-    //     options={['test']}
-    //     onClickOption={setLeaderOnInput}
-    //   />
     <AdditionalFieldsContainer>
 
       <GenericInputWrapper>
@@ -321,12 +346,6 @@ const NewChildForm = () => {
           onChange={filterTags}
           ofType="tags"
         />
-        {/* <CustomInput
-          type="text"
-          value={tagsOnInput}
-          // this should probably be combobox with additional option to add new type
-          onChange={(e) => setTagsOnInput(e.target.value)}
-        /> */}
       </GenericInputWrapper>
 
       <GenericInputWrapper>
@@ -356,7 +375,8 @@ const NewChildForm = () => {
 
       <CtaBtnsContainer>
         <CtaBtn>Cancel</CtaBtn>
-        <CtaBtn onClick={handleAddNewUnit}>Add</CtaBtn>
+        {/* <CtaBtn onClick={handleAddNewUnit}>Add</CtaBtn> */}
+        <button onClick={handleAddNewUnit} type="button"> Add</button>
       </CtaBtnsContainer>
     </CustomForm>
   );
