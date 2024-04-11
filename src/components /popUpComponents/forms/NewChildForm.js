@@ -22,6 +22,7 @@ const CustomForm = styled.form`
 
 const InputBtnContainer = styled.div`
   display: flex;
+  flex-direction: column;
 `;
 
 const AdditionalFieldsContainer = styled.div`

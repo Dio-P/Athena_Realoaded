@@ -9,10 +9,11 @@ import { deleteIcon } from '../../helpers/svgIcons';
 
 const Container = styled.div`
     display: flex;
-    color: white;
+    color: black;
     background-color:  ${(props) => style.variables.btn.ofTypeTag[props.theme].backgroundColour};
     height: 20px;
-    max-width: 200px;
+    min-width: 100px;
+    // width: 100%;
     margin: 5px;
     padding: 3px;
     align-items: center;
@@ -20,21 +21,22 @@ const Container = styled.div`
 
 const LabelWrapper = styled.div`
     height: 100%;
+    width: 100%;
     margin: 1px 2px 1px 2px;
   `;
 
-const XBoxWrapper = styled.div`
+const DeleteBtnWrapper = styled.div`
     height: 100%;
     width: 25px;
     margin: 1px 2px 1px 2px;
   `;
 
-const XBox = ({ onClickDelete }) => (
-  <XBoxWrapper
+const DeleteBtn = ({ onClickDelete }) => (
+  <DeleteBtnWrapper
     onClick={onClickDelete}
   >
     {deleteIcon}
-  </XBoxWrapper>
+  </DeleteBtnWrapper>
 );
 
 const TagBtn = ({
@@ -54,13 +56,13 @@ const TagBtn = ({
         {label}
       </LabelWrapper>
       {hasDeleteOption && (
-      <XBox onClickDelete={onClickDelete} />
+      <DeleteBtn onClickDelete={onClickDelete} />
       )}
     </Container>
   );
 };
 
-XBox.propTypes = {
+DeleteBtn.propTypes = {
   onClickDelete: PropTypes.func.isRequired,
 };
 
