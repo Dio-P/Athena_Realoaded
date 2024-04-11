@@ -1,7 +1,11 @@
-import styled from "@emotion/styled";
-import SearchComboBox from "../components /SearchComboBox";
-import useCustomSearchQuery from "../hooks/queries/useCustomSearch";
-
+import React, { useState } from 'react';
+import styled from '@emotion/styled';
+import PropTypes from 'prop-types';
+import SearchComboBox from '../components /SearchComboBox';
+import { refreshIcon } from '../helpers/svgIcons';
+import useSearchComboBoxHelper from '../hooks/useSearchComboBoxHelper';
+import useComboboxQueryManager from '../hooks/queries/useComboboxQueryManager';
+// import useCustomSearchQuery from '../hooks/queries/useCustomSearch';
 
 const AdvancedSearchBlockContainer = styled.div`
   display: flex;
@@ -23,71 +27,156 @@ const AdvancedSearch = styled.div`
   height: 20px;
 `;
 
-const SearchButton = styled.button`
+const SearchBtn = styled.button`
   display: flex;
   width: 50px;
   height: 50px;
   align-self: center;
 `;
 
+const ResetBtn = styled.button`
+  display: flex;
+  width: 25px;
+  height: 25px;
+  align-self: center;
+`;
+
 const AdvancedSearchBlock = ({
   isOpen,
   setIsOpen,
-  advanceQueryParameters, 
+  advanceQueryParameters,
   setAdvanceQueryParameters,
-  onClickSearch
+  onClickSearch,
 }) => {
+  const [createUpdatePayload] = useSearchComboBoxHelper();
+  const [nameQueryString, setNameQueryString] = useState('');
+  const [mainLinksQueryString, setMainLinksQueryString] = useState('');
+  const [briefDescriptionQueryString, setBriefDescriptionQueryString] = useState('');
+  const [leaderQueryString, setLeaderQueryString] = useState('');
 
+  const [nameOptions] = useComboboxQueryManager('name', nameQueryString);
+  const [mainLinksOptions] = useComboboxQueryManager('mainLinks', mainLinksQueryString);
+  const [briefDescriptionOptions] = useComboboxQueryManager('briefDescription', briefDescriptionQueryString);
+  const [leaderOptions] = useComboboxQueryManager('leader', leaderQueryString);
+
+  const onClickRefresh = () => {
+    setAdvanceQueryParameters('');
+  };
+
+  const handleOnClickOption = (option, ofType) => {
+    setAdvanceQueryParameters(createUpdatePayload(ofType, advanceQueryParameters, option));
+  };
+
+  const handleDeleteChoice = (choiceToRemove, ofType) => {
+    const { [ofType]: ofThisType, ...typesWithoutThis } = advanceQueryParameters;
+
+    const updateChoicesInField = () => ofThisType.filter(
+      (choice) => choice !== choiceToRemove,
+    );
+
+    const updatedFields = (ofThisType.length === 1)
+      ? { ...typesWithoutThis }
+      : { ...typesWithoutThis, [ofType]: updateChoicesInField() };
+
+    setAdvanceQueryParameters(updatedFields);
+  };
 
   return (
     <AdvancedSearchBlockContainer>
-      <AdvancedSearch onClick={() => setIsOpen(!isOpen)}>
+      <AdvancedSearch
+        aria-label="Advanced Search"
+        onClick={() => setIsOpen(!isOpen)}
+      >
         Advanced Search
       </AdvancedSearch>
       {isOpen && (
         <ComboBoxContainers>
           <SearchComboBox
             ofType="tags"
-            chosenValues={advanceQueryParameters}
-            onClickOption={setAdvanceQueryParameters}
-          />
-
-          <SearchComboBox
-            ofType="name"
-            chosenValues={advanceQueryParameters}
-            onClickOption={setAdvanceQueryParameters}
+            chosenValues={advanceQueryParameters.tags}
+            onClickOption={handleOnClickOption}
+            onDeletingChoice={(choice) => handleDeleteChoice(choice, 'tags')}
+            acceptsMultipleValues
           />
 
           <SearchComboBox
             ofType="type"
-            chosenValues={advanceQueryParameters}
-            onClickOption={setAdvanceQueryParameters}
+            chosenValues={advanceQueryParameters.type}
+            onClickOption={handleOnClickOption}
+            onDeletingChoice={(choice) => handleDeleteChoice(choice, 'type')}
+            acceptsMultipleValues
           />
 
           <SearchComboBox
-            ofType="mainLink"
-            chosenValues={advanceQueryParameters}
-            onClickOption={setAdvanceQueryParameters}
+            ofType="name"
+            options={nameOptions}
+            chosenValues={advanceQueryParameters.name}
+            onClickOption={handleOnClickOption}
+            onDeletingChoice={(choice) => handleDeleteChoice(choice, 'name')}
+            acceptsMultipleValues
+            queryString={nameQueryString}
+            onChange={setNameQueryString}
+          />
+
+          <SearchComboBox
+            ofType="mainLinks"
+            options={mainLinksOptions}
+            chosenValues={advanceQueryParameters.mainLinks}
+            onClickOption={handleOnClickOption}
+            onDeletingChoice={(choice) => handleDeleteChoice(choice, 'mainLinks')}
+            acceptsMultipleValues
+            queryString={mainLinksQueryString}
+            onChange={setMainLinksQueryString}
           />
 
           <SearchComboBox
             ofType="briefDescription"
-            chosenValues={advanceQueryParameters}
-            onClickOption={setAdvanceQueryParameters}
+            options={briefDescriptionOptions}
+            chosenValues={advanceQueryParameters.briefDescription}
+            onClickOption={handleOnClickOption}
+            onDeletingChoice={(choice) => handleDeleteChoice(choice, 'briefDescription')}
+            acceptsMultipleValues
+            queryString={briefDescriptionQueryString}
+            onChange={setBriefDescriptionQueryString}
           />
 
           <SearchComboBox
             ofType="leader"
-            chosenValues={advanceQueryParameters}
-            onClickOption={setAdvanceQueryParameters}
+            options={leaderOptions}
+            chosenValues={advanceQueryParameters.leader}
+            onClickOption={handleOnClickOption}
+            onDeletingChoice={(choice) => handleDeleteChoice(choice, 'leader')}
+            acceptsMultipleValues
+            queryString={leaderQueryString}
+            onChange={setLeaderQueryString}
           />
 
-          <SearchButton onClick={onClickSearch} /> 
+          <SearchBtn onClick={onClickSearch} aria-label="Search" />
+          <ResetBtn onClick={onClickRefresh} aria-label="Refresh"> {refreshIcon} </ResetBtn>
         </ComboBoxContainers>
-
       )}
     </AdvancedSearchBlockContainer>
   );
+};
+
+AdvancedSearchBlock.propTypes = {
+  isOpen: PropTypes.bool,
+  setIsOpen: PropTypes.func.isRequired,
+  advanceQueryParameters: PropTypes.shape({
+    tags: PropTypes.arrayOf(PropTypes.string),
+    name: PropTypes.arrayOf(PropTypes.string),
+    type: PropTypes.arrayOf(PropTypes.string),
+    mainLinks: PropTypes.arrayOf(PropTypes.string),
+    briefDescription: PropTypes.arrayOf(PropTypes.string),
+    leader: PropTypes.arrayOf(PropTypes.string),
+  }),
+  setAdvanceQueryParameters: PropTypes.func.isRequired,
+  onClickSearch: PropTypes.func.isRequired,
+};
+
+AdvancedSearchBlock.defaultProps = {
+  isOpen: false,
+  advanceQueryParameters: {},
 };
 
 export default AdvancedSearchBlock;

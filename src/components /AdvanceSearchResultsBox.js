@@ -1,10 +1,9 @@
-import { useMemo, useState } from "react";
-import styled from "@emotion/styled";
-import styleVariables from "../styleVariables";
-import { deleteIcon, magnifyingGlassIcon } from "../helpers/svgIcons";
-import capitaliseFirstLetters from "../helpers/capitaliseFirstLetters";
-import useGetAllOfType from "../hooks/queries/useGetAllOfType";
-// import useEntityByIdSearch from "../hooks/queries/useEntityByIdSearch";
+import React from 'react';
+import PropTypes from 'prop-types';
+import styled from '@emotion/styled';
+import style from '../styleVariables';
+import { SearchInput } from './specialElements';
+import capitaliseFirstLetters from '../helpers/capitaliseFirstLetters';
 
 const SearchBarContainer = styled.div`
   display: flex;
@@ -15,23 +14,11 @@ const SearchBarContainer = styled.div`
   padding: 10px;
 `;
 
-const MagnifyingGlassIconWrapper = styled.div`
-  width: 23px;
-  height: 23px;
-  padding: 3px;
-`;
-
-const SearchInput = styled.input`
-  width: 100%;
-  margin-right: 3px;
-  border-radius: ${styleVariables.borderRadious.main};
-`;
-
 const OptionsWrapper = styled.div`
   display: flex;
   flex-direction: column;
   overflow: scroll;
-  border-radius: ${styleVariables.borderRadious.main};
+  border-radius: ${style.variables.borderRadious.main};
 `;
 
 const SingleDropDownElementWrapper = styled.div`
@@ -39,21 +26,18 @@ const SingleDropDownElementWrapper = styled.div`
   align-items: center;
   width: 99%;
   height: 45px;
-  background-color: ${(props) =>
-    !props.isAddFolderBtn
-      ? styleVariables.colours.tertiaryBlue
-      : styleVariables.colours.tertiaryPink};
-  border-radius: ${(props) =>
-    !props.isAddFolderBtn ? null : styleVariables.borderRadious.main};
+  background-color: ${(props) => (!props.isAddFolderBtn
+    ? style.variables.colours.tertiaryBlue
+    : style.variables.colours.tertiaryPink)};
+  border-radius: ${(props) => (!props.isAddFolderBtn ? null : style.variables.borderRadious.main)};
   color: black;
   margin: 1px;
-  margin-top: ${(props) => props.isAddFolderBtn && "4px"};
+  margin-top: ${(props) => props.isAddFolderBtn && '4px'};
 
   &:hover {
-    background-color: ${(props) =>
-      !props.isAddFolderBtn
-        ? styleVariables.colours.secondaryBlue
-        : styleVariables.colours.secondaryPink};
+    background-color: ${(props) => (!props.isAddFolderBtn
+    ? style.variables.colours.secondaryBlue
+    : style.variables.colours.secondaryPink)};
   }
   cursor: pointer;
 `;
@@ -62,70 +46,73 @@ const DropDownLabel = styled.div`
   margin: auto;
 `;
 
-const ChoicesWrapper = styled.div`
-  display: flex;
-`;
-
-const ChosenEntityWrapper = styled.div`
-  display: flex;
-`;
-
-const XBoxWrapper = styled.div`
-  display: flex;
-  height: 100%;
-  width: 25px;
-  margin: 1px 2px 1px 2px;
-`;
-
-const SingleQueryResult = ({ onClickOption, label, isAddFolderBtn }) => {
-  return (
-    <SingleDropDownElementWrapper
-      onClick={onClickOption}
-      isAddFolderBtn={isAddFolderBtn}
-    >
-      <DropDownLabel>{capitaliseFirstLetters(label)}</DropDownLabel>
-    </SingleDropDownElementWrapper>
-  );
-};
+const SingleOption = ({
+  onClickOption,
+  label,
+  isAddFolderBtn,
+}) => (
+  <SingleDropDownElementWrapper
+    onClick={onClickOption}
+    isAddFolderBtn={isAddFolderBtn}
+    aria-label={`choose ${label}`}
+  >
+    <DropDownLabel>{capitaliseFirstLetters(label)}</DropDownLabel>
+  </SingleDropDownElementWrapper>
+);
 
 const AdvanceSearchResultsBox = ({
   advanceSearchResults,
   onClickOption,
-}) => {
-  // const [returnedEntity, searchEntity] = useEntityByIdSearch()
-  const [queryString, setQueryString] = useState("")
-  // const { filteredResults } = useGetAllOfType(ofType, queryString );
-  
-  const resultsToDisplay = advanceSearchResults || [];
-  console.log("optionsToRender@@@", advanceSearchResults);
+}) => (
+  <SearchBarContainer aria-label="Advance Search Results">
 
-  return (
-    <SearchBarContainer>
-      <MagnifyingGlassIconWrapper>
-        {magnifyingGlassIcon}
-      </MagnifyingGlassIconWrapper>
+    <SearchInput
+      name="advanceSearchDisplayBox"
+      placeholder="advance"
+      disabled
+    />
 
-      <SearchInput
-        // type="text"
-        name="advanceSearchDisplayBox"
-        placeholder={`advance`}
-        // onChange={(e) => setQueryString(e.target.value)}
-        disabled
-      />
-
-      <OptionsWrapper>
-        {resultsToDisplay.map((entity) => (
-          // what do I want this to display ?
-            <SingleQueryResult
-              onClickOption={() => onClickOption(entity.id)}
-              label={entity.name}
-              key={entity.id}
+    <OptionsWrapper>
+      {advanceSearchResults
+          && advanceSearchResults.map(({ id, name }) => (
+            <SingleOption
+              onClickOption={() => onClickOption(id)}
+              label={name}
+              key={id}
             />
-          ))
-        }
-      </OptionsWrapper>
-    </SearchBarContainer>
-  );
+          ))}
+    </OptionsWrapper>
+  </SearchBarContainer>
+);
+
+SingleOption.propTypes = {
+  onClickOption: PropTypes.func.isRequired,
+  label: PropTypes.string.isRequired,
+  isAddFolderBtn: PropTypes.bool,
+};
+
+SingleOption.defaultProps = {
+  isAddFolderBtn: false,
+};
+
+AdvanceSearchResultsBox.propTypes = {
+  advanceSearchResults: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.string,
+    name: PropTypes.string,
+    type: PropTypes.string,
+    mainLinks: PropTypes.arrayOf(PropTypes.string),
+    briefDescription: PropTypes.string,
+    teamsResponsible: PropTypes.arrayOf(PropTypes.string),
+    properties: PropTypes.shape({
+      tags: PropTypes.arrayOf(PropTypes.string),
+    }),
+  })),
+  onClickOption: PropTypes.func,
+};
+
+AdvanceSearchResultsBox.defaultProps = {
+  advanceSearchResults: {},
+  onClickOption: () => {},
 };
 
 export default AdvanceSearchResultsBox;

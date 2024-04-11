@@ -1,15 +1,15 @@
-import { useState, useEffect } from "react";
-import { useLazyQuery } from "@apollo/client";
-import gql from "graphql-tag";
+import { useEffect } from 'react';
+import { useLazyQuery } from '@apollo/client';
+import gql from 'graphql-tag';
 
 export const QUERY_ADVANCED_CUSTOME_SEARCH = gql`
 # if working change it to an array of strings
-  query ($tags: [String], $name: [String], $type: [String], $leader: [String], $teamsResponsible: [String], $mainLink: [String]) {
-    customEntitySearch(tags: $tags, name: $name, type: $type, leader: $leader, teamsResponsible: $teamsResponsible, mainLink: $mainLink) {
+  query ($tags: [String], $name: [String], $type: [String], $leader: [String], $teamsResponsible: [String], $mainLinks: [String]) {
+    customEntitySearch(tags: $tags, name: $name, type: $type, leader: $leader, teamsResponsible: $teamsResponsible, mainLinks: $mainLinks) {
       id
       name
       type
-      mainLink
+      mainLinks
       briefDescription
       teamsResponsible
       properties {
@@ -21,19 +21,25 @@ export const QUERY_ADVANCED_CUSTOME_SEARCH = gql`
 
 const useCustomSearchQuery = () => {
   // this needs to get the object with the choosenValues
-  const [returnedEntities, setReturnedEntities] = useState("");
+  // const [returnedEntities, setReturnedEntities] = useState([]);
 
-  const [query, { loading, error, data, refetch }] = useLazyQuery(
-    QUERY_ADVANCED_CUSTOME_SEARCH
+  const [query, { error, data, refetch }] = useLazyQuery(
+    QUERY_ADVANCED_CUSTOME_SEARCH,
   );
 
-  const trigerAdvancedSearch = ({tags, name ,type ,leader, teamsResponsible, mainLink}) => {
-    if(returnedEntities.length === 0) {
+  const trigerAdvancedSearch = ({
+    tags, name, type, leader, teamsResponsible, mainLinks,
+  }) => {
+    if (data?.customEntitySearch.length === 0) {
       query({
-        variables: { tags, name ,type ,leader, teamsResponsible, mainLink },
+        variables: {
+          tags, name, type, leader, teamsResponsible, mainLinks,
+        },
       });
     } else {
-      refetch({ tags, name ,type ,leader, teamsResponsible, mainLink })
+      refetch({
+        tags, name, type, leader, teamsResponsible, mainLinks,
+      });
     }
   };
 
@@ -42,11 +48,11 @@ const useCustomSearchQuery = () => {
 
     // }
     if (error) {
-      console.error("error", error)
+      console.error('error', error);
     }
-    if (data?.customEntitySearch) {
-      setReturnedEntities(data.customEntitySearch);
-    }
+    // if (data?.customEntitySearch) {
+    //   setReturnedEntities(data.customEntitySearch);
+    // }
   }, [data, error]);
 
   // useEffect(() => {
@@ -58,13 +64,13 @@ const useCustomSearchQuery = () => {
   //     //     folderToBeDisplayedIn: Number(part.folderToBeDisplayedIn)
   //     //     }))
   //     const newApp = data.getAppById;
-  //     console.log("newApp$$$$", newApp);
+  //     console.log('newApp$$$$', newApp);
   //     // check if you are indeed getting strings here
   //     setAppToDisplay({ ...newApp });
   //   }
   // }, [data]);
 
-  return {returnedEntities, trigerAdvancedSearch};
+  return { returnedEntities: data?.customEntitySearch || [], trigerAdvancedSearch };
 };
 
 export default useCustomSearchQuery;

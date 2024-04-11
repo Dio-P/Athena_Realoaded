@@ -1,20 +1,32 @@
-import { useState, useEffect } from "react";
-import { useLazyQuery } from "@apollo/client";
-import gql from "graphql-tag";
+import { useEffect } from 'react';
+import { useLazyQuery } from '@apollo/client';
+import gql from 'graphql-tag';
 
 export const SEARCH_CHILDREN_BY_ID_QUERY = gql`
   query ($ids: [ID]!) {
     getChildrenById(ids: $ids) {
       id
       name
-      type
-      mainLink
+      type {
+        id
+        title
+        description
+      }
+      mainLinks
       briefDescription
       teamsResponsible
       properties {
         docs
-        tags
-        technologies
+        tags {
+          id
+          title
+          description
+        }
+        technologies {
+          id
+          title
+          description
+        }
       }
       children
       connections {
@@ -41,21 +53,21 @@ export const SEARCH_CHILDREN_BY_ID_QUERY = gql`
 `;
 
 const useChildrenByIdsSearch = () => {
-  const [returnedChildren, setReturnedChildren] = useState("");
-
-  const [query, { loading, error, data, refetch }] = useLazyQuery(
-    SEARCH_CHILDREN_BY_ID_QUERY
+  const [query, {
+    error, data, refetch,
+  }] = useLazyQuery(
+    SEARCH_CHILDREN_BY_ID_QUERY,
   );
 
   const searchChildren = (ids) => {
-    if(ids){
-      if(!data){
+    if (ids) {
+      if (!data) {
         query({
           variables: { ids },
         });
       }
-      if(data){
-        refetch({ ids })
+      if (data) {
+        refetch({ ids });
       }
     }
   };
@@ -65,14 +77,17 @@ const useChildrenByIdsSearch = () => {
 
     // }
     if (error) {
-      console.error("error", error)
+      console.error('error', error);
     }
-    if (data?.getChildrenById) {
-      setReturnedChildren(data.getChildrenById);
-    }
+    // if (data?.getChildrenById) {
+    //   console.log('error£$', error);
+    //   setReturnedChildren(data.getChildrenById);
+    // }
   }, [data, error]);
 
-  return [returnedChildren, searchChildren];
+  // return [returnedChildren, searchChildren];
+  // do the filtering in the function body
+  return [data?.getChildrenById, searchChildren];
 };
 
 export default useChildrenByIdsSearch;

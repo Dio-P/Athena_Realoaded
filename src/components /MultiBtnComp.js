@@ -1,20 +1,79 @@
-import capitaliseFirstLetters from "../helpers/capitaliseFirstLetters";
-import styled from "@emotion/styled";
-import styleVariables from "../styleVariables";
-import { tickIcon, arrowDownIcon, arrowUpIcon, deleteIcon } from "../helpers/svgIcons";
-import { WarningElement } from "./specialElements";
-import { defaultProps } from "default-props";
-import PropTypes from "prop-types";
+import React, { useContext } from 'react';
+import styled from '@emotion/styled';
+// import { css } from '@emotion/react';
+
+import PropTypes from 'prop-types';
+
+import capitaliseFirstLetters from '../helpers/capitaliseFirstLetters';
+import style, { colours, themeStyle } from '../styleVariables';
+import {
+  tickIcon,
+  arrowDownIcon,
+  arrowUpIcon,
+  deleteIcon,
+} from '../helpers/svgIcons';
+import ThemeContext from '../context/ThemeContext';
+// import WarningElement from './specialElements';
+// import { defaultProps } from 'default-props';
+// import PropTypes from 'prop-types';
+
+// const theme = 'light';
+import RadioBtn from './buttons/RadioBtn';
+
+const DefaultBtnWrapper = styled.div`
+  display: flex;
+  width: 100%;
+  // width: 14em;
+  cursor: pointer;
+  margin: 8px;
+`;
+
+const DefaultBtnContainer = styled.button`
+  display: flex;
+  align-content: center;
+  background-color: ${style.variables.btn.ofTypeDefault.light};
+  width: 100%;
+  border-radius: ${style.variables.borderRadious.main};
+  margin: 20px;
+  font-size: 18px;
+  box-shadow: ${(props) => style.variables.boxShadow.large[props.theme]};
+`;
+const DefaultIconWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  width: 100%;
+  max-width: 30px;
+  margin: 5px;
+`;
+
+const DefaultLabelContainer = styled.div`
+  margin: auto;
+  color: ${(props) => themeStyle[props.theme].defaultType};
+  padding: 8px;
+  min-width: 141px;
+  min-height: 50px;
+  max-width: 140px;
+  max-height: 60px;
+  display: flex;
+  align-items: center;
+  text-align: left;
+`;
+
+const DefaultLabelStyle = styled.div`
+  display: flex;
+  align-items: center;
+  width: 50%;
+  font-size: 20px;
+`;
 
 const dropDownButton = {
-  ContainerWrapper: styled.div`
-    display: flex;
+  ContainerWrapper: styled(DefaultBtnWrapper)`
     border: solid black;
     align-content: center;
     width: 300px;
     height: 35px;
     align-items: center;
-    border-radius: ${styleVariables.borderRadious.secondary};
+    border-radius: ${style.variables.borderRadious.secondary};
   `,
   Container: styled.div`
     display: flex;
@@ -28,18 +87,15 @@ const dropDownButton = {
 };
 
 const smallBtn = {
-  Wrapper: styled.div`
-    display: flex;
+  Wrapper: styled(DefaultBtnWrapper)`
     right: 0;
     height: 35px;
     width: 35px;
     color: black;
-    background-color: ${styleVariables.colours.primaryPink};
-    box-shadow: ${styleVariables.boxShadow.smallButton};
-    border-radius: ${styleVariables.borderRadious.secondary};
-    margin: 8px;
+    background-color: ${colours.primaryPink};
+    box-shadow: ${style.variables.boxShadow.small};
+    border-radius: ${style.variables.borderRadious.secondary};
     align-self: end;
-    cursor: pointer;
 
     &:active {
       box-shadow: none;
@@ -56,24 +112,15 @@ const smallBtn = {
 };
 
 const mainBtn = {
-  Wrapper: styled.div`
-    display: flex;
-    width: 14em;
-    cursor: pointer;
-    margin: 7px;
-  `,
-  AddingVersionContainer: styled.div`
-    display: flex;
-    align-content: center;
-    background-color: ${styleVariables.colours.primaryPink};
+  Wrapper: DefaultBtnWrapper,
+  AddingVersionContainer: styled(DefaultBtnContainer)`
+    background-color: ${colours.primaryPink};
     min-width: 100px;
     min-height: 50px;
     max-width: 140px;
     max-height: 60px;
     width: 90%;
     height: 90%;
-    box-shadow: ${styleVariables.boxShadow.bigButton};
-    border-radius: ${styleVariables.borderRadious.main};
     margin: 20px;
     font-size: 14px;
 
@@ -81,54 +128,28 @@ const mainBtn = {
       box-shadow: none;
   }
   `,
-  ClickedVersionContainer: styled.div`
+  ClickedVersionContainer: styled.button`
     display: flex;
     align-content: center;
-    background-color: ${styleVariables.colours.primaryBlue};
+    background-color: ${colours.primaryBlue};
     width: 100%;
-    border: solid ${styleVariables.colours.primaryGreen};
-    border-radius: ${styleVariables.borderRadious.main};
+    border: solid ${colours.primaryGreen};
+    border-radius: ${style.variables.borderRadious.main};
     margin: 20px 0px 20px 10px;
     font-size: 18px;
   `,
-  PlainVersionContainer: styled.div`
-    display: flex;
-    align-content: center;
-    background-color: ${styleVariables.colours.primaryBlue};
-    width: 100%;
-    border-radius: ${styleVariables.borderRadious.main};
-    margin: 20px 0px 20px 0px;
-    font-size: 18px;
-    box-shadow: ${styleVariables.boxShadow.bigButton};
-  `,
-  LabelContainer: styled.div`
-    margin: auto;
-    color: ${styleVariables.colours.primaryLight};
-    padding: 8px;
-    min-width: 141px;
-    min-height: 50px;
-    max-width: 140px;
-    max-height: 60px;
-    display: flex;
-    align-items: center;
-    text-align: left;
-  `,
-  Label: styled.div`
-    display: flex;
-    align-items: center;
-  `,
-  TickBoxWrapper: styled.div`
-    display: flex;
-    border-radius: ${styleVariables.borderRadious.main};
-    align-items: center;
-    background-color: ${styleVariables.colours.primaryBlue};
-    width: 100%;
+  PlainVersionContainer: DefaultBtnContainer,
+  LabelContainer: DefaultLabelContainer,
+  Label: DefaultLabelStyle,
+  TickBoxWrapper: styled(DefaultIconWrapper)`
+    border-radius: ${style.variables.borderRadious.main};
+    background-color: ${colours.primaryBlue};
     min-width: 30px;
     max-width: 60px;
   `,
   TickBox: styled.div`
-    border-radius: ${styleVariables.borderRadious.main};
-    background-color: ${styleVariables.colours.primaryLight};
+    border-radius: ${style.variables.borderRadious.main};
+    background-color: ${colours.primaryLight};
     margin: auto;
     height: 80%;
     width: 80%;
@@ -139,7 +160,7 @@ const TagBtn = {
   Container: styled.div`
     display: flex;
     color: white;
-    background-color: ${styleVariables.colours.primaryBlue};
+    background-color: ${colours.primaryBlue};
     height: 20px;
     width: 90px;
     margin: 5px;
@@ -154,37 +175,63 @@ const TagBtn = {
     height: 100%;
     width: 25px;
     margin: 1px 2px 1px 2px;
-  `
-}
+  `,
+};
 
-const TagButton = ({label, onClickFunction, aria, withDelete, type}) => {
-  console.log("in tag button @", label, onClickFunction, aria, withDelete);
-  return (
-    <TagBtn.Container
+// const ToggleBtn = () => (
+//   <label className="switch">
+//     <input type="checkbox" />
+//     <span className="slider round" />
+//   </label>
+// );
+
+// const findTitleDisplay = (value, title) => {
+//   console.log('inside findTitleDisplay ', value, title);
+//   if (typeof value !== 'string' && value?.length > 0) {
+//     const allValuesString = value.map((singleValue) => (
+//       capitaliseFirstLetters(singleValue)
+//     )).join(', ');
+//     return `${title.withValue} ${allValuesString}`;
+//   } if (value && value?.length > 0) {
+//     return capitaliseFirstLetters(value);
+//   }
+//   return title.withoutValue;
+// };
+
+const TagButton = ({
+  label,
+  onClickFunction,
+  aria,
+  withDelete,
+  type,
+}) => (
+  <TagBtn.Container
     aria-label={aria || `${type} button`}
-    >
-      {label}
-     {withDelete && 
-      <TagBtn.XBoxWrapper
-        onClick={onClickFunction}
-      >
-        {deleteIcon}
-      </TagBtn.XBoxWrapper>
-      }
-    </TagBtn.Container>
-  );
-};
-
-const SmallButton = ({ icon, onClickFunction, type, aria }) => {
-  return (
-    <smallBtn.Wrapper
+  >
+    {label}
+    {withDelete && (
+    <TagBtn.XBoxWrapper
       onClick={onClickFunction}
-      aria-label={aria || `${icon.props["aria-label"]} button`}
     >
-      <smallBtn.IconContainer>{icon}</smallBtn.IconContainer>
-    </smallBtn.Wrapper>
-  );
-};
+      {deleteIcon}
+    </TagBtn.XBoxWrapper>
+    )}
+  </TagBtn.Container>
+);
+
+const SmallButton = ({
+  icon,
+  onClickFunction,
+  // type,
+  aria,
+}) => (
+  <smallBtn.Wrapper
+    onClick={onClickFunction}
+    aria-label={aria || `${icon.props['aria-label']} button`}
+  >
+    <smallBtn.IconContainer>{icon}</smallBtn.IconContainer>
+  </smallBtn.Wrapper>
+);
 
 const MainButton = ({
   CustomButtonContainer,
@@ -193,17 +240,38 @@ const MainButton = ({
   clicked,
   onClickFunction,
   aria,
+  icon,
+  theme,
+  // change all the above to 'aria-labelledby': ariaLabelledBy,
 }) => {
+  const props = aria || type
+    ? {
+      onClick: onClickFunction,
+      'aria-label': aria || `${type} button`,
+    }
+    : {
+      onClick: onClickFunction,
+    };
+
+  const isCheckbox = type === 'checkbox';
   return (
     <mainBtn.Wrapper
-      onClick={onClickFunction}
-      aria-label={aria || `${type} button`}
+      {...props}
     >
-      <CustomButtonContainer>
-        <mainBtn.LabelContainer>
+      <CustomButtonContainer theme={theme}>
+        <mainBtn.LabelContainer theme={theme}>
           <mainBtn.Label>{capitaliseFirstLetters(label)}</mainBtn.Label>
+
+          {icon
+          && (
+          <DefaultIconWrapper>
+            {icon}
+          </DefaultIconWrapper>
+          )}
+
         </mainBtn.LabelContainer>
-        {type === "checkbox" && (
+
+        { isCheckbox && (
           <mainBtn.TickBoxWrapper>
             <mainBtn.TickBox>{clicked && tickIcon}</mainBtn.TickBox>
           </mainBtn.TickBoxWrapper>
@@ -216,26 +284,19 @@ const MainButton = ({
 const DropDownButton = ({
   onClickFunction,
   isMenuOpen,
-  freshlyAddedValue,
-  chosenValue,
   type,
   aria,
-}) => {
-  const folderName = freshlyAddedValue?.name || chosenValue
-  const dropDownButtonTitle = (freshlyAddedValue || chosenValue)
-    ? `Folder to display new part in: ${capitaliseFirstLetters(folderName)}`
-    : "Choose a folder to display part in";
-  return (
-    <dropDownButton.ContainerWrapper aria-label={aria || `${type} button`}>
-      <dropDownButton.Container onClick={onClickFunction}>
-        <div> {dropDownButtonTitle} </div>
-        <dropDownButton.ArrowContainer>
-          {isMenuOpen ? arrowUpIcon : arrowDownIcon}
-        </dropDownButton.ArrowContainer>
-      </dropDownButton.Container>
-    </dropDownButton.ContainerWrapper>
-  );
-};
+  title,
+}) => (
+  <dropDownButton.ContainerWrapper aria-label={aria || `${type} button`}>
+    <dropDownButton.Container onClick={onClickFunction}>
+      <div> {title} </div>
+      <dropDownButton.ArrowContainer>
+        {isMenuOpen ? arrowUpIcon : arrowDownIcon}
+      </dropDownButton.ArrowContainer>
+    </dropDownButton.Container>
+  </dropDownButton.ContainerWrapper>
+);
 
 const MultiBtnComp = ({
   label,
@@ -243,13 +304,15 @@ const MultiBtnComp = ({
   type,
   icon,
   onClickFunction,
-  renderConditional,
+  // renderConditional,
   isMenuOpen,
   freshlyAddedValue,
   chosenValue,
   aria,
+  title,
 }) => {
-  if (type === "small") {
+  const theme = useContext(ThemeContext);
+  if (type === 'small') {
     return (
       <SmallButton
         icon={icon}
@@ -259,7 +322,18 @@ const MultiBtnComp = ({
       />
     );
   }
-  if (type === "add") {
+  if (type === 'radio') {
+    console.log('returning radio@@@@@');
+    return (
+      <RadioBtn
+        label={label}
+        value={chosenValue}
+        setValue={onClickFunction}
+        theme={theme}
+      />
+    );
+  }
+  if (type === 'add') {
     return (
       <MainButton
         CustomButtonContainer={mainBtn.AddingVersionContainer}
@@ -268,10 +342,12 @@ const MultiBtnComp = ({
         clicked={clicked}
         onClickFunction={onClickFunction}
         aria={aria}
+        icon={icon}
+        theme={theme}
       />
     );
   }
-  if (type === "checkbox" && !!clicked) {
+  if (type === 'checkbox' && !!clicked) {
     return (
       <MainButton
         CustomButtonContainer={mainBtn.ClickedVersionContainer}
@@ -283,7 +359,7 @@ const MultiBtnComp = ({
       />
     );
   }
-  if (type === "dropDown") {
+  if (type === 'dropDown') {
     return (
       <DropDownButton
         onClickFunction={onClickFunction}
@@ -292,22 +368,23 @@ const MultiBtnComp = ({
         chosenValue={chosenValue}
         type={type}
         aria={aria}
-        providingAdditionalOption={true}
+        providingAdditionalOption
+        title={title}
       />
     );
   }
-  if (type === "tagWithX") {
+  if (type === 'tagWithX') {
     return (
       <TagButton
         onClickFunction={onClickFunction}
         label={label}
         type={type}
         aria={aria}
-        withDelete={true}
+        withDelete
       />
     );
   }
-  if (type === "tag") {
+  if (type === 'tag') {
     return (
       <TagButton
         label={label}
@@ -321,30 +398,117 @@ const MultiBtnComp = ({
     <div>
       <MainButton
         CustomButtonContainer={mainBtn.PlainVersionContainer}
-        type={type}
         label={label}
         clicked={clicked}
         onClickFunction={onClickFunction}
         aria={aria}
+        theme={theme}
       />
-      {/* {renderConditional(label) && <WarningElement info="will be deleted if not choosen" />} */}
+      {/* {renderConditional(label) && <WarningElement info='will be deleted if not choosen' />} */}
     </div>
   );
 };
 
+TagButton.propTypes = {
+  label: PropTypes.string,
+  onClickFunction: PropTypes.func,
+  aria: PropTypes.string,
+  withDelete: PropTypes.bool,
+  type: PropTypes.string,
+};
+
+TagButton.defaultProps = {
+  label: '...',
+  onClickFunction: () => {},
+  aria: '',
+  withDelete: false,
+  type: 'checkbox', // do we need that there
+};
+
+SmallButton.propTypes = {
+  icon: PropTypes.instanceOf(Object),
+  onClickFunction: PropTypes.func.isRequired,
+  // type: PropTypes.string, // do we need that there
+  aria: PropTypes.string,
+};
+
+SmallButton.defaultProps = {
+  icon: <> </>,
+  // type: '',
+  aria: '',
+};
+
+MainButton.propTypes = {
+  CustomButtonContainer: PropTypes.instanceOf(Object), // is this the right value?
+  type: PropTypes.string, // ??
+  label: PropTypes.string,
+  clicked: PropTypes.bool,
+  onClickFunction: PropTypes.func,
+  aria: PropTypes.string,
+  icon: PropTypes.instanceOf(Object),
+  theme: PropTypes.string,
+};
+
+MainButton.defaultProps = {
+  CustomButtonContainer: mainBtn.PlainVersionContainer,
+  type: undefined,
+  label: '...',
+  clicked: false,
+  onClickFunction: () => {},
+  aria: '',
+  icon: undefined,
+  theme: 'light',
+};
+
+DropDownButton.propTypes = {
+  onClickFunction: PropTypes.func,
+  isMenuOpen: PropTypes.bool,
+  type: PropTypes.string, // ??
+  aria: PropTypes.string,
+  title: PropTypes.objectOf(PropTypes.string).isRequired,
+};
+
+DropDownButton.defaultProps = {
+  onClickFunction: () => {},
+  isMenuOpen: false,
+  type: '', // ??
+  aria: '', // ??
+};
+
+MultiBtnComp.propTypes = {
+  label: PropTypes.oneOfType([PropTypes.string, PropTypes.arrayOf(PropTypes.string)]),
+  clicked: PropTypes.bool,
+  type: PropTypes.string,
+  icon: PropTypes.instanceOf(Object),
+  onClickFunction: PropTypes.func,
+  // renderConditional: PropTypes.,
+  isMenuOpen: PropTypes.bool,
+  freshlyAddedValue: PropTypes.string,
+  chosenValue: PropTypes.string,
+  aria: PropTypes.string,
+  title: PropTypes.objectOf(PropTypes.string),
+};
+MultiBtnComp.defaultProps = {
+  label: '...',
+  clicked: false,
+  type: '', // ??
+  icon: undefined,
+  onClickFunction: () => {},
+  // renderConditional: PropTypes.,
+  isMenuOpen: false,
+  freshlyAddedValue: '',
+  chosenValue: '',
+  aria: '',
+  title: {
+    withValue: '',
+    withoutValue: 'please choose a ',
+  },
+};
+
 export default MultiBtnComp;
 
-MultiBtnComp.propTypes = {};
-
-// make everything left align
-// for the parts:
-// make a greed
-// to be scrolling down in case of more than two rows of three
-// add a finder
-// for the folder:
-// make it a dropdown
-// when clicked, the same functionality ass the tick but instead of tick same green smaller shape as the white box
-// make this a dropdown
-// to add new have a popup with the existing box
-// instead of back to existing folders have a pink X top right
-// "if you leave this folder empty it will be deleted"
+// refactoring:
+// 'if you leave this folder empty it will be deleted'
+// change all the arias and aria labelledby props to this syntax 'aria-labelledby': ariaLabelledBy,
+// create emotion css components to refer partly to avoid those huge emotion blocks at the top.
+// change the if statements of the main component to swap
