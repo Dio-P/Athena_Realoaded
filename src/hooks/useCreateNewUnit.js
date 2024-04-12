@@ -4,19 +4,15 @@ import { v4 as uuidv4 } from 'uuid';
 const useCreateNewUnit = ({
   name,
   type,
-  newLink,
+  // newLink,
   teamsResponsible,
   leader,
   mainLinks,
   briefDescription,
   docs,
   tags,
-  technologies
+  technologies,
 }) => {
-  const ERRORS = {
-    newLink: 'Invalid Link',
-  };
-
   const newEntityConstructor = {
     id: uuidv4(),
     children: [],
@@ -55,23 +51,19 @@ const useCreateNewUnit = ({
     //     ]
     //   },
   };
+
+  // .....................!!!!!!!!!!!!!!
+  // we need some logic that will:
+  //  check if the strings for the document exist as units in the database
+  //  if there already are se the existing id in the array
+  //  if not create a new unit and put that id in the docs array
+  // .....................!!!!!!!!!!!!!!
+
   const [newEntityToBe, setNewEntityToBe] = useState(newEntityConstructor);
 
   // const [errors] = useState(ERRORS);
 
-  const addNewTeamResponsible = (newTeam) => {
-    set
-  };
-
-  const addNewLink = (newLink) => {
-    setMainLinks([...mainLinks, newLink]) 
-  }
-
-  return {
-    // errors,
-    addNewLink,
-    addNewTeamResponsible,
-  };
+  return [newEntityToBe, setNewEntityToBe]; // delete me.
 };
 
 export default useCreateNewUnit;
