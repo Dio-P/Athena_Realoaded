@@ -13,7 +13,7 @@ import { linkIsValid } from '../../../helpers/validation';
 import { errorsLink } from '../../../constants';
 import capitaliseFirstLetters from '../../../helpers/capitaliseFirstLetters';
 
-const CustomForm = styled.form`
+const CustomForm = styled.div`
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -220,23 +220,13 @@ const NewChildForm = () => {
             />
             {linkError && <WarningElement info={linkError} />}
           </>
-          <button
-            // type="add"
-            type="button"
-            disabled={!linkOnInput || !linkIsValid(linkOnInput)}
-            aria-hidden={!linkOnInput || !linkIsValid(linkOnInput)}
-            label={hasLinksSet ? 'add another link' : 'add link'}
-            onClick={() => handleAddLink(linkOnInput)}
-            // onClickFunction={() => handleAddLink(linkOnInput)}
-          >add link
-          </button>
-          {/* <MultiBtnComp
+          <MultiBtnComp
             type="add"
             disabled={!linkOnInput || !linkIsValid(linkOnInput)}
             aria-hidden={!linkOnInput || !linkIsValid(linkOnInput)}
             label={hasLinksSet ? 'add another link' : 'add link'}
             onClickFunction={() => handleAddLink(linkOnInput)}
-          /> */}
+          />
         </InputBtnContainer>
         {hasLinksSet
           && mainLinks.map((link) => (
@@ -312,7 +302,7 @@ const NewChildForm = () => {
         {hasDocsSet
           && allDocsOfUnit.map((doc) => (
             <TagBtn
-              label={doc.label}
+              label={doc}
               hasDeleteOption
               onClickDelete={() => handleDeleteChoice(doc, allDocsOfUnit, setAllDocsOfUnit)}
             />
@@ -375,8 +365,7 @@ const NewChildForm = () => {
 
       <CtaBtnsContainer>
         <CtaBtn>Cancel</CtaBtn>
-        {/* <CtaBtn onClick={handleAddNewUnit}>Add</CtaBtn> */}
-        <button onClick={handleAddNewUnit} type="button"> Add</button>
+        <CtaBtn onClick={() => handleAddNewUnit()}>Add</CtaBtn>
       </CtaBtnsContainer>
     </CustomForm>
   );
