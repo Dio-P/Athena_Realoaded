@@ -1,31 +1,30 @@
-import { useState } from 'react';
+// import { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
-const useCreateNewUnit = ({
-  name,
-  type,
-  // newLink,
-  teamsResponsible,
-  leader,
+const useCreateNewUnit = (
+  nameOnInput,
+  typeOnInput,
+  teamsResponsibleOnInput,
+  // leaderOnInput,
   mainLinks,
-  briefDescription,
-  docs,
-  tags,
-  technologies,
-}) => {
-  const newEntityConstructor = {
+  briefDescriptionOnInput,
+  allDocsOfUnit,
+  allTagsOfUnit,
+  allTechnologiesOfUnit,
+) => {
+  const newEntityConstructor = () => ({
     id: uuidv4(),
     children: [],
-    name,
-    type,
-    teamsResponsible,
-    leader,
+    name: nameOnInput,
+    type: typeOnInput,
+    teamsResponsible: teamsResponsibleOnInput,
+    // leader: leaderOnInput,
     mainLinks,
-    briefDescription,
+    briefDescription: briefDescriptionOnInput,
     properties: {
-      docs,
-      tags,
-      technologies,
+      docs: allDocsOfUnit,
+      tags: allTagsOfUnit,
+      technologies: allTechnologiesOfUnit,
     },
     // connections: {
     // audienceFacing: false,
@@ -50,6 +49,11 @@ const useCreateNewUnit = ({
     //       }
     //     ]
     //   },
+  });
+
+  const handleCreateNewUnit = () => {
+    console.log('handle handleCreateNewUnit');
+    console.log('newEntityConstructor', newEntityConstructor());
   };
 
   // .....................!!!!!!!!!!!!!!
@@ -59,11 +63,11 @@ const useCreateNewUnit = ({
   //  if not create a new unit and put that id in the docs array
   // .....................!!!!!!!!!!!!!!
 
-  const [newEntityToBe, setNewEntityToBe] = useState(newEntityConstructor);
+  // const [newEntityToBe, setNewEntityToBe] = useState(newEntityConstructor);
 
   // const [errors] = useState(ERRORS);
 
-  return [newEntityToBe, setNewEntityToBe]; // delete me.
+  return [handleCreateNewUnit]; // delete me.
 };
 
 export default useCreateNewUnit;

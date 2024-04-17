@@ -4,7 +4,7 @@ import useGetAllTypes from '../../../hooks/queries/useGetAllTypes';
 import useGetAllTechnologies from '../../../hooks/queries/useGetAllTechnologies';
 import useGetAllTags from '../../../hooks/queries/useGetAllTags';
 import useGetAllTeams from '../../../hooks/queries/useGetAllTeams';
-// import useCreateNewUnit from '../../../hooks/useCreateNewUnit';
+import useCreateNewUnit from '../../../hooks/useCreateNewUnit';
 import MultiBtnComp from '../../MultiBtnComp';
 import TagBtn from '../../buttons/TagBtn';
 import DropDown from '../../DropDown';
@@ -71,11 +71,12 @@ const NewChildForm = () => {
   const [typeOnInput, setTypeOnInput] = useState('');
   const [teamsResponsibleOnInput, setTeamsResponsibleOnInput] = useState([]);
   // const [leaderOnInput, setLeaderOnInput] = useState('');
+  // this should be comming from partner platform
   const [briefDescriptionOnInput, setBriefDescriptionOnInput] = useState('');
 
   const [docOnInput, setDocOnInput] = useState('');
-  const [tagsOnInput, setTagsOnInput] = useState([]);
-  const [technologiesOnInput, setTechnologiesOnInput] = useState([]);
+  const [allTagsOfUnit, setAllTagsOfUnit] = useState([]);
+  const [allTechnologiesOfUnit, setAllTechnologiesOfUnit] = useState([]);
 
   const [linkError, setLinkError] = useState('');
   const [docError, setDocError] = useState('');
@@ -86,8 +87,8 @@ const NewChildForm = () => {
   // animation-timing-function: onClickFunctions.
 
   useEffect(() => {
-    console.log('technologiesOnInput******', technologiesOnInput);
-  }, [technologiesOnInput]);
+    console.log('allTechnologiesOfUnit******', allTechnologiesOfUnit);
+  }, [allTechnologiesOfUnit]);
 
   const requiredFields = {
     nameOnInput, // string
@@ -95,14 +96,26 @@ const NewChildForm = () => {
     typeOnInput, // object
     teamsResponsibleOnInput, // array
     briefDescriptionOnInput, // string
-    docOnInput, // array
+    allDocsOfUnit, // array
   };
 
   // const optionalFields = {
   //   leaderOnInput,
-  //   tagsOnInput,
-  //   technologiesOnInput,
+  //   allTagsOfUnit,
+  //   allTechnologiesOfUnit,
   // };
+  const [handleCreateNewUnit] = useCreateNewUnit(
+    nameOnInput,
+    typeOnInput,
+    teamsResponsibleOnInput,
+    // leaderOnInput,
+    mainLinks,
+    briefDescriptionOnInput,
+    allDocsOfUnit,
+    allTagsOfUnit,
+    allTechnologiesOfUnit,
+  );
+
   const [typesToRender, filterTypes] = useGetAllTypes();
   const [teamsToRender, filterTeams] = useGetAllTeams();
   // const [] = useGetAllDocs();
@@ -161,6 +174,7 @@ const NewChildForm = () => {
       // logic to announce missing fields here
     } else {
       console.log('good to add');
+      handleCreateNewUnit();
       // logic to add the new unit
       // delete the log above
     }
@@ -322,16 +336,16 @@ const NewChildForm = () => {
         <DropDown
           role="combobox"
           onClickOption={(latestTagAdded) => {
-            setTagsOnInput([...tagsOnInput, latestTagAdded]);
+            setAllTagsOfUnit([...allTagsOfUnit, latestTagAdded]);
           }}
           onDeletingChoice={
             (choiceToDelete) => (
-              handleDeleteChoice(choiceToDelete, tagsOnInput, setTagsOnInput)
+              handleDeleteChoice(choiceToDelete, allTagsOfUnit, setAllTagsOfUnit)
             )
           }
-          chosenValue={tagsOnInput}
+          chosenValue={allTagsOfUnit}
           acceptsMultipleValues
-          title={tagsOnInput?.length > 0 ? `${tagsOnInput.length} selected` : 'Please choose a tag'}
+          title={allTagsOfUnit?.length > 0 ? `${allTagsOfUnit.length} selected` : 'Please choose a tag'}
           options={tagsToRender}
           onChange={filterTags}
           ofType="tags"
@@ -344,17 +358,17 @@ const NewChildForm = () => {
         <DropDown
           onClickOption={
             (latestTechnologyAdded) => {
-              setTechnologiesOnInput([...technologiesOnInput, latestTechnologyAdded]);
+              setAllTechnologiesOfUnit([...allTechnologiesOfUnit, latestTechnologyAdded]);
             }
           }
-          chosenValue={technologiesOnInput}
+          chosenValue={allTechnologiesOfUnit}
           acceptsMultipleValues
           onDeletingChoice={
             (choiceToDelete) => (
-              handleDeleteChoice(choiceToDelete, technologiesOnInput, setTechnologiesOnInput)
+              handleDeleteChoice(choiceToDelete, allTechnologiesOfUnit, setAllTechnologiesOfUnit)
             )
           }
-          title={technologiesOnInput.length > 0 ? `${technologiesOnInput.length} selected` : 'Please choose a technology'}
+          title={allTechnologiesOfUnit.length > 0 ? `${allTechnologiesOfUnit.length} selected` : 'Please choose a technology'}
           options={technologiesToRender}
           onChange={filterTechnologies}
           ofType="technology"
