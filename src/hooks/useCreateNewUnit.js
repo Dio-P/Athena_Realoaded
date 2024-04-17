@@ -1,4 +1,4 @@
-// import { useState } from 'react';
+import { useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
 const useCreateNewUnit = (
@@ -8,10 +8,20 @@ const useCreateNewUnit = (
   // leaderOnInput,
   mainLinks,
   briefDescriptionOnInput,
-  allDocsOfUnit,
-  allTagsOfUnit,
-  allTechnologiesOfUnit,
+  allDocsOfEntity,
+  allTagsOfEntity,
+  allTechnologiesOfEntity,
 ) => {
+  useEffect(() => {
+    
+  }, []);
+
+  const allDocsEntityIdsArray = () => {
+    const docsAllreadyExist = allDocsOfEntity.filter((docLink) => (
+      allDocLinks.includes(docLink)
+    ));
+  };
+
   const newEntityConstructor = () => ({
     id: uuidv4(),
     children: [],
@@ -22,9 +32,9 @@ const useCreateNewUnit = (
     mainLinks,
     briefDescription: briefDescriptionOnInput,
     properties: {
-      docs: allDocsOfUnit,
-      tags: allTagsOfUnit,
-      technologies: allTechnologiesOfUnit,
+      docs: allDocsEntityIdsArray(),
+      tags: allTagsOfEntity,
+      technologies: allTechnologiesOfEntity,
     },
     // connections: {
     // audienceFacing: false,
