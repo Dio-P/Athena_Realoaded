@@ -365,7 +365,11 @@ const NewChildForm = () => {
           acceptsMultipleValues
           onDeletingChoice={
             (choiceToDelete) => (
-              handleDeleteChoice(choiceToDelete, allTechnologiesOfEntity, setAllTechnologiesOfEntity)
+              handleDeleteChoice(
+                choiceToDelete,
+                allTechnologiesOfEntity,
+                setAllTechnologiesOfEntity,
+              )
             )
           }
           title={allTechnologiesOfEntity.length > 0 ? `${allTechnologiesOfEntity.length} selected` : 'Please choose a technology'}

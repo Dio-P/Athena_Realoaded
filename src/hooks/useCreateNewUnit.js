@@ -1,5 +1,6 @@
-import { useEffect } from 'react';
+// import { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
+import useGetAllDocs from './queries/useGetAllDocs';
 
 const useCreateNewUnit = (
   nameOnInput,
@@ -12,14 +13,40 @@ const useCreateNewUnit = (
   allTagsOfEntity,
   allTechnologiesOfEntity,
 ) => {
-  useEffect(() => {
-    
-  }, []);
+  const [allUnitsOfTypeDoc] = useGetAllDocs();
 
   const allDocsEntityIdsArray = () => {
-    const docsAllreadyExist = allDocsOfEntity.filter((docLink) => (
+    const allDocLinks = allUnitsOfTypeDoc.map((doc) => (doc.mainLinks)).flat();
+    const linksExistingAsDocEntities = [];
+    const linksNotExistingInDB = [];
+    const docIdsArray = [];
+
+    allDocsOfEntity.forEach((docLink) => (
       allDocLinks.includes(docLink)
+        ? linksExistingAsDocEntities.push(docLink)
+        : linksNotExistingInDB.push(docLink)
     ));
+
+    if (linksExistingAsDocEntities.length > 0) {
+      linksExistingAsDocEntities.forEach((link) => {
+        const thisDocumentEntity = allUnitsOfTypeDoc.find((entity) => (
+          entity.mainLinks.includes(link)));
+        if (thisDocumentEntity) {
+          docIdsArray.push(thisDocumentEntity.id);
+        } else {
+          throw new Error('entity with the right doc link not found');
+        }
+      });
+    }
+
+    if (linksNotExistingInDB.length > 0) {
+      linksNotExistingInDB.forEach((link) => (
+        console.log('link', link)
+        // here we need to populate the array with the ids gotten
+        // from the newly created entities
+        // but first I need to find a way to populate the entities with data
+      ));
+    }
   };
 
   const newEntityConstructor = () => ({
