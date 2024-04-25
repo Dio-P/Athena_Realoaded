@@ -45,6 +45,16 @@ const useCreateNewUnit = (
         // here we need to populate the array with the ids gotten
         // from the newly created entities
         // but first I need to find a way to populate the entities with data
+
+      // id: uuidv4(),
+      // name: // from title
+      // type: // here I need to pull from the db the doc type id
+      // mainLinks: [`${link}`],
+      // properties: {
+      //   docs: allDocsEntityIdsArray(),
+      //   tags: allTagsOfEntity,
+      //   technologies: allTechnologiesOfEntity,
+      // },
       ));
     }
   };
