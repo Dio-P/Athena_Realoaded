@@ -37,20 +37,33 @@ const findSource = (linkParts) => {
   return firstLinkFragment[1];
 };
 
-const getSourceDetails = async (link) => {
-  console.log('inside getSourceDetails@@', link);
+const getSourceDetails = (links) => {
+  console.log('inside getSourceDetails@@', links);
 
-  const linkParts = link
+  const seperateLinkParts = (link) => (link
     .split('/')
     .filter((fragment) => (
       fragment !== ''
-    ));
+    ))
+  );
 
-  const lastLinkIndx = linkParts.length - 1;
+  const linksPartsCollection = links.map((link) => (
+    seperateLinkParts(link)
+  ));
 
-  const source = findSource(linkParts);
-  const name = await findName(source, lastLinkIndx, linkParts);
-  return { source, name };
+  const linksSourcesArray = () => {
+    const sources = linksPartsCollection.map((linkParts) => {
+      const lastLinkIndx = (linkParts.length - 1);
+      const source = findSource(linkParts);
+      const name = findName(source, lastLinkIndx, linkParts);
+
+      return [source, name];
+    });
+
+    return sources;
+  };
+
+  return [linksSourcesArray];
 };
 
 export default getSourceDetails;

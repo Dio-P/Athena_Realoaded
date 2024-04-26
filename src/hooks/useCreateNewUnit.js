@@ -1,6 +1,7 @@
 // import { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import useGetAllDocs from './queries/useGetAllDocs';
+import getSourceDetails from './getSourceDetails';
 
 const useCreateNewUnit = (
   nameOnInput,
@@ -14,6 +15,8 @@ const useCreateNewUnit = (
   allTechnologiesOfEntity,
 ) => {
   const [allUnitsOfTypeDoc] = useGetAllDocs();
+  const [linksSourcesArray] = getSourceDetails(allDocsOfEntity);
+  // here the doc source will be gotten
 
   const allDocsEntityIdsArray = () => {
     const allDocLinks = allUnitsOfTypeDoc.map((doc) => (doc.mainLinks)).flat();
