@@ -37,15 +37,15 @@ const findSource = (linkParts) => {
   return firstLinkFragment[1];
 };
 
+const seperateLinkParts = (link) => (link
+  .split('/')
+  .filter((fragment) => (
+    fragment !== ''
+  ))
+);
+
 const getSourceDetails = (links) => {
   console.log('inside getSourceDetails@@', links);
-
-  const seperateLinkParts = (link) => (link
-    .split('/')
-    .filter((fragment) => (
-      fragment !== ''
-    ))
-  );
 
   const linksPartsCollection = links.map((link) => (
     seperateLinkParts(link)
