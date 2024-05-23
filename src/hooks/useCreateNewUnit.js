@@ -1,7 +1,8 @@
 // import { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import useGetAllDocs from './queries/useGetAllDocs';
-import getSourceDetails from './getSourceDetails';
+import getDocSourceDetails from './getDocSourceDetails';
+import useAddNewEntities from './queries/useAddNewEntities';
 
 const useCreateNewUnit = (
   nameOnInput,
@@ -15,10 +16,10 @@ const useCreateNewUnit = (
   allTechnologiesOfEntity,
 ) => {
   const [allUnitsOfTypeDoc] = useGetAllDocs();
-  const [linksSourcesArray] = getSourceDetails(allDocsOfEntity);
+  const [addEntities] = useAddNewEntities();
   // here the doc source will be gotten
 
-  const allDocsEntityIdsArray = () => {
+  const allDocsEntityIdsArray = () => { // this title is a bit unclear
     const allDocLinks = allUnitsOfTypeDoc.map((doc) => (doc.mainLinks)).flat();
     const linksExistingAsDocEntities = [];
     const linksNotExistingInDB = [];
@@ -43,23 +44,40 @@ const useCreateNewUnit = (
     }
 
     if (linksNotExistingInDB.length > 0) {
-      linksNotExistingInDB.forEach((link) => (
-        console.log('link', link)
+      const allNewEntitiesForDb = linksNotExistingInDB.map((link) => {
+        console.log('link', link);
+        // when you are done put the bellow in a seperate function
+
+        // create the doc unit, get the id to use it for the unit created after this
+        // I think that this function needs to return an array of ids, which will enchance
+        // the entities docs allong the ids of those docs that allready exist.
+        const { source, name } = getDocSourceDetails(link);
         // here we need to populate the array with the ids gotten
         // from the newly created entities
         // but first I need to find a way to populate the entities with data
 
-      // id: uuidv4(),
-      // name: // from title
-      // type: // here I need to pull from the db the doc type id
-      // mainLinks: [`${link}`],
-      // properties: {
-      //   docs: allDocsEntityIdsArray(),
-      //   tags: allTagsOfEntity,
-      //   technologies: allTechnologiesOfEntity,
-      // },
-      ));
+        return {
+          id: uuidv4(),
+          name, // from title
+          type: 'theDocTypeId', // here I need to pull from the db the doc type id
+          mainLinks: [`${link}`],
+          properties: {
+            // docs: , // does a doc needs docs?
+            tags: allTagsOfEntity,
+            technologies: allTechnologiesOfEntity,
+            source,
+          },
+        };
+
+        // use the docEntityConstructor to make the api call to add the doc entity to the db
+        // return from this hook the id and add it to an array.
+      });
+      const newlyAddedEntitesIds = addEntities(allNewEntitiesForDb);
+      docIdsArray.push(...newlyAddedEntitesIds); // instead of that I need to send this to db
+      // and push only the entities ids
+      // return allNewEntitiesForDb;
     }
+    return docIdsArray;
   };
 
   const newEntityConstructor = () => ({

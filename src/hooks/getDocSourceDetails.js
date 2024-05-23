@@ -44,29 +44,32 @@ const seperateLinkParts = (link) => (link
   ))
 );
 
-const getSourceDetails = (links) => {
-  console.log('inside getSourceDetails@@', links);
+const getDocSourceDetails = (link) => {
+  console.log('inside getDocSourceDetails@@', link);
 
-  const linksPartsCollection = links.map((link) => (
-    seperateLinkParts(link)
-  ));
+  // const linksPartsCollection = links.map((link) => (
+  //   seperateLinkParts(link)
+  // ));
 
-  const linksSourcesArray = () => {
-    const sources = linksPartsCollection.map((linkParts) => {
-      const lastLinkIndx = (linkParts.length - 1);
-      const source = findSource(linkParts);
-      const name = findName(source, lastLinkIndx, linkParts);
+  // const linksSourcesArray = () => {
+  //   const sources = linksPartsCollection.map((linkParts) => {
+  //     const lastLinkIndx = (linkParts.length - 1);
+  //     const source = findSource(linkParts);
+  //     const name = findName(source, lastLinkIndx, linkParts);
 
-      return [source, name];
-    });
+  //     return [source, name];
+  //   });
+  //   return sources;
+  // }
+  const seperatedLinkParts = seperateLinkParts(link);
+  const lastLinkIndx = (seperatedLinkParts.length - 1);
+  const source = findSource(seperatedLinkParts);
+  const name = findName(source, lastLinkIndx, seperatedLinkParts);
 
-    return sources;
-  };
-
-  return [linksSourcesArray];
+  return { source, name };
 };
 
-export default getSourceDetails;
+export default getDocSourceDetails;
 
 // fetch(https://github.com/Dio-P/Athena/blob/main/src/components/AddNewConnectionBlock.js)
 // https://paper.dropbox.com/doc/Imposter-syndrome-workshop-ideas--BtYF4rZRzasgUTPjgE7J0osIAg-vIsKjOV2rmXL6H3g39LgZ
