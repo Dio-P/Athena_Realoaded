@@ -165,8 +165,11 @@ const NewChildForm = () => {
   // can I call the above as a closure ?
 
   const handleAddNewUnit = () => {
+    console.log('inside handleAddNewUnit');
     const allRequiredFieldsKeys = Object.keys(requiredFields);
+    console.log('allRequiredFieldsKeys', allRequiredFieldsKeys);
     const missingRequiredFields = allRequiredFieldsKeys.filter(findMissingField);
+    console.log('missingRequiredFields', missingRequiredFields);
     // will this break it if it is not an object ?
     if (missingRequiredFields.length > 0) {
       const missingRequiredFieldsString = missingRequiredFields.join(', ');

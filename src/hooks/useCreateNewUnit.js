@@ -19,7 +19,7 @@ const useCreateNewUnit = (
   const [addEntities] = useAddNewEntities();
   // here the doc source will be gotten
 
-  const allDocsEntityIdsArray = () => { // this title is a bit unclear
+  const allDocsEntityIdsArray = async () => { // this title is a bit unclear
     const allDocLinks = allUnitsOfTypeDoc.map((doc) => (doc.mainLinks)).flat();
     const linksExistingAsDocEntities = [];
     const linksNotExistingInDB = [];
@@ -72,8 +72,9 @@ const useCreateNewUnit = (
         // use the docEntityConstructor to make the api call to add the doc entity to the db
         // return from this hook the id and add it to an array.
       });
-      const newlyAddedEntitesIds = addEntities(allNewEntitiesForDb);
-      docIdsArray.push(...newlyAddedEntitesIds); // instead of that I need to send this to db
+      const newlyAddedEntitesIds = await addEntities(allNewEntitiesForDb);
+      newlyAddedEntitesIds.forEach((newEntity) => (
+        docIdsArray.push(newEntity))); // instead of that I need to send this to db
       // and push only the entities ids
       // return allNewEntitiesForDb;
     }

@@ -5,6 +5,7 @@ import useCreateNewUnit from './useCreateNewUnit';
 jest.mock('@apollo/client');
 const useGetAllDocs = jest.fn();
 const useAddNewEntities = jest.fn();
+const addEntities = jest.fn();
 // const [allUnitsOfTypeDoc] = useGetAllDocs();
 // const [addEntities] = useAddNewEntities();
 beforeEach(() => {
@@ -13,6 +14,7 @@ beforeEach(() => {
     // to add examples of doc entities
   ]);
   useAddNewEntities.mockImplementation(() => [
+    addEntities,
     // to return what the funtion should return ?
   ]);
 });
@@ -20,6 +22,7 @@ beforeEach(() => {
 describe('useCreateNewUnit', () => {
   describe('allDocsEntityIdsArray', () => {
     test('', () => {
+        addEntities.toHaveBeenCalledWith
 
     });
   });
