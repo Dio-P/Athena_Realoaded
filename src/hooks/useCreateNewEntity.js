@@ -3,6 +3,7 @@ import { v4 as uuidv4 } from 'uuid';
 import useGetAllDocs from './queries/useGetAllDocs';
 import getDocSourceDetails from './getDocSourceDetails';
 import useAddNewEntities from './queries/useAddNewEntities';
+import useGetAllTypes from './queries/useGetAllTypes';
 
 const useCreateNewUnit = (
   nameOnInput,
@@ -17,6 +18,7 @@ const useCreateNewUnit = (
 ) => {
   const [allUnitsOfTypeDoc] = useGetAllDocs();
   const [addEntities] = useAddNewEntities();
+  const [allTypes] = useGetAllTypes();
   // here the doc source will be gotten
 
   const allDocsEntityIdsArray = async () => { // this title is a bit unclear
@@ -56,6 +58,8 @@ const useCreateNewUnit = (
         // I think that this function needs to return an array of ids, which will enchance
         // the entities docs allong the ids of those docs that allready exist.
         const { source, name } = getDocSourceDetails(link);
+        const documentTypeId = allTypes.find((type) => type.title === 'document').id;
+        console.log('documentType', documentTypeId);
         // here we need to populate the array with the ids gotten
         // from the newly created entities
         // but first I need to find a way to populate the entities with data
@@ -63,11 +67,7 @@ const useCreateNewUnit = (
         return {
           id: uuidv4(),
           name, // from title
-          type: {
-            id: 'theDocTypeId',
-            title: 'theDocTypeTitle',
-            description: 'theDocTypeDescription',
-          }, // here I need to pull from the db the doc type id
+          type: documentTypeId, // here I need to pull from the db the doc type id
           mainLinks: [`${link}`],
           properties: {
             // docs: , // does a doc needs docs?

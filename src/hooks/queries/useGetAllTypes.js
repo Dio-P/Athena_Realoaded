@@ -12,7 +12,7 @@ export const GET_ALL_TYPES = gql`
   }`;
 
 const useGetAllTypes = () => {
-  const [typesToRender, setTypesToRender] = useState('');
+  const [allTypes, setAllTypes] = useState('');
 
   const [query, { loading, error, data }] = useLazyQuery(
     GET_ALL_TYPES,
@@ -24,7 +24,7 @@ const useGetAllTypes = () => {
 
   useEffect(() => {
     if (data?.getAllTypes) {
-      setTypesToRender(data?.getAllTypes);
+      setAllTypes(data?.getAllTypes);
     }
     if (error) {
       console.error(error);
@@ -37,12 +37,12 @@ const useGetAllTypes = () => {
     const allTypesArray = data?.getAllTypes;
     if (allTypesArray?.length > 0) {
       if (queryString) {
-        setTypesToRender(allTypesArray.filter((type) => (
+        setAllTypes(allTypesArray.filter((type) => (
           type.title.includes(queryString)
           || type.description.includes(queryString)
         )));
       } else {
-        setTypesToRender(allTypesArray);
+        setAllTypes(allTypesArray);
         // I want if now query string to display
       }
     } else {
@@ -50,7 +50,7 @@ const useGetAllTypes = () => {
     }
   };
 
-  return [typesToRender, filterTypes];
+  return [allTypes, filterTypes];
 };
 
 export default useGetAllTypes;
