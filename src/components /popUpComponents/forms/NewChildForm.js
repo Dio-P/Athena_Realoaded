@@ -4,7 +4,7 @@ import useGetAllTypes from '../../../hooks/queries/useGetAllTypes';
 import useGetAllTechnologies from '../../../hooks/queries/useGetAllTechnologies';
 import useGetAllTags from '../../../hooks/queries/useGetAllTags';
 import useGetAllTeams from '../../../hooks/queries/useGetAllTeams';
-import useCreateNewUnit from '../../../hooks/useCreateNewUnit';
+import useCreateNewUnit from '../../../hooks/useCreateNewEntity';
 import MultiBtnComp from '../../MultiBtnComp';
 import TagBtn from '../../buttons/TagBtn';
 import DropDown from '../../DropDown';

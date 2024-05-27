@@ -1,6 +1,6 @@
 import { renderHook } from '@testing-library/react';
 import { useLazyQuery } from '@apollo/client';
-import useCreateNewUnit from './useCreateNewUnit';
+import useCreateNewUnit from './useCreateNewEntity';
 
 jest.mock('@apollo/client');
 const useGetAllDocs = jest.fn();
