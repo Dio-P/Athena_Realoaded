@@ -20,11 +20,15 @@ const useCreateNewUnit = (
   // here the doc source will be gotten
 
   const allDocsEntityIdsArray = async () => { // this title is a bit unclear
+    console.log('allUnitsOfTypeDoc(((())))', allUnitsOfTypeDoc);
     const allDocLinks = allUnitsOfTypeDoc.map((doc) => (doc.mainLinks)).flat();
+    console.log('allDocLinks!!!', allDocLinks);
     const linksExistingAsDocEntities = [];
     const linksNotExistingInDB = [];
     const docIdsArray = [];
 
+    console.log('allDocLinks(((())))', allDocLinks);
+    console.log('allDocsOfEntity(((())))', allDocsOfEntity);
     allDocsOfEntity.forEach((docLink) => (
       allDocLinks.includes(docLink)
         ? linksExistingAsDocEntities.push(docLink)
@@ -81,7 +85,9 @@ const useCreateNewUnit = (
         docIdsArray.push(newEntity))); // instead of that I need to send this to db
       // and push only the entities ids
       // return allNewEntitiesForDb;
+      console.log('newlyAddedEntitesIds***', newlyAddedEntitesIds);
     }
+    console.log('docIdsArray', docIdsArray);
     return docIdsArray;
   };
 
