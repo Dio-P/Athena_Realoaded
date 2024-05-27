@@ -59,7 +59,11 @@ const useCreateNewUnit = (
         return {
           id: uuidv4(),
           name, // from title
-          type: 'theDocTypeId', // here I need to pull from the db the doc type id
+          type: {
+            id: 'theDocTypeId',
+            title: 'theDocTypeTitle',
+            description: 'theDocTypeDescription',
+          }, // here I need to pull from the db the doc type id
           mainLinks: [`${link}`],
           properties: {
             // docs: , // does a doc needs docs?
