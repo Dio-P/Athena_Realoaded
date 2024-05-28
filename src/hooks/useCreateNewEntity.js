@@ -19,18 +19,17 @@ const useCreateNewUnit = (
   const [allUnitsOfTypeDoc] = useGetAllDocs();
   const [addEntities] = useAddNewEntities();
   const [allTypes] = useGetAllTypes();
+  console.log('allTypes!!!!!!!', allTypes);
+  const documentTypeId = allTypes.find((type) => type.title === 'document').id;
+
   // here the doc source will be gotten
 
   const allDocsEntityIdsArray = async () => { // this title is a bit unclear
-    console.log('allUnitsOfTypeDoc(((())))', allUnitsOfTypeDoc);
     const allDocLinks = allUnitsOfTypeDoc.map((doc) => (doc.mainLinks)).flat();
-    console.log('allDocLinks!!!', allDocLinks);
     const linksExistingAsDocEntities = [];
     const linksNotExistingInDB = [];
     const docIdsArray = [];
 
-    console.log('allDocLinks(((())))', allDocLinks);
-    console.log('allDocsOfEntity(((())))', allDocsOfEntity);
     allDocsOfEntity.forEach((docLink) => (
       allDocLinks.includes(docLink)
         ? linksExistingAsDocEntities.push(docLink)
@@ -58,7 +57,6 @@ const useCreateNewUnit = (
         // I think that this function needs to return an array of ids, which will enchance
         // the entities docs allong the ids of those docs that allready exist.
         const { source, name } = getDocSourceDetails(link);
-        const documentTypeId = allTypes.find((type) => type.title === 'document').id;
         console.log('documentType', documentTypeId);
         // here we need to populate the array with the ids gotten
         // from the newly created entities
@@ -91,44 +89,37 @@ const useCreateNewUnit = (
     return docIdsArray;
   };
 
-  const newEntityConstructor = () => ({
-    id: uuidv4(),
-    children: [],
-    name: nameOnInput,
-    type: typeOnInput,
-    teamsResponsible: teamsResponsibleOnInput,
-    // leader: leaderOnInput,
-    mainLinks,
-    briefDescription: briefDescriptionOnInput,
-    properties: {
-      docs: allDocsEntityIdsArray(),
-      tags: allTagsOfEntity,
-      technologies: allTechnologiesOfEntity,
-    },
-    // connections: {
-    // audienceFacing: false,
-    // receivesDataFrom: undefined,
-    // givesDataTo: undefined,
-    // },
-    //   interactions: {
-    //     isLinkUpToDate: true,
-    //     comments: [
-    //       {
-    //         timeStamp: "some date and time",
-    //         userId: "some user Id or name",
-    //         text: "some text"
-    //       }
-    //     ],
-    //     requestedActions: [
-    //       {
-    //         timeStamp: "some date and time",
-    //         typeOfAction: "some action type",
-    //         description: "some coments",
-    //         requestingUserId: "some user Id or name"
-    //       }
-    //     ]
-    //   },
-  });
+  const newEntityConstructor = () => {
+    const standardKeys = {
+      id: uuidv4(),
+      name: nameOnInput,
+      type: typeOnInput,
+      teamsResponsible: teamsResponsibleOnInput,
+      // leader: leaderOnInput,
+      mainLinks,
+      briefDescription: briefDescriptionOnInput,
+      properties: {
+        tags: allTagsOfEntity,
+        technologies: allTechnologiesOfEntity,
+      },
+    };
+
+    const newEntity = { ...standardKeys };
+
+    if (typeOnInput === 'document') {
+      const { source, name } = getDocSourceDetails(mainLinks[0]);
+      newEntity.properties.source = source;
+      newEntity.name = name;
+    }
+
+    if (typeOnInput !== 'document') {
+      newEntity.children = [];
+      newEntity.properties.docs = allDocsEntityIdsArray();
+    }
+
+    console.log('newEntity(((())))', newEntity);
+    return newEntity;
+  };
 
   const handleCreateNewUnit = () => {
     console.log('handle handleCreateNewUnit');

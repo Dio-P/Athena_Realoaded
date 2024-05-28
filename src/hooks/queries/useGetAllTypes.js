@@ -50,6 +50,7 @@ const useGetAllTypes = () => {
     }
   };
 
+  console.log('allTypes*(*(*()))', allTypes);
   return [allTypes, filterTypes];
 };
 
