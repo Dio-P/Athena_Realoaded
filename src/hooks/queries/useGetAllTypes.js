@@ -12,13 +12,21 @@ export const GET_ALL_TYPES = gql`
   }`;
 
 const useGetAllTypes = () => {
-  const [allTypes, setAllTypes] = useState('');
+  console.log('inside useGetAllTypes ***');
+  const [allTypes, setAllTypes] = useState([]);
 
   const [query, { loading, error, data }] = useLazyQuery(
     GET_ALL_TYPES,
   );
 
+  console.log('about to go to uef');
+  // query();
   useEffect(() => {
+    console.log('test, test, test!!!');
+  }, []);
+  useEffect(() => {
+    console.log('this log shoul appear');
+    console.log('about o get all types ');
     query();
   }, []);
 
