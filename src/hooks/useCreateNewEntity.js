@@ -89,12 +89,12 @@ const useCreateNewUnit = (
     return docIdsArray;
   };
 
-  const newEntityConstructor = () => {
+  const newEntityConstructor = async () => {
     const standardKeys = {
       id: uuidv4(),
       name: nameOnInput,
-      type: typeOnInput,
-      teamsResponsible: teamsResponsibleOnInput,
+      type: typeOnInput.id,
+      teamsResponsible: teamsResponsibleOnInput.map((team) => (team.id)),
       // leader: leaderOnInput,
       mainLinks,
       briefDescription: briefDescriptionOnInput,
@@ -114,16 +114,18 @@ const useCreateNewUnit = (
 
     if (typeOnInput !== 'document') {
       newEntity.children = [];
-      newEntity.properties.docs = allDocsEntityIdsArray();
+      newEntity.properties.docs = await allDocsEntityIdsArray();
     }
 
     console.log('newEntity(((())))', newEntity);
     return newEntity;
   };
 
-  const handleCreateNewUnit = () => {
+  const handleCreateNewUnit = async () => {
     console.log('handle handleCreateNewUnit');
     console.log('newEntityConstructor', newEntityConstructor());
+    const newEntity = await newEntityConstructor();
+    addEntities(newEntity);
   };
 
   // .....................!!!!!!!!!!!!!!
