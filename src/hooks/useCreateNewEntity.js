@@ -20,7 +20,7 @@ const useCreateNewUnit = (
   const [addEntities] = useAddNewEntities();
   const [allTypes] = useGetAllTypes();
   console.log('allTypes!!!!!!!', allTypes);
-  const documentTypeId = allTypes.find((type) => type.title === 'document').id;
+  const documentTypeId = allTypes && allTypes.find((type) => type.title === 'document').id;
 
   // here the doc source will be gotten
 
