@@ -56,6 +56,7 @@ const PopUp = ({
           <ComponentToDisplay
             onClickFunctions={onClickFunctions}
             values={values}
+            closePopUP={() => setIsPopUpOpen(false)}
           />
         </ComponentToDisplayWrapper>
       </PopUpContainer>

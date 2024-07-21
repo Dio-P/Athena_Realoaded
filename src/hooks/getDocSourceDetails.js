@@ -1,4 +1,5 @@
 // all this logic needs to be rewritten
+// I need something more agnostic to be working or with everything or by using an object containing all the things we regularly use
 
 const findName = (source, lastLinkIndx, linkParts) => {
   const lastLinkFragment = linkParts[lastLinkIndx];
@@ -9,29 +10,35 @@ const findName = (source, lastLinkIndx, linkParts) => {
   if (source === 'confluence') {
     return lastLinkFragment.split('+').join(' ');
   }
-  return linkParts[lastLinkIndx].split('-').join(' ');
+  if (source === 'github' || 'zeplin' || 'jira' || 'figma') {
+    return linkParts[lastLinkIndx].split('-').join(' ');
+  }
+  return 
 };
 
 const findSource = (linkParts) => {
   console.log('linkParts***', linkParts);
-  const firstLinkFragment = linkParts[1].split('.');
-  if (firstLinkFragment.includes('paper')) {
-    return 'paper';
-  }
-  if (firstLinkFragment.includes('github')) {
-    return 'github';
-  }
-  if (firstLinkFragment.includes('zeplin')) {
-    return 'zeplin';
-  }
-  if (firstLinkFragment.includes('confluence')) {
-    return 'confluence';
-  }
-  if (firstLinkFragment.includes('jira')) {
-    return 'jira';
-  }
-  if (firstLinkFragment.includes('figma')) {
-    return 'figma';
+  const firstLinkFragment = linkParts[1] ? linkParts[1].split('.') : linkParts[0].split('.');
+  console.log('firstLinkFragment', firstLinkFragment);
+  if (firstLinkFragment) {
+    if (firstLinkFragment.includes('paper')) {
+      return 'paper';
+    }
+    if (firstLinkFragment.includes('github')) {
+      return 'github';
+    }
+    if (firstLinkFragment.includes('zeplin')) {
+      return 'zeplin';
+    }
+    if (firstLinkFragment.includes('confluence')) {
+      return 'confluence';
+    }
+    if (firstLinkFragment.includes('jira')) {
+      return 'jira';
+    }
+    if (firstLinkFragment.includes('figma')) {
+      return 'figma';
+    }
   }
 
   return firstLinkFragment[1];

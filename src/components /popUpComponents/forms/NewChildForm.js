@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styled from '@emotion/styled';
+import PropTypes from 'prop-types';
 import useGetAllTypes from '../../../hooks/queries/useGetAllTypes';
 import useGetAllTechnologies from '../../../hooks/queries/useGetAllTechnologies';
 import useGetAllTags from '../../../hooks/queries/useGetAllTags';
@@ -58,7 +59,7 @@ const findTitleDisplay = (value, title) => {
   //   return capitaliseFirstLetters(singleValue);
   // }).join(', ');
 };
-const NewChildForm = () => {
+const NewChildForm = ({ closePopUP }) => {
   // const {
   //   addNewLink,
   // } = useCreateNewUnit();
@@ -167,9 +168,7 @@ const NewChildForm = () => {
   const handleAddNewUnit = () => {
     console.log('inside handleAddNewUnit');
     const allRequiredFieldsKeys = Object.keys(requiredFields);
-    console.log('allRequiredFieldsKeys', allRequiredFieldsKeys);
     const missingRequiredFields = allRequiredFieldsKeys.filter(findMissingField);
-    console.log('missingRequiredFields', missingRequiredFields);
     // will this break it if it is not an object ?
     if (missingRequiredFields.length > 0) {
       const missingRequiredFieldsString = missingRequiredFields.join(', ');
@@ -178,6 +177,7 @@ const NewChildForm = () => {
     } else {
       console.log('good to add');
       handleCreateNewUnit();
+      closePopUP();
       // logic to add the new unit
       // delete the log above
     }
@@ -390,6 +390,15 @@ const NewChildForm = () => {
       </CtaBtnsContainer>
     </CustomForm>
   );
+};
+
+NewChildForm.propTypes = {
+  closePopUP: PropTypes.func,
+
+};
+
+NewChildForm.defaultProps = {
+  closePopUP: undefined,
 };
 
 export default NewChildForm;
