@@ -1,5 +1,6 @@
 // all this logic needs to be rewritten
-// I need something more agnostic to be working or with everything or by using an object containing all the things we regularly use
+// I need something more agnostic to be working or with everything
+// or by using an object containing all the things we regularly use
 
 const findName = (source, lastLinkIndx, linkParts) => {
   const lastLinkFragment = linkParts[lastLinkIndx];
@@ -13,7 +14,7 @@ const findName = (source, lastLinkIndx, linkParts) => {
   if (source === 'github' || 'zeplin' || 'jira' || 'figma') {
     return linkParts[lastLinkIndx].split('-').join(' ');
   }
-  return 
+  return lastLinkFragment;
 };
 
 const findSource = (linkParts) => {
@@ -41,6 +42,8 @@ const findSource = (linkParts) => {
     }
   }
 
+  console.log('firstLinkFragment', firstLinkFragment);
+  console.log('firstLinkFragment[1]', firstLinkFragment[1]);
   return firstLinkFragment[1];
 };
 
