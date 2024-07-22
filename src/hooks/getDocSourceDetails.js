@@ -4,6 +4,9 @@
 
 const findName = (source, lastLinkIndx, linkParts) => {
   const lastLinkFragment = linkParts[lastLinkIndx];
+  console.log('!!source inside findAName', source);
+  console.log('!!lastLinkFragment', lastLinkFragment);
+  console.log("lastLinkFragment.split('.')", lastLinkFragment.split('.'));
 
   if (source === 'paper') {
     return lastLinkFragment.split('--')[0].split('-').join(' ');
@@ -14,7 +17,8 @@ const findName = (source, lastLinkIndx, linkParts) => {
   if (source === 'github' || 'zeplin' || 'jira' || 'figma') {
     return linkParts[lastLinkIndx].split('-').join(' ');
   }
-  return lastLinkFragment;
+  const singleFragmentLinkParts = lastLinkFragment.split('.');
+  return singleFragmentLinkParts[1];
 };
 
 const findSource = (linkParts) => {
@@ -55,8 +59,6 @@ const seperateLinkParts = (link) => (link
 );
 
 const getDocSourceDetails = (link) => {
-  console.log('inside getDocSourceDetails@@', link);
-
   // const linksPartsCollection = links.map((link) => (
   //   seperateLinkParts(link)
   // ));
@@ -71,10 +73,15 @@ const getDocSourceDetails = (link) => {
   //   });
   //   return sources;
   // }
+  console.log('inside getDocSourceDetails@@', link);
   const seperatedLinkParts = seperateLinkParts(link);
+  console.log('seperatedLinkParts@@', seperatedLinkParts);
   const lastLinkIndx = (seperatedLinkParts.length - 1);
+  console.log('lastLinkIndx@@', lastLinkIndx);
   const source = findSource(seperatedLinkParts);
+  console.log('source@@', source);
   const name = findName(source, lastLinkIndx, seperatedLinkParts);
+  console.log('name@@', name);
 
   return { source, name };
 };

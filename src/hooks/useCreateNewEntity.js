@@ -57,6 +57,7 @@ const useCreateNewUnit = (
         // I think that this function needs to return an array of ids, which will enchance
         // the entities docs allong the ids of those docs that allready exist.
         const { source, name } = getDocSourceDetails(link);
+        console.log('name for doc', name);
         console.log('documentType', documentTypeId);
         // here we need to populate the array with the ids gotten
         // from the newly created entities
@@ -106,13 +107,14 @@ const useCreateNewUnit = (
 
     const newEntity = { ...standardKeys };
 
-    if (typeOnInput === 'document') {
+    if (typeOnInput.title === 'document') {
+      console.log('inside type document');
       const { source, name } = getDocSourceDetails(mainLinks[0]);
       newEntity.properties.source = source;
       newEntity.name = name;
     }
 
-    if (typeOnInput !== 'document') {
+    if (typeOnInput.title !== 'document') {
       newEntity.children = [];
       newEntity.properties.docs = await allDocsEntityIdsArray();
     }
