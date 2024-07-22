@@ -9,6 +9,7 @@ const findName = (source, lastLinkIndx, linkParts) => {
   console.log("lastLinkFragment.split('.')", lastLinkFragment.split('.'));
 
   if (source === 'paper') {
+    console.log('inside source paper');
     return lastLinkFragment.split('--')[0].split('-').join(' ');
   }
   if (source === 'confluence') {
