@@ -22,6 +22,23 @@ const findName = (source, lastLinkIndx, linkParts) => {
   return singleFragmentLinkParts[1];
 };
 
+// gemini refactoring.....
+// const findName = (source, lastLinkIndx, linkParts) => {
+//   const lastLinkFragment = linkParts[lastLinkIndx];
+
+//   const nameMapping = {
+//     paper: () => lastLinkFragment.split('--')[0].split('-').join(' '),
+//     confluence: () => lastLinkFragment.split('+').join(' '),
+//     github: () => lastLinkFragment.split('-').join(' '),
+//     zeplin: () => lastLinkFragment.split('-').join(' '),
+//     jira: () => lastLinkFragment.split('-').join(' '),
+//     figma: () => lastLinkFragment.split('-').join(' '),
+//     default: () => lastLinkFragment.split('.')[1],
+//   };
+
+//   return nameMapping[source]?.() || nameMapping.default();
+// };
+
 const findSource = (linkParts) => {
   console.log('linkParts***', linkParts);
   const firstLinkFragment = linkParts[1] ? linkParts[1].split('.') : linkParts[0].split('.');
@@ -51,6 +68,21 @@ const findSource = (linkParts) => {
   console.log('firstLinkFragment[1]', firstLinkFragment[1]);
   return firstLinkFragment[1];
 };
+
+// gemini refactoring...
+// const findSource = (linkParts) => {
+//   const firstLinkFragment = (linkParts[1] || linkParts[0]).split('.');
+
+//   const sources = ['paper', 'github', 'zeplin', 'confluence', 'jira', 'figma'];
+
+//   for (const source of sources) {
+//     if (firstLinkFragment.includes(source)) {
+//       return source;
+//     }
+//   }
+
+//   return firstLinkFragment[1];
+// };
 
 const seperateLinkParts = (link) => (link
   .split('/')
@@ -88,6 +120,51 @@ const getDocSourceDetails = (link) => {
 };
 
 export default getDocSourceDetails;
+
+// gemini turning this into a helper function
+
+// const extractDocSourceDetails = (link) => {
+//   const splitLinkIntoParts = (link) => link.split('/').filter(fragment => fragment !== '');
+
+//   const findSource = (linkParts) => {
+//     const firstLinkFragment = (linkParts[1] || linkParts[0]).split('.');
+
+//     const sources = ['paper', 'github', 'zeplin', 'confluence', 'jira', 'figma'];
+
+//     for (const source of sources) {
+//       if (firstLinkFragment.includes(source)) {
+//         return source;
+//       }
+//     }
+
+//     return firstLinkFragment[1];
+//   };
+
+//   const findName = (source, lastLinkIndx, linkParts) => {
+//     const lastLinkFragment = linkParts[lastLinkIndx];
+
+//     const nameMapping = {
+//       paper: () => lastLinkFragment.split('--')[0].split('-').join(' '),
+//       confluence: () => lastLinkFragment.split('+').join(' '),
+//       github: () => lastLinkFragment.split('-').join(' '),
+//       zeplin: () => lastLinkFragment.split('-').join(' '),
+//       jira: () => lastLinkFragment.split('-').join(' '),
+//       figma: () => lastLinkFragment.split('-').join(' '),
+//       default: () => lastLinkFragment.split('.')[1],
+//     };
+
+//     return nameMapping[source]?.() || nameMapping.default();
+//   };
+
+//   const linkParts = splitLinkIntoParts(link);
+//   const lastLinkIndx = linkParts.length - 1;
+//   const source = findSource(linkParts);
+//   const name = findName(source, lastLinkIndx, linkParts);
+
+//   return { source, name };
+// };
+
+// export default extractDocSourceDetails;
 
 // fetch(https://github.com/Dio-P/Athena/blob/main/src/components/AddNewConnectionBlock.js)
 // https://paper.dropbox.com/doc/Imposter-syndrome-workshop-ideas--BtYF4rZRzasgUTPjgE7J0osIAg-vIsKjOV2rmXL6H3g39LgZ
