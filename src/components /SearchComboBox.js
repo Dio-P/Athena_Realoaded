@@ -217,10 +217,6 @@ const SearchComboBox = ({
       />
 
       <OptionsWrapper>
-        {/* && options
-            .filter((option) => (
-              exclude && !(exclude.includes(option))
-            )) // no clue what this is any more */}
         {options?.length > 0
           && options.map((option) => (
             <DropdownOption
@@ -229,13 +225,14 @@ const SearchComboBox = ({
               onClickOption={() => {
                 handleClickOption(option, ofType);
                 console.log('clicked Option is: ', option);
+                console.log('clickedOptions are: ', clickedOptions);
                 setClickedOptions(
-                  { ...clickedOptions, [option.title]: !clickedOptions[option.title] },
+                  { ...clickedOptions, [option.id]: !clickedOptions[option.id] },
                 );
               }}
               ofType={ofType}
               ariaLabel={optionsAriaLabel}
-              hasBeenClicked={clickedOptions[option.title]}
+              hasBeenClicked={clickedOptions[option.id]}
               acceptsMultipleValues={acceptsMultipleValues}
             />
           ))}

@@ -15,7 +15,7 @@ const ExistingChildOrNotBtnContainer = styled.div`
   display: flex;
 
 `;
-const AddChildFormWrapper = ({ onClickFunctions, values }) => {
+const AddChildFormWrapper = ({ onClickFunctions, values, closePopUP }) => {
   const [one] = useState('This is the AddChildFormWrapper');
   const [isExistingChild, setIsExistingChild] = useState(false);
   const [radioValue, setRadioValue] = useState('');
@@ -60,6 +60,7 @@ const AddChildFormWrapper = ({ onClickFunctions, values }) => {
           : (
             <NewChildForm
               onClickFunctions={onClickFunctions}
+              closePopUP={closePopUP}
             />
           )}
       </BodyContainer>
@@ -76,11 +77,13 @@ const AddChildFormWrapper = ({ onClickFunctions, values }) => {
 AddChildFormWrapper.propTypes = {
   onClickFunctions: PropTypes.objectOf(PropTypes.func),
   values: PropTypes.objectOf(PropTypes.string),
+  closePopUP: PropTypes.func,
 };
 AddChildFormWrapper.defaultProps = {
   onClickFunctions: {},
   values: {
     parent: '',
   },
+  closePopUP: undefined,
 };
 export default AddChildFormWrapper;

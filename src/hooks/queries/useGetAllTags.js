@@ -19,13 +19,13 @@ const useGetAllTags = () => {
   );
 
   useEffect(() => {
-    console.log('query for all tags');
+    // console.log('query for all tags');
     query();
   }, []);
 
-  useEffect(() => {
-    console.log('tagsToRender', tagsToRender);
-  }, [tagsToRender]);
+  // useEffect(() => {
+  //   console.log('tagsToRender', tagsToRender);
+  // }, [tagsToRender]);
 
   useEffect(() => {
     if (data?.getAllTags) {

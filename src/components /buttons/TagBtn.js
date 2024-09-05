@@ -9,7 +9,7 @@ import { deleteIcon } from '../../helpers/svgIcons';
 
 const Container = styled.div`
     display: flex;
-    color: black;
+    color: ${(props) => style.variables.btn.ofTypeTag[props.theme].typeColour};
     background-color:  ${(props) => style.variables.btn.ofTypeTag[props.theme].backgroundColour};
     height: 20px;
     min-width: 100px;

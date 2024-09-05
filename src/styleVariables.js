@@ -47,13 +47,13 @@ export const themeStyle = {
       backgroundColour: colours.primaryPink,
     },
     tagBtn: {
-      ofTypeColour: colours.primaryLight,
+      typeColour: colours.primaryLight,
       backgroundColour: colours.primaryBlue,
     },
     radioBtn: {
       activeTypeColour: colours.black,
       inactiveTypeColour: colours.grey,
-      ofTypeColour: colours.black,
+      typeColour: colours.black,
       backgroundColour: colours.primaryPink,
       active: colours.primaryPink,
       inactive: colours.secondaryPink,
@@ -64,19 +64,19 @@ export const themeStyle = {
     defaultTypeColour: colours.secondaryLight,
     shadow: colours.secondaryLight,
     defaultBtn: {
-      ofTypeColour: colours.primaryLight,
+      typeColour: colours.primaryLight,
       backgroundColour: colours.primaryLight,
     },
     addBtn: {
-      ofTypeColour: colours.primaryLight,
+      typeColour: colours.primaryLight,
       backgroundColour: colours.primaryPink,
     },
     smallBtn: {
-      ofTypeColour: colours.primaryLight,
+      typeColour: colours.primaryLight,
       backgroundColour: colours.primaryPink,
     },
     tagBtn: {
-      ofTypeColour: colours.primaryDark,
+      typeColour: colours.primaryDark,
       backgroundColour: colours.primaryLight,
     },
     radioBtn: {
