@@ -13,7 +13,7 @@ import { linkIsValid } from '../../../helpers/validation';
 import { errorsLink } from '../../../constants';
 import capitaliseFirstLetters from '../../../helpers/capitaliseFirstLetters';
 
-const CustomForm = styled.div`
+const CustomForm = styled.form`
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -364,7 +364,9 @@ const NewChildForm = () => {
     )}
 
       <CtaBtnsContainer>
-        <CtaBtn>Cancel</CtaBtn>
+        {/* <CtaBtn>Cancel</CtaBtn> */}
+        {/* eslint-disable-next-line react/button-has-type */}
+        <button type="button"> Cancel </button>
         <CtaBtn onClick={() => handleAddNewUnit()}>Add</CtaBtn>
       </CtaBtnsContainer>
     </CustomForm>
