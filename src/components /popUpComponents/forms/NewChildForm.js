@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import styled from '@emotion/styled';
+import PropTypes from 'prop-types';
 import useGetAllTypes from '../../../hooks/queries/useGetAllTypes';
 import useGetAllTechnologies from '../../../hooks/queries/useGetAllTechnologies';
 import useGetAllTags from '../../../hooks/queries/useGetAllTags';
 import useGetAllTeams from '../../../hooks/queries/useGetAllTeams';
-// import useCreateNewUnit from '../../../hooks/useCreateNewUnit';
+import useCreateNewUnit from '../../../hooks/useCreateNewEntity';
 import MultiBtnComp from '../../MultiBtnComp';
 import TagBtn from '../../buttons/TagBtn';
 import DropDown from '../../DropDown';
@@ -58,24 +59,25 @@ const findTitleDisplay = (value, title) => {
   //   return capitaliseFirstLetters(singleValue);
   // }).join(', ');
 };
-const NewChildForm = () => {
+const NewChildForm = ({ closePopUP }) => {
   // const {
   //   addNewLink,
   // } = useCreateNewUnit();
 
   const [mainLinks, setMainLinks] = useState([]);
-  const [allDocsOfUnit, setAllDocsOfUnit] = useState([]);
+  const [allDocsOfEntity, setAllDocsOfEntity] = useState([]);
 
   const [nameOnInput, setNameOnInput] = useState('');
   const [linkOnInput, setLinkOnInput] = useState('');
   const [typeOnInput, setTypeOnInput] = useState('');
   const [teamsResponsibleOnInput, setTeamsResponsibleOnInput] = useState([]);
   // const [leaderOnInput, setLeaderOnInput] = useState('');
+  // this should be comming from partner platform
   const [briefDescriptionOnInput, setBriefDescriptionOnInput] = useState('');
 
   const [docOnInput, setDocOnInput] = useState('');
-  const [tagsOnInput, setTagsOnInput] = useState([]);
-  const [technologiesOnInput, setTechnologiesOnInput] = useState([]);
+  const [allTagsOfEntity, setAllTagsOfEntity] = useState([]);
+  const [allTechnologiesOfEntity, setAllTechnologiesOfEntity] = useState([]);
 
   const [linkError, setLinkError] = useState('');
   const [docError, setDocError] = useState('');
@@ -86,8 +88,8 @@ const NewChildForm = () => {
   // animation-timing-function: onClickFunctions.
 
   useEffect(() => {
-    console.log('technologiesOnInput******', technologiesOnInput);
-  }, [technologiesOnInput]);
+    console.log('allTechnologiesOfEntity******', allTechnologiesOfEntity);
+  }, [allTechnologiesOfEntity]);
 
   const requiredFields = {
     nameOnInput, // string
@@ -95,14 +97,26 @@ const NewChildForm = () => {
     typeOnInput, // object
     teamsResponsibleOnInput, // array
     briefDescriptionOnInput, // string
-    docOnInput, // array
+    allDocsOfEntity, // array
   };
 
   // const optionalFields = {
   //   leaderOnInput,
-  //   tagsOnInput,
-  //   technologiesOnInput,
+  //   allTagsOfEntity,
+  //   allTechnologiesOfEntity,
   // };
+  const [handleCreateNewUnit] = useCreateNewUnit(
+    nameOnInput,
+    typeOnInput,
+    teamsResponsibleOnInput,
+    // leaderOnInput,
+    mainLinks,
+    briefDescriptionOnInput,
+    allDocsOfEntity,
+    allTagsOfEntity,
+    allTechnologiesOfEntity,
+  );
+
   const [typesToRender, filterTypes] = useGetAllTypes();
   const [teamsToRender, filterTeams] = useGetAllTeams();
   // const [] = useGetAllDocs();
@@ -140,7 +154,7 @@ const NewChildForm = () => {
 
   const handleAddDoc = (newDoc) => {
     // add the existing valid link on the new array
-    setAllDocsOfUnit([...allDocsOfUnit, newDoc]);
+    setAllDocsOfEntity([...allDocsOfEntity, newDoc]);
     // empty the input
     setDocOnInput('');
     // display the existing link as btn with x underneath
@@ -152,6 +166,7 @@ const NewChildForm = () => {
   // can I call the above as a closure ?
 
   const handleAddNewUnit = () => {
+    console.log('inside handleAddNewUnit');
     const allRequiredFieldsKeys = Object.keys(requiredFields);
     const missingRequiredFields = allRequiredFieldsKeys.filter(findMissingField);
     // will this break it if it is not an object ?
@@ -161,6 +176,8 @@ const NewChildForm = () => {
       // logic to announce missing fields here
     } else {
       console.log('good to add');
+      handleCreateNewUnit();
+      closePopUP();
       // logic to add the new unit
       // delete the log above
     }
@@ -179,7 +196,7 @@ const NewChildForm = () => {
   };
 
   const hasLinksSet = mainLinks.length > 0;
-  const hasDocsSet = allDocsOfUnit.length > 0;
+  const hasDocsSet = allDocsOfEntity.length > 0;
 
   return (
     <CustomForm>
@@ -300,11 +317,11 @@ const NewChildForm = () => {
           />
         </InputBtnContainer>
         {hasDocsSet
-          && allDocsOfUnit.map((doc) => (
+          && allDocsOfEntity.map((doc) => (
             <TagBtn
               label={doc}
               hasDeleteOption
-              onClickDelete={() => handleDeleteChoice(doc, allDocsOfUnit, setAllDocsOfUnit)}
+              onClickDelete={() => handleDeleteChoice(doc, allDocsOfEntity, setAllDocsOfEntity)}
             />
           ))}
       </GenericInputWrapper>
@@ -322,16 +339,16 @@ const NewChildForm = () => {
         <DropDown
           role="combobox"
           onClickOption={(latestTagAdded) => {
-            setTagsOnInput([...tagsOnInput, latestTagAdded]);
+            setAllTagsOfEntity([...allTagsOfEntity, latestTagAdded]);
           }}
           onDeletingChoice={
             (choiceToDelete) => (
-              handleDeleteChoice(choiceToDelete, tagsOnInput, setTagsOnInput)
+              handleDeleteChoice(choiceToDelete, allTagsOfEntity, setAllTagsOfEntity)
             )
           }
-          chosenValue={tagsOnInput}
+          chosenValue={allTagsOfEntity}
           acceptsMultipleValues
-          title={tagsOnInput?.length > 0 ? `${tagsOnInput.length} selected` : 'Please choose a tag'}
+          title={allTagsOfEntity?.length > 0 ? `${allTagsOfEntity.length} selected` : 'Please choose a tag'}
           options={tagsToRender}
           onChange={filterTags}
           ofType="tags"
@@ -344,17 +361,21 @@ const NewChildForm = () => {
         <DropDown
           onClickOption={
             (latestTechnologyAdded) => {
-              setTechnologiesOnInput([...technologiesOnInput, latestTechnologyAdded]);
+              setAllTechnologiesOfEntity([...allTechnologiesOfEntity, latestTechnologyAdded]);
             }
           }
-          chosenValue={technologiesOnInput}
+          chosenValue={allTechnologiesOfEntity}
           acceptsMultipleValues
           onDeletingChoice={
             (choiceToDelete) => (
-              handleDeleteChoice(choiceToDelete, technologiesOnInput, setTechnologiesOnInput)
+              handleDeleteChoice(
+                choiceToDelete,
+                allTechnologiesOfEntity,
+                setAllTechnologiesOfEntity,
+              )
             )
           }
-          title={technologiesOnInput.length > 0 ? `${technologiesOnInput.length} selected` : 'Please choose a technology'}
+          title={allTechnologiesOfEntity.length > 0 ? `${allTechnologiesOfEntity.length} selected` : 'Please choose a technology'}
           options={technologiesToRender}
           onChange={filterTechnologies}
           ofType="technology"
@@ -371,6 +392,15 @@ const NewChildForm = () => {
       </CtaBtnsContainer>
     </CustomForm>
   );
+};
+
+NewChildForm.propTypes = {
+  closePopUP: PropTypes.func,
+
+};
+
+NewChildForm.defaultProps = {
+  closePopUP: undefined,
 };
 
 export default NewChildForm;
